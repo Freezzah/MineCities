@@ -71,7 +71,7 @@ public class City {
             city.read(tag);
             return city;
         } catch (Exception e) {
-            Constants.LOGGER.warn("Something went wrong loading the municipalities");
+            Constants.LOGGER.warn("Something went wrong loading the cities");
         }
         return null;
     }
