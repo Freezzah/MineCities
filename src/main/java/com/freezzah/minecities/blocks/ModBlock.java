@@ -1,8 +1,11 @@
 package com.freezzah.minecities.blocks;
 
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.function.Supplier;
 
 import static com.freezzah.minecities.Constants.MOD_ID;
 
@@ -15,7 +18,8 @@ public class ModBlock {
     /*
      * All items added by this mod.
      */
-
+    public static final @NotNull Supplier<TownhallBlock> TOWNHALL_BLOCK =
+            BLOCKS.register(ModBlockId.TOWNHALL_BLOCK_ID, () -> new TownhallBlock(BlockBehaviour.Properties.of()));
     /*
      * Function to call from mod init phase to register all blocks
      */
