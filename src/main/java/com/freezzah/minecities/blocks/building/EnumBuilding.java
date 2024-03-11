@@ -8,7 +8,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.function.BiFunction;
 
 public enum EnumBuilding {
-    TOWNHALL(TownhallBuilding::new, EnumIds.TOWNHALL_BYTE);
+    TOWNHALL(TownhallBuilding::new, EnumIds.TOWNHALL_BYTE), BANK(BankBuilding::new, EnumIds.BANK_BYTE);
 
     private final BiFunction<City, BlockPos, IBuilding> function;
     private final byte id;
@@ -29,5 +29,6 @@ public enum EnumBuilding {
 
     public static class EnumIds {
         public static final byte TOWNHALL_BYTE = (byte) 1;
+        public static final byte BANK_BYTE = (byte) 2;
     }
 }

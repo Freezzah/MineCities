@@ -1,18 +1,19 @@
 package com.freezzah.minecities.saveddata;
 
 import com.freezzah.minecities.city.City;
+import com.freezzah.minecities.entities.IInhabitant;
+import com.freezzah.minecities.utils.NBTHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.level.saveddata.SavedData;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
+import java.util.UUID;
 
 public class CitySavedData extends SavedData {
     private static final String TAG_CITIES = "cities";
@@ -22,17 +23,7 @@ public class CitySavedData extends SavedData {
         this.setDirty();
     }
 
-    @Contract(" -> new")
-    static @NotNull Collector<CompoundTag, ?, ListTag> toListNBT() {
-        return Collectors.collectingAndThen(
-                Collectors.toList(),
-                list -> {
-                    final ListTag tagList = new ListTag();
-                    tagList.addAll(list);
 
-                    return tagList;
-                });
-    }
 
     public static @NotNull CitySavedData load(@NotNull CompoundTag compoundTag) {
         CitySavedData savedData = new CitySavedData();
@@ -46,7 +37,7 @@ public class CitySavedData extends SavedData {
     }
 
     public @NotNull CompoundTag save(@NotNull CompoundTag compoundTag) {
-        ListTag tag = cities.stream().map(City::getCityTag).filter(Objects::nonNull).collect(toListNBT());
+        ListTag tag = cities.stream().map(City::getCityTag).filter(Objects::nonNull).collect(NBTHelper.toListNBT());
         compoundTag.put(TAG_CITIES, tag);
         return compoundTag;
     }
@@ -55,5 +46,16 @@ public class CitySavedData extends SavedData {
         // In some method within the class
         cities.add(city);
         setDirty();
+    }
+
+    public @Nullable City getById(@NotNull UUID uuid){
+        return cities.stream().filter(c -> c.getId().equals(uuid)).findFirst().orElse(null);
+    }
+
+    public @Nullable City getCityByPlayer(@NotNull IInhabitant inhabitant) {
+        for(City city : cities) {
+            if(city.getPlayers().contains(inhabitant)) return city;
+        }
+        return null;
     }
 }

@@ -20,6 +20,8 @@ public class ModBlock {
      */
     public static final @NotNull Supplier<TownhallBlock> TOWNHALL_BLOCK =
             BLOCKS.register(ModBlockId.TOWNHALL_BLOCK_ID, () -> new TownhallBlock(BlockBehaviour.Properties.of()));
+    public static final @NotNull Supplier<BankBlock> BANK_BLOCK =
+            BLOCKS.register(ModBlockId.BANK_BLOCK_ID, () -> new BankBlock(BlockBehaviour.Properties.of()));
     /*
      * Function to call from mod init phase to register all blocks
      */

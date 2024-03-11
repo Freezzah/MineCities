@@ -1,5 +1,6 @@
 package com.freezzah.minecities.entities;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Contract;
@@ -12,7 +13,7 @@ public class Inhabitant implements IInhabitant {
     private final UUID uuid;
     private final String name;
 
-    public Inhabitant(UUID uuid, String name) {
+    public Inhabitant(@NotNull UUID uuid, @NotNull String name) {
         this.uuid = uuid;
         this.name = name;
     }
@@ -28,17 +29,17 @@ public class Inhabitant implements IInhabitant {
     }
 
     @Override
-    public UUID getUUID() {
+    public @NotNull UUID getUUID() {
         return this.uuid;
     }
 
     @Override
-    public String getName() {
+    public @NotNull String getName() {
         return this.name;
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(@NotNull Object obj) {
         if (obj instanceof Inhabitant inhabitant) {
             return inhabitant.getUUID().equals(getUUID());
         }
@@ -51,5 +52,26 @@ public class Inhabitant implements IInhabitant {
     @Override
     public int hashCode() {
         return getName().hashCode() + getUUID().hashCode();
+    }
+
+    private static final String UUID = "uuid";
+    private static final String USERNAME = "username";
+
+    @Override
+    public @NotNull CompoundTag write() {
+        CompoundTag tag = new CompoundTag();
+        tag.putUUID(UUID, this.getUUID());
+        tag.putString(USERNAME, this.getName());
+        return tag;
+    }
+
+    public static @Nullable Inhabitant load(@NotNull CompoundTag tag) {
+        if(!(tag.contains(UUID) && tag.contains(USERNAME))){
+            return null;
+        }
+        UUID uuid = tag.getUUID(UUID);
+        String username = tag.getString(USERNAME);
+        if(username.isEmpty()) return null;
+        return new Inhabitant(uuid, username);
     }
 }

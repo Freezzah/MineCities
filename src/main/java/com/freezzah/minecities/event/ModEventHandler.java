@@ -11,6 +11,7 @@ public class ModEventHandler {
     public void createTabBuildContent(@NotNull BuildCreativeModeTabContentsEvent event) {
         if(event.getTabKey() == CreativeModeTabs.INGREDIENTS){
             event.accept(ModBlock.TOWNHALL_BLOCK.get());
+            event.accept(ModBlock.BANK_BLOCK.get());
         }
     }
 }
