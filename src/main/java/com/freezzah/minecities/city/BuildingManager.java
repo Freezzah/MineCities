@@ -1,33 +1,28 @@
 package com.freezzah.minecities.city;
 
 import com.freezzah.minecities.Constants;
-import com.freezzah.minecities.blocks.building.AbstractBuilding;
-import com.freezzah.minecities.blocks.building.IBuilding;
-import com.freezzah.minecities.blocks.building.TownhallBuilding;
+import com.freezzah.minecities.blocks.building.*;
+import com.freezzah.minecities.blocks.building.registry.BuildingEntry;
+import com.freezzah.minecities.blocks.building.registry.ModBuildingRegistry;
+import com.freezzah.minecities.blocks.building.townhall.TownhallBuilding;
 import com.freezzah.minecities.entities.IInhabitant;
-import com.freezzah.minecities.entities.Inhabitant;
 import com.freezzah.minecities.utils.BlockPosHelper;
-import com.mojang.authlib.GameProfile;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.scores.ScoreAccess;
-import net.minecraft.world.scores.ScoreHolder;
-import net.minecraft.world.scores.Scoreboard;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
+
+import static com.freezzah.minecities.city.City.TAG_CITY_ID;
 
 public class BuildingManager {
 
@@ -55,10 +50,6 @@ public class BuildingManager {
                 return (TownhallBuilding) building;
         }
         return null;
-    }
-
-    public @Nullable IBuilding getBuildingFromPos(@NotNull BlockPos pos) {
-        return buildings.stream().filter(b -> BlockPosHelper.equals(pos, b.getBlockPos())).findFirst().orElse(null);
     }
 
     public void tick(Level level) {
@@ -109,30 +100,49 @@ public class BuildingManager {
 
         ListTag buildings = new ListTag();
         for(int i = 0; i < buildings.size(); i++){
-            buildings.add(this.buildings.get(i).write());
+            buildings.add(i, this.buildings.get(i).write());
         }
         tag.put(TAG_BUILDINGS, buildings);
         this.buildingManagerTag = tag;
         return tag;
     }
+
     public void read(@NotNull CompoundTag tag) {
-        ListTag buidlings = tag.getList(TAG_BUILDINGS, Tag.TAG_COMPOUND);
-        for(int i = 0; i < buidlings.size(); i++) {
-            CompoundTag compoundTag = buidlings.getCompound(i);
-            this.buildings.add(AbstractBuilding.read(compoundTag));
+        final ListTag buildingTagList = tag.getList(TAG_BUILDINGS, Tag.TAG_COMPOUND);
+        for (int i = 0; i < buildingTagList.size(); ++i)
+        {
+            final CompoundTag buildingCompound = buildingTagList.getCompound(i);
+            @Nullable final IBuilding b = createFrom(city, buildingCompound);
         }
     }
 
+    private static IBuilding createFrom(final City city, CompoundTag tag) {
+
+        final ResourceLocation type = new ResourceLocation(tag.getString(AbstractBuilding.TAG_BUILDING_TYPE));
+        final BuildingEntry entry = ModBuildingRegistry.buildingRegistry.get(type);
+        final BlockPos pos = BlockPosHelper.readBlockPos(tag);
+        return entry.produceBuilding(city);
+    }
+
+    public IBuilding createFrom(final City city, final IBuildingBlock buildingBlock)
+    {
+        return this.createFrom(city, buildingBlock.getBuildingName());
+    }
+
+    public IBuilding createFrom(final City city, final ResourceLocation buildingName)
+    {
+        final BuildingEntry entry = ModBuildingRegistry.buildingRegistry.get(buildingName);
+        return entry.produceBuilding(city);
+    }
     public static @Nullable BuildingManager load(@NotNull CompoundTag tag, City city) {
         try {
             UUID id = tag.getUUID(TAG_CITY_ID);
-            City city = new City(id);
-            city.read(tag);
-            return city;
+            City cityy = new City(id);
+            cityy.read(tag);
+            return cityy.getBuildingManager();
         } catch (Exception e) {
             Constants.LOGGER.warn("Something went wrong loading the cities");
         }
         return null;
     }
-
 }

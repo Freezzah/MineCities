@@ -1,12 +1,11 @@
 package com.freezzah.minecities.blocks;
 
-import com.freezzah.minecities.blocks.building.IBuilding;
-import com.freezzah.minecities.blocks.building.IBuildingBlock;
-import com.freezzah.minecities.blocks.building.TownhallBuilding;
+import com.freezzah.minecities.blocks.building.*;
+import com.freezzah.minecities.blocks.building.registry.BuildingEntry;
+import com.freezzah.minecities.blocks.building.registry.ModBuilding;
 import com.freezzah.minecities.city.City;
 import com.freezzah.minecities.city.CityManager;
 import com.freezzah.minecities.entities.Inhabitant;
-import com.freezzah.minecities.utils.BlockPosHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -16,12 +15,6 @@ public class TownhallBlock extends AbstractMineCitiesBlock implements IBuildingB
     public TownhallBlock(Properties properties) {
         super(properties);
     }
-
-    @Override
-    public <T extends IBuilding> Class<T> getType(){
-        return (Class<T>) TownhallBuilding.class;
-    }
-
 
     /**
      * Should be called from events.
@@ -35,14 +28,16 @@ public class TownhallBlock extends AbstractMineCitiesBlock implements IBuildingB
         if (player instanceof ServerPlayer serverPlayer) {
             City city = CityManager.getInstance().getCityByPlayer(Inhabitant.fromPlayer(serverPlayer));
             if (city != null) {
-                TownhallBuilding townhallBuilding = city.getTownhall();
-                if (BlockPosHelper.equals(townhallBuilding.getBlockPos(), pos)) {
-                    CityManager.getInstance().destroyCity(city);
-                    return false;
-                }
+                CityManager.getInstance().destroyCity(city);
+                return false;
 
             }
         }
         return true;
+    }
+
+    @Override
+    public BuildingEntry getBuildingType(){
+        return ModBuilding.townhall.get();
     }
 }

@@ -29,7 +29,7 @@ public class EventHandler {
                             return;
                         }
                         city = CityManager.getInstance().createCity(Inhabitant.fromPlayer(serverPlayer));
-                        CityManager.getInstance().addBuilding(city, event.getPos());
+                        CityManager.getInstance().addBuilding(city, iBuildingBlock);
                     }
                 }
             } else {
@@ -40,7 +40,7 @@ public class EventHandler {
                             event.setCanceled(true);
                             return;
                         }
-                        CityManager.getInstance().addBuilding(city, event.getPos());
+                        CityManager.getInstance().addBuilding(city, iBuildingBlock);
                     }
                 }
             }
@@ -57,7 +57,7 @@ public class EventHandler {
 
     @SubscribeEvent
     @SuppressWarnings("unused")
-    public void onBreakEvent(BlockEvent.BreakEvent event){
+    public void onBreakEvent(BlockEvent.@NotNull BreakEvent event){
         if(event.getState().getBlock() instanceof IBuildingBlock iBuildingBlock) {
             boolean cancel = iBuildingBlock.onBreak(event.getPlayer(), event.getPos());
             event.setCanceled(cancel);
@@ -65,12 +65,10 @@ public class EventHandler {
     }
     @SubscribeEvent
     public void tickEvent(@NotNull TickEvent.LevelTickEvent levelTickEvent) {
-        if(levelTickEvent.side.isServer()) {
+        if (levelTickEvent.side.isServer()) {
             if (levelTickEvent.level.getGameTime() % 100 == 0) {
                 CityManager.getInstance().tick(levelTickEvent.level);
             }
         }
     }
-
-
 }

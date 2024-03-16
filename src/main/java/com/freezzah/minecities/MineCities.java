@@ -1,6 +1,7 @@
 package com.freezzah.minecities;
 
 import com.freezzah.minecities.blocks.ModBlock;
+import com.freezzah.minecities.blocks.building.registry.ModBuilding;
 import com.freezzah.minecities.client.gui.menu.ModMenuType;
 import com.freezzah.minecities.event.EventHandler;
 import com.freezzah.minecities.event.ModEventHandler;

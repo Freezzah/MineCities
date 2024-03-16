@@ -1,6 +1,7 @@
 package com.freezzah.minecities.city;
 
 import com.freezzah.minecities.blocks.AbstractMineCitiesBlock;
+import com.freezzah.minecities.blocks.building.IBuilding;
 import com.freezzah.minecities.entities.IInhabitant;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -18,7 +19,7 @@ public interface ICityManager {
 
     void setOwner(@NotNull City city, @NotNull IInhabitant inhabitant);
 
-    void addBuilding(@NotNull City city, @NotNull BlockPos pos);
+    void addBuilding(@NotNull City city, @NotNull IBuilding building);
 
     void destroyCity(@NotNull City city);
 

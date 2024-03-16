@@ -2,15 +2,13 @@ package com.freezzah.minecities.city;
 
 import com.freezzah.minecities.Constants;
 import com.freezzah.minecities.blocks.building.IBuilding;
-import com.freezzah.minecities.blocks.building.TownhallBuilding;
+import com.freezzah.minecities.blocks.building.townhall.TownhallBuilding;
 import com.freezzah.minecities.entities.IInhabitant;
 import com.freezzah.minecities.entities.Inhabitant;
 import com.freezzah.minecities.utils.ITaggable;
-import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -21,11 +19,12 @@ import java.util.*;
 
 public class City implements ITaggable {
     private static final String TAG_CITY = "city";
-    private static final String TAG_CITY_ID = "cityid";
+    public static final String TAG_CITY_ID = "cityid";
     private static final String TAG_OWNER = "owner";
     private static final String TAG_PLAYERS = "players";
     private static final String TAG_PLAYER = "player";
     private static final String TAG_JOIN_DATE = "joinDate";
+    private static final String TAG_BUILDING_MANAGER = "buildingManager";
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:MM");
 //    private final List<IInhabitant> inhabitants = new ArrayList<>();
     private final Map<IInhabitant, LocalDateTime> inhabitants = new HashMap<>();
@@ -47,9 +46,13 @@ public class City implements ITaggable {
 
     protected void setOwner(@NotNull IInhabitant inhabitant) {
         this.owner = inhabitant;
+        setDirty(true);
     }
-    protected boolean addBuilding(@NotNull BlockPos pos) {
-        return buildingManager.addBuilding(new TownhallBuilding(this, pos));
+    protected boolean addBuilding(IBuilding building) {
+        boolean result = buildingManager.addBuilding(building);
+        if(result)
+            setDirty(true);
+        return result;
     }
 
     public @NotNull List<IInhabitant> getPlayers() {
@@ -58,18 +61,19 @@ public class City implements ITaggable {
 
     protected void addInhabitant(@NotNull IInhabitant inhabitant) {
         inhabitants.put(inhabitant, LocalDateTime.now());
+        setDirty(true);
     }
 
     public @NotNull TownhallBuilding getTownhall(){
         return buildingManager.getTownhall();
     }
 
-    public @Nullable IBuilding getBuildingFromPos(@NotNull BlockPos pos) {
-        return buildingManager.getBuildingFromPos(pos);
-    }
-
     public void tick(Level level) {
         this.buildingManager.tick(level);
+    }
+
+    public BuildingManager getBuildingManager() {
+        return buildingManager;
     }
 
     /*
@@ -116,6 +120,7 @@ public class City implements ITaggable {
             i++;
         }
         tag.put(TAG_PLAYERS, players);
+        tag.put(TAG_BUILDING_MANAGER, buildingManager.write());
         this.cityTag = tag;
         return tag;
     }

@@ -1,9 +1,11 @@
 package com.freezzah.minecities.blocks;
 
+import com.freezzah.minecities.blocks.building.registry.BuildingEntry;
 import com.freezzah.minecities.city.City;
 import com.freezzah.minecities.city.CityManager;
 import com.freezzah.minecities.entities.Inhabitant;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
@@ -27,4 +29,11 @@ public abstract class AbstractMineCitiesBlock extends Block implements IMineCiti
         return true;
     }
 
+    public abstract BuildingEntry getBuildingType();
+    public ResourceLocation getRegistryName(){
+        return getBuildingType().getRegistryName();
+    }
+    public ResourceLocation getBuildingName() {
+        return getRegistryName();
+    }
 }

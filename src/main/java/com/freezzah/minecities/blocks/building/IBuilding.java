@@ -1,9 +1,9 @@
 package com.freezzah.minecities.blocks.building;
 
+import com.freezzah.minecities.blocks.building.registry.BuildingEntry;
 import com.freezzah.minecities.utils.ITaggable;
-import net.minecraft.core.BlockPos;
 
 public interface IBuilding extends ITaggable {
-
-    BlockPos getBlockPos();
+    BuildingEntry getBuildingType();
+    void setBuildingType(BuildingEntry buildingType);
 }

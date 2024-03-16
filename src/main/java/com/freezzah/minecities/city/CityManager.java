@@ -1,9 +1,10 @@
 package com.freezzah.minecities.city;
 
 import com.freezzah.minecities.blocks.AbstractMineCitiesBlock;
+import com.freezzah.minecities.blocks.building.IBuilding;
+import com.freezzah.minecities.blocks.building.IBuildingBlock;
 import com.freezzah.minecities.entities.IInhabitant;
 import com.freezzah.minecities.saveddata.CitySavedData;
-import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
@@ -63,9 +64,12 @@ public class CityManager implements ICityManager {
         city.setOwner(inhabitant);
     }
 
+    public void addBuilding(@NotNull City city, @NotNull IBuildingBlock building) {
+        city.addBuilding(city.getBuildingManager().createFrom(city, building));
+    }
     @Override
-    public void addBuilding(@NotNull City city, @NotNull BlockPos pos) {
-        city.addBuilding(pos);
+    public void addBuilding(@NotNull City city, @NotNull IBuilding building) {
+        city.addBuilding(building);
     }
 
     @Override
