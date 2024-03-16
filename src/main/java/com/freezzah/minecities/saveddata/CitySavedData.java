@@ -2,6 +2,7 @@ package com.freezzah.minecities.saveddata;
 
 import com.freezzah.minecities.city.City;
 import com.freezzah.minecities.entities.IInhabitant;
+import com.freezzah.minecities.tag.CityTags;
 import com.freezzah.minecities.utils.NBTHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -12,20 +13,26 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 public class CitySavedData extends SavedData {
-    private static final String TAG_CITIES = "cities";
+    /**
+     * List of cities to track
+     */
     private final List<City> cities = new ArrayList<>();
 
     public CitySavedData() {
         this.setDirty();
     }
 
+    /**
+     * Loads SavedData from NBT
+     * @param compoundTag tag to load cityData from
+     * @return new instance of the cityData
+     */
     public static @NotNull CitySavedData load(@NotNull CompoundTag compoundTag) {
         CitySavedData savedData = new CitySavedData();
-        for (final Tag tag : compoundTag.getList(TAG_CITIES, Tag.TAG_COMPOUND)) {
+        for (final Tag tag : compoundTag.getList(CityTags.TAG_CITIES, Tag.TAG_COMPOUND)) {
             final City city = City.load((CompoundTag) tag);
             if (city != null) {
                 savedData.cities.add(city);
@@ -34,22 +41,41 @@ public class CitySavedData extends SavedData {
         return savedData;
     }
 
+    /**
+     * Writes SavedData to NBT.
+     * @param compoundTag the {@code CompoundTag} to save the {@code SavedData} to
+     * @return Compound tag where cities are added.
+     */
+    @Override
     public @NotNull CompoundTag save(@NotNull CompoundTag compoundTag) {
-        ListTag tag = cities.stream().map(City::getCityTag).filter(Objects::nonNull).collect(NBTHelper.toListNBT());
-        compoundTag.put(TAG_CITIES, tag);
+        ListTag tag = cities.stream().map(City::getCityTag).collect(NBTHelper.toListNBT());
+        compoundTag.put(CityTags.TAG_CITIES, tag);
         return compoundTag;
     }
 
-    public void add(City city) {
+    /**
+     * Adds a city to the trackable object
+     * @param city {@link City}
+     */
+    public void add(@NotNull City city) {
         // In some method within the class
         cities.add(city);
         setDirty();
     }
 
+    /**
+     * Returns the {@link City} if any exist with UUID, otherwise null
+     * @param uuid {@link UUID} of the {@link City}
+     * @return {@link City} or null
+     */
     public @Nullable City getById(@NotNull UUID uuid){
         return cities.stream().filter(c -> c.getId().equals(uuid)).findFirst().orElse(null);
     }
-
+    /**
+     * Returns the {@link City} if any exist with UUID, otherwise null
+     * @param inhabitant {@link IInhabitant} of the {@link City}
+     * @return {@link City} or null
+     */
     public @Nullable City getCityByPlayer(@NotNull IInhabitant inhabitant) {
         for(City city : cities) {
             if(city.getPlayers().contains(inhabitant)) return city;
@@ -57,7 +83,7 @@ public class CitySavedData extends SavedData {
         return null;
     }
 
-    public List<City> getCities() {
+    public @NotNull List<City> getCities() {
         return cities;
     }
 }

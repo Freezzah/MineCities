@@ -1,12 +1,11 @@
 package com.freezzah.minecities.blocks.building.registry;
 
 import com.freezzah.minecities.blocks.building.IBuilding;
-import com.freezzah.minecities.blocks.building.IBuildingBlock;
+import com.freezzah.minecities.blocks.IBuildingBlock;
 import com.freezzah.minecities.city.City;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.Objects;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class BuildingEntry {

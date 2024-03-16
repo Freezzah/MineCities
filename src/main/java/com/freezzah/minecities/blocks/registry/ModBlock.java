@@ -1,5 +1,7 @@
-package com.freezzah.minecities.blocks;
+package com.freezzah.minecities.blocks.registry;
 
+import com.freezzah.minecities.blocks.BankBlock;
+import com.freezzah.minecities.blocks.TownhallBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;

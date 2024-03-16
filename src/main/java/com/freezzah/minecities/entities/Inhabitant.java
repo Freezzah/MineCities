@@ -65,6 +65,11 @@ public class Inhabitant implements IInhabitant {
         return tag;
     }
 
+    @Override
+    public void read(@NotNull CompoundTag tag) {
+
+    }
+
     public static @Nullable Inhabitant load(@NotNull CompoundTag tag) {
         if(!(tag.contains(UUID) && tag.contains(USERNAME))){
             return null;

@@ -1,10 +1,9 @@
 package com.freezzah.minecities.city;
 
-import com.freezzah.minecities.blocks.AbstractBuildingBlock;
-import com.freezzah.minecities.blocks.building.IBuilding;
-import com.freezzah.minecities.blocks.building.IBuildingBlock;
+import com.freezzah.minecities.blocks.IBuildingBlock;
 import com.freezzah.minecities.entities.IInhabitant;
 import com.freezzah.minecities.saveddata.CitySavedData;
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
@@ -17,6 +16,10 @@ public class CityManager implements ICityManager {
     static CityManager instance;
     private final ServerLevel level;
     private final CitySavedData savedData;
+
+    public static @NotNull CityManager getInstance(){
+        return instance;
+    }
 
     public CityManager(@NotNull ServerLevel level) {
         this.level = level;
@@ -43,10 +46,7 @@ public class CityManager implements ICityManager {
         return savedData.getById(id);
     }
 
-    public static @NotNull CityManager getInstance(){
-        return instance;
-    }
-
+    @Override
     public @Nullable City getCityByPlayer(@NotNull IInhabitant inhabitant) {
         return savedData.getCityByPlayer(inhabitant);
     }
@@ -64,13 +64,11 @@ public class CityManager implements ICityManager {
         city.setOwner(inhabitant);
     }
 
-    public void addBuilding(@NotNull City city, @NotNull IBuildingBlock building) {
-        city.addBuilding(city.getBuildingManager().createFrom(city, building));
-    }
     @Override
-    public void addBuilding(@NotNull City city, @NotNull IBuilding building) {
-        city.addBuilding(building);
+    public void addBuilding(@NotNull City city, @NotNull IBuildingBlock building, @NotNull BlockPos pos) {
+        city.addBuilding(pos, city.getBuildingManager().createFrom(city, building));
     }
+
 
     @Override
     public void destroyCity(@NotNull City city) {
@@ -78,8 +76,8 @@ public class CityManager implements ICityManager {
     }
 
     @Override
-    public void removeBuilding(@NotNull City city, @NotNull AbstractBuildingBlock abstractBuildingBlock) {
-
+    public void removeBuilding(@NotNull City city, @NotNull BlockPos pos) {
+        city.removeBuilding(pos);
     }
 
     @Override

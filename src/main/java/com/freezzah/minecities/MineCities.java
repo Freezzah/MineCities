@@ -1,6 +1,6 @@
 package com.freezzah.minecities;
 
-import com.freezzah.minecities.blocks.ModBlock;
+import com.freezzah.minecities.blocks.registry.ModBlock;
 import com.freezzah.minecities.blocks.building.registry.ModBuildingRegistry;
 import com.freezzah.minecities.client.gui.menu.ModMenuType;
 import com.freezzah.minecities.event.EventHandler;
@@ -13,7 +13,7 @@ import net.neoforged.neoforge.common.NeoForge;
 import org.jetbrains.annotations.NotNull;
 
 import static com.freezzah.minecities.Constants.MOD_ID;
-import static com.mojang.text2speech.Narrator.LOGGER;
+import static com.freezzah.minecities.Constants.LOGGER;
 
 @Mod(MOD_ID)
 public class MineCities {
@@ -21,21 +21,21 @@ public class MineCities {
     public MineCities(@NotNull IEventBus modEventBus) {
         LOGGER.info("MineCities: Starting loading");
 
-        LOGGER.info("MineCities: Registering listeners");
+        LOGGER.info("MineCities: Registering event listeners");
         modEventBus.register(new ModEventHandler());
         NeoForge.EVENT_BUS.register(new EventHandler());
 
-        LOGGER.info("MineCities: Registring items");
+        LOGGER.info("MineCities: Registering items");
         ModItem.register(modEventBus);
-        LOGGER.info("MineCities: Registring blocks");
+        LOGGER.info("MineCities: Registering blocks");
         ModBlock.register(modEventBus);
-        LOGGER.info("MineCities: Registring menu types");
+        LOGGER.info("MineCities: Registering menu types");
         ModMenuType.register(modEventBus);
-        LOGGER.info("MineCities: Registring packet handler");
+        LOGGER.info("MineCities: Registering packet handler");
         modEventBus.register(new ModPacketHandler());
 
-        LOGGER.info("MineCities: Registring mod registries");
+        LOGGER.info("MineCities: Registering mod registries");
         ModBuildingRegistry.register(modEventBus);
-        LOGGER.info("MineCities: Done registring");
+        LOGGER.info("MineCities: Done Registering");
     }
 }

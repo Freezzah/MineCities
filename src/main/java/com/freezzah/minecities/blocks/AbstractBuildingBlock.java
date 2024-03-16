@@ -1,6 +1,5 @@
 package com.freezzah.minecities.blocks;
 
-import com.freezzah.minecities.blocks.building.IBuildingBlock;
 import com.freezzah.minecities.city.City;
 import com.freezzah.minecities.city.CityManager;
 import com.freezzah.minecities.entities.Inhabitant;
@@ -21,10 +20,20 @@ public abstract class AbstractBuildingBlock extends Block implements IBuildingBl
         if (player instanceof ServerPlayer serverPlayer) {
             City city = CityManager.getInstance().getCityByPlayer(Inhabitant.fromPlayer(serverPlayer));
             if (city != null) {
-                CityManager.getInstance().removeBuilding(city, this);
+                CityManager.getInstance().removeBuilding(city, pos);
                 return false;
 
             }
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onPlace(ServerPlayer serverPlayer, BlockPos pos){
+        City city = CityManager.getInstance().getCityByPlayer(Inhabitant.fromPlayer(serverPlayer));
+        if (city != null) {
+            CityManager.getInstance().addBuilding(city, this, pos);
+            return false;
         }
         return true;
     }

@@ -1,17 +1,15 @@
 package com.freezzah.minecities.blocks.building.registry;
 
 import com.freezzah.minecities.Constants;
-import com.freezzah.minecities.blocks.ModBlock;
-import com.freezzah.minecities.blocks.building.bank.BankBuilding;
-import com.freezzah.minecities.blocks.building.townhall.TownhallBuilding;
+import com.freezzah.minecities.blocks.registry.ModBlock;
+import com.freezzah.minecities.blocks.building.BankBuilding;
+import com.freezzah.minecities.blocks.building.TownhallBuilding;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.RegistryBuilder;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 

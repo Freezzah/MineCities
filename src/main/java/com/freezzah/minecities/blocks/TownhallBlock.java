@@ -1,6 +1,5 @@
 package com.freezzah.minecities.blocks;
 
-import com.freezzah.minecities.blocks.building.*;
 import com.freezzah.minecities.blocks.building.registry.BuildingEntry;
 import com.freezzah.minecities.blocks.building.registry.ModBuildingRegistry;
 import com.freezzah.minecities.city.City;
@@ -16,24 +15,31 @@ public class TownhallBlock extends AbstractBuildingBlock implements IBuildingBlo
         super(properties);
     }
 
-    /**
-     * Should be called from events.
-     * Returns true if event should be cancelled.
-     * @param player
-     * @param pos
-     * @return
-     */
+
     @Override
     public boolean onBreak(@NotNull Player player, @NotNull BlockPos pos) {
         if (player instanceof ServerPlayer serverPlayer) {
             City city = CityManager.getInstance().getCityByPlayer(Inhabitant.fromPlayer(serverPlayer));
             if (city != null) {
-                CityManager.getInstance().destroyCity(city);
-                return false;
-
+                if(city.isOwner(Inhabitant.fromPlayer(player))) {
+                    CityManager.getInstance().destroyCity(city);
+                    return false;
+                }
             }
         }
         return true;
+    }
+
+
+    @Override
+    public boolean onPlace(ServerPlayer player, BlockPos pos) {
+        City city = CityManager.getInstance().getCityByPlayer(Inhabitant.fromPlayer(player));
+        if (city != null) {
+            return true;
+        }
+        city = CityManager.getInstance().createCity(Inhabitant.fromPlayer(player));
+        CityManager.getInstance().addBuilding(city, this, pos);
+        return false;
     }
 
     @Override

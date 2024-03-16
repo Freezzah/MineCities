@@ -1,19 +1,20 @@
 package com.freezzah.minecities.blocks.building;
 
 import com.freezzah.minecities.blocks.building.registry.BuildingEntry;
-import com.freezzah.minecities.city.City;
 import net.minecraft.nbt.CompoundTag;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractBuilding implements IBuilding {
-    public static final String TAG_BUILDING_TYPE = "buildingtype";
     private BuildingEntry buildingType = null;
 
     @Override
     public @NotNull CompoundTag write() {
-        CompoundTag tag = new CompoundTag();
-        tag.putString(TAG_BUILDING_TYPE, this.getBuildingType().getRegistryName().toString());
-        return tag;
+        return new CompoundTag();
+    }
+
+    @Override
+    public void read(@NotNull CompoundTag tag) {
+
     }
 
     @Override
