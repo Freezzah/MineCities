@@ -47,7 +47,7 @@ public class BuildingManager {
         return true;
     }
 
-    public @NotNull TownhallBuilding getTownhall(){
+    public @Nullable TownhallBuilding getTownhall(){
         for (IBuilding building: buildings.values()) {
             if(building instanceof TownhallBuilding)
                 return (TownhallBuilding) building;
@@ -131,8 +131,7 @@ public class BuildingManager {
         final BlockPos pos = BlockPosHelper.readBlockPos(tag);
         IBuilding building = entry.produceBuilding(city);
         building.read(tag);
-        Pair<BlockPos, IBuilding> pair = new Pair<>(pos, building);
-        return pair;
+        return new Pair<>(pos, building);
     }
 
     public IBuilding createFrom(final City city, final IBuildingBlock buildingBlock)
@@ -155,5 +154,9 @@ public class BuildingManager {
             Constants.LOGGER.warn("Something went wrong loading the cities");
         }
         return null;
+    }
+
+    public boolean getBuildingByPos(@NotNull BlockPos pos) {
+        return buildings.get(pos) != null;
     }
 }

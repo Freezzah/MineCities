@@ -22,7 +22,8 @@ public abstract class AbstractBuildingBlock extends Block implements IBuildingBl
             if (city != null) {
                 CityManager.getInstance().removeBuilding(city, pos);
                 return false;
-
+            } else if(CityManager.getInstance().getCityByBuilding(pos) == null) {
+                CityManager.getInstance().removeUnassociatedBuilding(pos);
             }
         }
         return true;

@@ -4,6 +4,7 @@ import com.freezzah.minecities.city.City;
 import com.freezzah.minecities.entities.IInhabitant;
 import com.freezzah.minecities.tag.CityTags;
 import com.freezzah.minecities.utils.NBTHelper;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -85,5 +86,26 @@ public class CitySavedData extends SavedData {
 
     public @NotNull List<City> getCities() {
         return cities;
+    }
+
+    public void destroyCity(City city) {
+        cities.remove(city);
+    }
+
+    public void removeUnassociatedBuilding(BlockPos pos) {
+        for (City city : cities) {
+            if(city.getBuildingManager().getBuildingByPos(pos)) {
+                city.getBuildingManager().removeBuilding(pos);
+            }
+        }
+    }
+
+    public @Nullable City getCityByBuilding(BlockPos pos) {
+        for (City city : cities) {
+            if(city.getBuildingManager().getBuildingByPos(pos)) {
+                return city;
+            }
+        }
+        return null;
     }
 }

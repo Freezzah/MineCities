@@ -82,4 +82,8 @@ public interface ICityManager {
      * Marks dirty, so it will be re-saved.
      */
     void markDirty();
+
+    void removeUnassociatedBuilding(BlockPos pos);
+
+    @Nullable City getCityByBuilding(BlockPos pos);
 }

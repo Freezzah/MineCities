@@ -72,12 +72,22 @@ public class CityManager implements ICityManager {
 
     @Override
     public void destroyCity(@NotNull City city) {
-
+        savedData.destroyCity(city);
     }
 
     @Override
     public void removeBuilding(@NotNull City city, @NotNull BlockPos pos) {
         city.removeBuilding(pos);
+    }
+
+    @Override
+    public void removeUnassociatedBuilding(BlockPos pos) {
+        savedData.removeUnassociatedBuilding(pos);
+    }
+
+    @Override
+    public @Nullable City getCityByBuilding(BlockPos pos) {
+        return savedData.getCityByBuilding(pos);
     }
 
     @Override
@@ -98,4 +108,5 @@ public class CityManager implements ICityManager {
     public void markDirty() {
         savedData.setDirty();
     }
+
 }
