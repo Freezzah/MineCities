@@ -5,6 +5,7 @@ import com.freezzah.minecities.entities.IInhabitant;
 import com.freezzah.minecities.saveddata.CitySavedData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -75,5 +76,12 @@ public class CityManager implements ICityManager {
     @Override
     public void removeBuilding(@NotNull City city, @NotNull AbstractMineCitiesBlock abstractMineCitiesBlock) {
 
+    }
+
+    @Override
+    public void tick(Level level) {
+        for(City city : savedData.getCities()){
+            city.tick(level);
+        }
     }
 }

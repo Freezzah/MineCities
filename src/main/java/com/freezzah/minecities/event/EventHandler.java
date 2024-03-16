@@ -8,6 +8,7 @@ import com.freezzah.minecities.entities.Inhabitant;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.TickEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
 import org.jetbrains.annotations.NotNull;
@@ -62,4 +63,14 @@ public class EventHandler {
             event.setCanceled(cancel);
         }
     }
+    @SubscribeEvent
+    public void tickEvent(@NotNull TickEvent.LevelTickEvent levelTickEvent) {
+        if(levelTickEvent.side.isServer()) {
+            if (levelTickEvent.level.getGameTime() % 100 == 0) {
+                CityManager.getInstance().tick(levelTickEvent.level);
+            }
+        }
+    }
+
+
 }

@@ -4,6 +4,7 @@ import com.freezzah.minecities.blocks.ModBlock;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.neoforged.neoforge.event.TickEvent;
 import org.jetbrains.annotations.NotNull;
 
 public class ModEventHandler {
@@ -14,4 +15,5 @@ public class ModEventHandler {
             event.accept(ModBlock.BANK_BLOCK.get());
         }
     }
+
 }

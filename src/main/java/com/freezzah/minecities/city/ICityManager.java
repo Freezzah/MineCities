@@ -3,6 +3,7 @@ package com.freezzah.minecities.city;
 import com.freezzah.minecities.blocks.AbstractMineCitiesBlock;
 import com.freezzah.minecities.entities.IInhabitant;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -22,4 +23,6 @@ public interface ICityManager {
     void destroyCity(@NotNull City city);
 
     void removeBuilding(@NotNull City city, @NotNull AbstractMineCitiesBlock abstractMineCitiesBlock);
+
+    void tick(Level level);
 }

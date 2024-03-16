@@ -58,4 +58,8 @@ public class CitySavedData extends SavedData {
         }
         return null;
     }
+
+    public List<City> getCities() {
+        return cities;
+    }
 }
