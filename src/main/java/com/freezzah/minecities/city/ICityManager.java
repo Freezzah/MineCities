@@ -1,9 +1,8 @@
 package com.freezzah.minecities.city;
 
-import com.freezzah.minecities.blocks.AbstractMineCitiesBlock;
+import com.freezzah.minecities.blocks.AbstractBuildingBlock;
 import com.freezzah.minecities.blocks.building.IBuilding;
 import com.freezzah.minecities.entities.IInhabitant;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -23,7 +22,11 @@ public interface ICityManager {
 
     void destroyCity(@NotNull City city);
 
-    void removeBuilding(@NotNull City city, @NotNull AbstractMineCitiesBlock abstractMineCitiesBlock);
+    void removeBuilding(@NotNull City city, @NotNull AbstractBuildingBlock abstractBuildingBlock);
+
+    void tickSlow(Level level);
 
     void tick(Level level);
+
+    void markDirty();
 }

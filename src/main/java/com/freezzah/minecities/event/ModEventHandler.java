@@ -1,7 +1,6 @@
 package com.freezzah.minecities.event;
 
 import com.freezzah.minecities.blocks.ModBlock;
-import com.freezzah.minecities.blocks.building.registry.ModBuilding;
 import com.freezzah.minecities.blocks.building.registry.ModBuildingRegistry;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -21,9 +20,6 @@ public class ModEventHandler {
 
     @SubscribeEvent
     public void registerRegistries(@NotNull NewRegistryEvent event) {
-        ModBuildingRegistry.buildingRegistry = event.create(ModBuildingRegistry.buildingRegistryBuilder);
-
-
-        ModBuilding.register();
+        event.register(ModBuildingRegistry.buildingRegistry);
     }
 }

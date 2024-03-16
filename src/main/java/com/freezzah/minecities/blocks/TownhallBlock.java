@@ -2,7 +2,7 @@ package com.freezzah.minecities.blocks;
 
 import com.freezzah.minecities.blocks.building.*;
 import com.freezzah.minecities.blocks.building.registry.BuildingEntry;
-import com.freezzah.minecities.blocks.building.registry.ModBuilding;
+import com.freezzah.minecities.blocks.building.registry.ModBuildingRegistry;
 import com.freezzah.minecities.city.City;
 import com.freezzah.minecities.city.CityManager;
 import com.freezzah.minecities.entities.Inhabitant;
@@ -11,7 +11,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class TownhallBlock extends AbstractMineCitiesBlock implements IBuildingBlock {
+public class TownhallBlock extends AbstractBuildingBlock implements IBuildingBlock {
     public TownhallBlock(Properties properties) {
         super(properties);
     }
@@ -38,6 +38,6 @@ public class TownhallBlock extends AbstractMineCitiesBlock implements IBuildingB
 
     @Override
     public BuildingEntry getBuildingType(){
-        return ModBuilding.townhall.get();
+        return ModBuildingRegistry.townhall.get();
     }
 }

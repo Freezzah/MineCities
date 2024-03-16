@@ -7,16 +7,17 @@ import net.minecraft.resources.ResourceLocation;
 
 import java.util.Objects;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class BuildingEntry {
     private final ResourceLocation registryName;
     private final IBuildingBlock buildingBlock;
-    private final Function<City, IBuilding> buildingProducer;
+    private final Supplier<IBuilding> buildingProducer;
 
     public static final class Builder
     {
         private IBuildingBlock buildingBlock;
-        private Function<City, IBuilding> buildingProducer;
+        private Supplier<IBuilding> buildingProducer;
         private ResourceLocation registryName;
 
         public <T extends IBuildingBlock> Builder setBuildingBlock(final T buildingBlock)
@@ -25,7 +26,7 @@ public class BuildingEntry {
             return this;
         }
 
-        public Builder setBuildingProducer(final Function<City, IBuilding> buildingProducer)
+        public Builder setBuildingProducer(final Supplier<IBuilding> buildingProducer)
         {
             this.buildingProducer = buildingProducer;
             return this;
@@ -55,7 +56,7 @@ public class BuildingEntry {
 
     private BuildingEntry(final ResourceLocation registryName,
                          final IBuildingBlock buildingBlock,
-                         final Function<City, IBuilding> buildingProducer)
+                         final Supplier<IBuilding> buildingProducer)
     {
         super();
         this.registryName = registryName;
@@ -65,7 +66,7 @@ public class BuildingEntry {
 
     public IBuilding produceBuilding(final City city)
     {
-        final IBuilding building = buildingProducer.apply(city);
+        final IBuilding building = buildingProducer.get();
         building.setBuildingType(this);
         return building;
     }

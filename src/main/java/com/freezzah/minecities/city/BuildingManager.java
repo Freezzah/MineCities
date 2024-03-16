@@ -37,11 +37,17 @@ public class BuildingManager {
     }
 
     public boolean addBuilding(@NotNull IBuilding building) {
-        return buildings.add(building);
+        boolean result = buildings.add(building);
+        if(result)
+            setDirty(true);
+        return result;
     }
 
     public boolean removeBuilding(@NotNull IBuilding building) {
-        return buildings.remove(building);
+        boolean result = buildings.remove(building);
+        if(result)
+            setDirty(true);
+        return result;
     }
 
     public @NotNull TownhallBuilding getTownhall(){
@@ -52,10 +58,12 @@ public class BuildingManager {
         return null;
     }
 
-    public void tick(Level level) {
+    public void tickSlow(Level level) {
         collectTaxes(level);
     }
-
+    public void tick(Level level) {
+        checkDirty();
+    }
     private void collectTaxes(Level level) {
         int tax = buildings.size() * 10;
         for(IInhabitant inhabitant : city.getPlayers()) {
@@ -72,6 +80,7 @@ public class BuildingManager {
      */
     public void setDirty(boolean dirty) {
         this.isDirty = dirty;
+        city.setDirty(dirty);
     }
 
     private void checkDirty() {
@@ -84,7 +93,7 @@ public class BuildingManager {
         this.write();
     }
 
-    public @NotNull CompoundTag getCityTag() {
+    public @NotNull CompoundTag getBuildingManagerTag() {
         try {
             if (this.buildingManagerTag == null || this.isDirty) {
                 this.write();
@@ -99,7 +108,7 @@ public class BuildingManager {
         CompoundTag tag = new CompoundTag();
 
         ListTag buildings = new ListTag();
-        for(int i = 0; i < buildings.size(); i++){
+        for(int i = 0; i < this.buildings.size(); i++){
             buildings.add(i, this.buildings.get(i).write());
         }
         tag.put(TAG_BUILDINGS, buildings);
@@ -113,6 +122,7 @@ public class BuildingManager {
         {
             final CompoundTag buildingCompound = buildingTagList.getCompound(i);
             @Nullable final IBuilding b = createFrom(city, buildingCompound);
+            this.buildings.add(b);
         }
     }
 
@@ -136,10 +146,9 @@ public class BuildingManager {
     }
     public static @Nullable BuildingManager load(@NotNull CompoundTag tag, City city) {
         try {
-            UUID id = tag.getUUID(TAG_CITY_ID);
-            City cityy = new City(id);
-            cityy.read(tag);
-            return cityy.getBuildingManager();
+            BuildingManager buildingManager = new BuildingManager(city);
+            buildingManager.read(tag);
+            return buildingManager;
         } catch (Exception e) {
             Constants.LOGGER.warn("Something went wrong loading the cities");
         }

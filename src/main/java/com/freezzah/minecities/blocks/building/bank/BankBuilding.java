@@ -6,13 +6,4 @@ import net.minecraft.nbt.CompoundTag;
 import org.jetbrains.annotations.NotNull;
 
 public class BankBuilding extends AbstractBuilding {
-
-    public BankBuilding(@NotNull City city) {
-        super(city);
-    }
-
-    @Override
-    public @NotNull CompoundTag write() {
-        return null;
-    }
 }

@@ -23,8 +23,6 @@ public class CitySavedData extends SavedData {
         this.setDirty();
     }
 
-
-
     public static @NotNull CitySavedData load(@NotNull CompoundTag compoundTag) {
         CitySavedData savedData = new CitySavedData();
         for (final Tag tag : compoundTag.getList(TAG_CITIES, Tag.TAG_COMPOUND)) {

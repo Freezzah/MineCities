@@ -30,7 +30,7 @@ public class City implements ITaggable {
     private final Map<IInhabitant, LocalDateTime> inhabitants = new HashMap<>();
     private String name;
     private IInhabitant owner;
-    private final BuildingManager buildingManager;
+    private BuildingManager buildingManager;
     private CompoundTag cityTag;
     private boolean isDirty = true;
     private UUID id;
@@ -68,7 +68,12 @@ public class City implements ITaggable {
         return buildingManager.getTownhall();
     }
 
+    public void tickSlow(Level level) {
+        this.buildingManager.tickSlow(level);
+    }
+
     public void tick(Level level) {
+        checkDirty();
         this.buildingManager.tick(level);
     }
 
@@ -92,6 +97,8 @@ public class City implements ITaggable {
 
     private void refresh() {
         this.write();
+        CityManager.getInstance().markDirty();
+        setDirty(false);
     }
 
     public @NotNull CompoundTag getCityTag() {
@@ -134,6 +141,7 @@ public class City implements ITaggable {
             inhabitants.put(Inhabitant.load(playerTag.getCompound(TAG_PLAYER)),
                     LocalDateTime.parse(playerTag.getString(TAG_JOIN_DATE), formatter));
         }
+        this.buildingManager = buildingManager.load(tag.getCompound(TAG_BUILDING_MANAGER), this);
     }
 
     public static @Nullable City load(@NotNull CompoundTag tag) {
@@ -153,5 +161,4 @@ public class City implements ITaggable {
         compoundTag.put(TAG_CITY, getCityTag());
         return friendlyByteBuf.writeNbt(compoundTag);
     }
-
 }

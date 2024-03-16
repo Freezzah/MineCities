@@ -67,6 +67,8 @@ public class EventHandler {
     public void tickEvent(@NotNull TickEvent.LevelTickEvent levelTickEvent) {
         if (levelTickEvent.side.isServer()) {
             if (levelTickEvent.level.getGameTime() % 100 == 0) {
+                CityManager.getInstance().tickSlow(levelTickEvent.level);
+            } else {
                 CityManager.getInstance().tick(levelTickEvent.level);
             }
         }

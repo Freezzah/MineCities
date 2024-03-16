@@ -7,14 +7,4 @@ import net.minecraft.nbt.CompoundTag;
 import org.jetbrains.annotations.NotNull;
 
 public class TownhallBuilding extends AbstractBuilding {
-
-    public TownhallBuilding(@NotNull City city) {
-        super(city);
-    }
-
-    @Override
-    public @NotNull CompoundTag write() {
-        super.write();
-        return null;
-    }
 }

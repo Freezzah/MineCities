@@ -1,6 +1,6 @@
 package com.freezzah.minecities.city;
 
-import com.freezzah.minecities.blocks.AbstractMineCitiesBlock;
+import com.freezzah.minecities.blocks.AbstractBuildingBlock;
 import com.freezzah.minecities.blocks.building.IBuilding;
 import com.freezzah.minecities.blocks.building.IBuildingBlock;
 import com.freezzah.minecities.entities.IInhabitant;
@@ -78,8 +78,15 @@ public class CityManager implements ICityManager {
     }
 
     @Override
-    public void removeBuilding(@NotNull City city, @NotNull AbstractMineCitiesBlock abstractMineCitiesBlock) {
+    public void removeBuilding(@NotNull City city, @NotNull AbstractBuildingBlock abstractBuildingBlock) {
 
+    }
+
+    @Override
+    public void tickSlow(Level level) {
+        for(City city : savedData.getCities()){
+            city.tickSlow(level);
+        }
     }
 
     @Override
@@ -87,5 +94,10 @@ public class CityManager implements ICityManager {
         for(City city : savedData.getCities()){
             city.tick(level);
         }
+    }
+
+    @Override
+    public void markDirty() {
+        savedData.setDirty();
     }
 }
