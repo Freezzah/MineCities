@@ -69,7 +69,7 @@ public class City implements ITaggable {
         setDirty(true);
     }
 
-    public @NotNull TownhallBuilding getTownhall(){
+    public @Nullable TownhallBuilding getTownhall(){
         return buildingManager.getTownhall();
     }
 
