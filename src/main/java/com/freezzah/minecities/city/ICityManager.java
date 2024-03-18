@@ -2,6 +2,7 @@ package com.freezzah.minecities.city;
 
 import com.freezzah.minecities.blocks.building.IBuilding;
 import com.freezzah.minecities.blocks.IBuildingBlock;
+import com.freezzah.minecities.city.City;
 import com.freezzah.minecities.entities.IInhabitant;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -86,4 +87,6 @@ public interface ICityManager {
     void removeUnassociatedBuilding(BlockPos pos);
 
     @Nullable City getCityByBuilding(BlockPos pos);
+
+    void save();
 }

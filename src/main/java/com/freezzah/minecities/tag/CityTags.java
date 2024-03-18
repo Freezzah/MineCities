@@ -12,5 +12,7 @@ public class CityTags {
     public static final String TAG_JOIN_DATE = "joinDate";
     public static final String TAG_BUILDING_MANAGER = "buildingManager";
     public static final String TAG_CITIES = "cities";
-
+    public static final String TAG_BUILDINGS = "buildings";
+    public static final String TAG_MONEY = "money";
+    public static final String TAG_ECONOMY_MANAGER = "economyManager";
 }

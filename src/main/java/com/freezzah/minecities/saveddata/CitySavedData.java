@@ -94,7 +94,7 @@ public class CitySavedData extends SavedData {
 
     public void removeUnassociatedBuilding(BlockPos pos) {
         for (City city : cities) {
-            if(city.getBuildingManager().getBuildingByPos(pos)) {
+            if(city.getBuildingManager().getBuildingByPos(pos) != null) {
                 city.getBuildingManager().removeBuilding(pos);
             }
         }
@@ -102,7 +102,7 @@ public class CitySavedData extends SavedData {
 
     public @Nullable City getCityByBuilding(BlockPos pos) {
         for (City city : cities) {
-            if(city.getBuildingManager().getBuildingByPos(pos)) {
+            if(city.getBuildingManager().getBuildingByPos(pos) != null) {
                 return city;
             }
         }

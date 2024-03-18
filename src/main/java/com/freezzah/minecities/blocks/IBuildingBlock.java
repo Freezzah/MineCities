@@ -5,9 +5,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.EntityBlock;
 import org.jetbrains.annotations.NotNull;
 
-public interface IBuildingBlock {
+public interface IBuildingBlock extends EntityBlock {
     /**
      * Should be called from events.
      * Returns true if event should be cancelled.

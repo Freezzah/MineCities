@@ -26,6 +26,8 @@ public class ModItem {
             ITEMS.register(ModItemId.TOWNHALL_BLOCK_ITEM_ID, () -> new ItemNameBlockItem(ModBlock.TOWNHALL_BLOCK.get(), new Item.Properties()));
     public static final Supplier<Item> BANK_BLOCK_ITEM =
             ITEMS.register(ModItemId.BANK_BLOCK_ITEM_ID, () -> new ItemNameBlockItem(ModBlock.BANK_BLOCK.get(), new Item.Properties()));
+    public static final Supplier<Item> HOUSE_BLOCK_ITEM =
+            ITEMS.register(ModItemId.HOUSE_BLOCK_ITEM_ID, () -> new ItemNameBlockItem(ModBlock.HOUSE_BLOCK.get(), new Item.Properties()));
     /*
      * Function to call from mod init phase to register all items
      */

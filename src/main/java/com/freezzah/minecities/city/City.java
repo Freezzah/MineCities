@@ -3,6 +3,8 @@ package com.freezzah.minecities.city;
 import com.freezzah.minecities.Constants;
 import com.freezzah.minecities.blocks.building.IBuilding;
 import com.freezzah.minecities.blocks.building.TownhallBuilding;
+import com.freezzah.minecities.city.managers.BuildingManager;
+import com.freezzah.minecities.city.managers.EconomyManager;
 import com.freezzah.minecities.entities.IInhabitant;
 import com.freezzah.minecities.entities.Inhabitant;
 import com.freezzah.minecities.tag.CityTags;
@@ -10,6 +12,7 @@ import com.freezzah.minecities.utils.ITaggable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -25,6 +28,7 @@ public class City implements ITaggable {
     private String name;
     private IInhabitant owner;
     private BuildingManager buildingManager;
+    private EconomyManager economyManager;
     private CompoundTag cityTag;
     private boolean isDirty = true;
     private UUID id;
@@ -32,6 +36,8 @@ public class City implements ITaggable {
     public City(@NotNull UUID id) {
         this.id = id;
         this.buildingManager = new BuildingManager(this);
+        this.economyManager = new EconomyManager(this);
+        setDirty(true);
     }
 
     public @NotNull UUID getId() {
@@ -75,17 +81,22 @@ public class City implements ITaggable {
 
     public void tickSlow(Level level) {
         this.buildingManager.tickSlow(level);
+        this.economyManager.tickSlow(level);
     }
 
     public void tick(Level level) {
         checkDirty();
         this.buildingManager.tick(level);
+        this.economyManager.tick(level);
     }
 
-    public BuildingManager getBuildingManager() {
+    public @NotNull BuildingManager getBuildingManager() {
         return buildingManager;
     }
 
+    public @NotNull  EconomyManager getEconomyManager() {
+        return economyManager;
+    }
     /*
      * NBT related methods
      */
@@ -133,6 +144,7 @@ public class City implements ITaggable {
         }
         tag.put(CityTags.TAG_PLAYERS, players);
         tag.put(CityTags.TAG_BUILDING_MANAGER, buildingManager.write());
+        tag.put(CityTags.TAG_ECONOMY_MANAGER, economyManager.write());
         this.cityTag = tag;
         return tag;
     }
@@ -149,6 +161,7 @@ public class City implements ITaggable {
                     LocalDateTime.parse(playerTag.getString(CityTags.TAG_JOIN_DATE), formatter));
         }
         this.buildingManager = BuildingManager.load(tag.getCompound(CityTags.TAG_BUILDING_MANAGER), this);
+        this.economyManager = EconomyManager.load(tag.getCompound(CityTags.TAG_ECONOMY_MANAGER), this);
     }
 
     public static @Nullable City load(@NotNull CompoundTag tag) {
@@ -163,4 +176,13 @@ public class City implements ITaggable {
         return null;
     }
 
+    public String getCityName() {
+        return "mytempcity";
+    }
+
+    public @NotNull FriendlyByteBuf putInFriendlyByteBuf(@NotNull FriendlyByteBuf friendlyByteBuf) {
+        CompoundTag compoundTag = new CompoundTag();
+        compoundTag.put(CityTags.TAG_CITY, getCityTag());
+        return friendlyByteBuf.writeNbt(compoundTag);
+    }
 }

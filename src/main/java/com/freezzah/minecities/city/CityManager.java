@@ -91,6 +91,11 @@ public class CityManager implements ICityManager {
     }
 
     @Override
+    public void save() {
+        this.savedData.setDirty(true);
+    }
+
+    @Override
     public void tickSlow(Level level) {
         for(City city : savedData.getCities()){
             city.tickSlow(level);

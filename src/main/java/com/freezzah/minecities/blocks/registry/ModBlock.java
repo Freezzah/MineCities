@@ -1,12 +1,18 @@
 package com.freezzah.minecities.blocks.registry;
 
+import com.freezzah.minecities.blocks.AbstractBuildingBlock;
 import com.freezzah.minecities.blocks.BankBlock;
+import com.freezzah.minecities.blocks.HouseBlock;
 import com.freezzah.minecities.blocks.TownhallBlock;
+import com.freezzah.minecities.blocks.building.HouseBuilding;
+import com.freezzah.minecities.blocks.building.IBuilding;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.ObjectInputStream;
 import java.util.function.Supplier;
 
 import static com.freezzah.minecities.Constants.MOD_ID;
@@ -24,6 +30,16 @@ public class ModBlock {
             BLOCKS.register(ModBlockId.TOWNHALL_BLOCK_ID, () -> new TownhallBlock(BlockBehaviour.Properties.of()));
     public static final @NotNull Supplier<BankBlock> BANK_BLOCK =
             BLOCKS.register(ModBlockId.BANK_BLOCK_ID, () -> new BankBlock(BlockBehaviour.Properties.of()));
+    public static final @NotNull Supplier<HouseBlock> HOUSE_BLOCK =
+            BLOCKS.register(ModBlockId.HOUSE_BLOCK_ID, () -> new HouseBlock(BlockBehaviour.Properties.of()));
+    @Contract(value = " -> new", pure = true)
+    @NotNull
+    public static AbstractBuildingBlock[] getBuildingSuppliers()
+    {
+        return new AbstractBuildingBlock[] {
+                TOWNHALL_BLOCK.get(), BANK_BLOCK.get(), HOUSE_BLOCK.get()
+        };
+    }
     /*
      * Function to call from mod init phase to register all blocks
      */

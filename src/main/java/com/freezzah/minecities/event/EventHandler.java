@@ -8,6 +8,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.TickEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
 import org.jetbrains.annotations.NotNull;
 
 public class EventHandler {
@@ -42,6 +43,11 @@ public class EventHandler {
         }
     }
 
+    @SubscribeEvent
+    public void levelUnload(LevelEvent.@NotNull Unload event) {
+        CityManager.getInstance().save();
+    }
+
 
     @SubscribeEvent
     public void tickEvent(@NotNull TickEvent.LevelTickEvent levelTickEvent) {
@@ -53,4 +59,5 @@ public class EventHandler {
             }
         }
     }
+
 }
