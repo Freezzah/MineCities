@@ -5,7 +5,6 @@ import com.freezzah.minecities.blocks.building.IBuilding;
 import com.freezzah.minecities.city.City;
 import com.freezzah.minecities.city.ITaxable;
 import com.freezzah.minecities.entities.IInhabitant;
-import com.freezzah.minecities.entities.Inhabitant;
 import com.freezzah.minecities.network.packet.UpdateEconomyPacket;
 import com.freezzah.minecities.tag.CityTags;
 import net.minecraft.nbt.CompoundTag;
@@ -71,5 +70,15 @@ public class EconomyManager extends AbstractCityManager {
 
     public long getGold() {
         return this.gold;
+    }
+
+    public void addGold(int count) {
+        this.gold += count;
+    }
+
+    public long withdrawStack() {
+        long count = (Math.min(gold, 256));
+        this.gold -= count;
+        return count;
     }
 }

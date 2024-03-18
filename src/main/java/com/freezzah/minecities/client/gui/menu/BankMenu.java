@@ -1,6 +1,8 @@
 package com.freezzah.minecities.client.gui.menu;
 
 import com.freezzah.minecities.city.City;
+import com.freezzah.minecities.city.CityManager;
+import com.freezzah.minecities.city.managers.EconomyManager;
 import com.freezzah.minecities.tag.CityTags;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -10,20 +12,23 @@ import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.UUID;
+
 public class BankMenu extends AbstractContainerMenu {
 
     private City city;
 
     //Client
     public BankMenu(int containerId, Inventory inventory, @NotNull FriendlyByteBuf buf) {
-        this(containerId, inventory, City.load(buf.readNbt().getCompound(CityTags.TAG_CITY)));
+        this(containerId, inventory, buf.readUUID());
     }
 
     //Server
-    public BankMenu(int containerId, Inventory _unused, City city){
+    public BankMenu(int containerId, Inventory _unused, UUID cityUuid){
         super(ModMenuType.BANK_MENU.get(), containerId);
-        this.city = city;
+        this.city = CityManager.getInstance().getCityById(cityUuid);
     }
+
     @Override
     public ItemStack quickMoveStack(Player pPlayer, int pIndex) {
         return null;
@@ -39,6 +44,7 @@ public class BankMenu extends AbstractContainerMenu {
     }
 
     public long getMoney() {
-        return city.getEconomyManager().getGold();
+        EconomyManager mgr = city.getEconomyManager();
+        return mgr.getGold();
     }
 }
