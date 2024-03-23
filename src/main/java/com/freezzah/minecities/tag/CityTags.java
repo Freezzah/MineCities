@@ -15,4 +15,10 @@ public class CityTags {
     public static final String TAG_BUILDINGS = "buildings";
     public static final String TAG_MONEY = "money";
     public static final String TAG_ECONOMY_MANAGER = "economyManager";
+    public static final String TAG_WASTE = "waste";
+    public static final String TAG_WATER = "water";
+    public static final String TAG_WATER_MANAGER = "waterManager";
+    public static final String TAG_WASTE_MANAGER = "wasteManager";
+    public static final String TAG_BUILDINGS_POS = "buildPos";
+    public static final String TAG_VILLAGER_COUNT = "villagerCount";
 }

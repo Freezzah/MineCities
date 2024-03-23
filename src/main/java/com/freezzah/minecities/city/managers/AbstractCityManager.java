@@ -7,8 +7,8 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractCityManager implements IManager {
-    private City city;
-    private boolean isDirty = false;
+    private final City city;
+    public boolean isDirty = false;
     private CompoundTag managerTag;
 
     public AbstractCityManager(City city) {
@@ -31,12 +31,13 @@ public abstract class AbstractCityManager implements IManager {
 
     public void tickSlow(Level level) {
     }
-    public void tick(Level level) {
+    public void tick(Level _level) {
         checkDirty();
     }
 
     private void refresh() {
         this.write();
+        setDirty(false);
     }
 
     @Override

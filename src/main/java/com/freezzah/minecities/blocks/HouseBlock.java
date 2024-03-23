@@ -22,7 +22,7 @@ public class HouseBlock extends AbstractBuildingBlock{
     }
 
     public BuildingEntry getBuildingType(){
-        return ModBuildingRegistry.house.get();
+        return ModBuildingRegistry.HOUSE.get();
     }
 
     @Override

@@ -113,5 +113,4 @@ public class CityManager implements ICityManager {
     public void markDirty() {
         savedData.setDirty();
     }
-
 }

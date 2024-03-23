@@ -11,13 +11,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 
 public class TileEntityBuilding extends BlockEntity {
     /**
      * The name of the building location.
      */
     public ResourceLocation registryName;
-
     private City city;
     private AbstractBuildingBlock building;
 
@@ -61,7 +61,7 @@ public class TileEntityBuilding extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag pTag) {
+    protected void saveAdditional(@NotNull CompoundTag pTag) {
         super.saveAdditional(pTag);
     }
 }

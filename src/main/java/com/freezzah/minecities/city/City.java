@@ -5,6 +5,8 @@ import com.freezzah.minecities.blocks.building.IBuilding;
 import com.freezzah.minecities.blocks.building.TownhallBuilding;
 import com.freezzah.minecities.city.managers.BuildingManager;
 import com.freezzah.minecities.city.managers.EconomyManager;
+import com.freezzah.minecities.city.managers.WasteManager;
+import com.freezzah.minecities.city.managers.WaterManager;
 import com.freezzah.minecities.entities.IInhabitant;
 import com.freezzah.minecities.entities.Inhabitant;
 import com.freezzah.minecities.tag.CityTags;
@@ -29,6 +31,8 @@ public class City implements ITaggable {
     private IInhabitant owner;
     private BuildingManager buildingManager;
     private EconomyManager economyManager;
+    private WasteManager wasteManager;
+    private WaterManager waterManager;
     private CompoundTag cityTag;
     private boolean isDirty = true;
     private UUID id;
@@ -37,6 +41,8 @@ public class City implements ITaggable {
         this.id = id;
         this.buildingManager = new BuildingManager(this);
         this.economyManager = new EconomyManager(this);
+        this.wasteManager = new WasteManager(this);
+        this.waterManager = new WaterManager(this);
         setDirty(true);
     }
 
@@ -82,12 +88,16 @@ public class City implements ITaggable {
     public void tickSlow(Level level) {
         this.buildingManager.tickSlow(level);
         this.economyManager.tickSlow(level);
+        this.waterManager.tickSlow(level);
+        this.wasteManager.tickSlow(level);
     }
 
     public void tick(Level level) {
         checkDirty();
         this.buildingManager.tick(level);
         this.economyManager.tick(level);
+        this.waterManager.tick(level);
+        this.wasteManager.tick(level);
     }
 
     public @NotNull BuildingManager getBuildingManager() {
@@ -96,6 +106,13 @@ public class City implements ITaggable {
 
     public @NotNull  EconomyManager getEconomyManager() {
         return economyManager;
+    }
+
+    public @NotNull WasteManager getWasteManager() {
+        return wasteManager;
+    }
+
+    public @NotNull WaterManager getWaterManager() { return waterManager;
     }
     /*
      * NBT related methods
@@ -119,7 +136,8 @@ public class City implements ITaggable {
 
     public @NotNull CompoundTag getCityTag() {
         try {
-            if (this.cityTag == null || this.isDirty) {
+            checkDirty();
+            if (this.cityTag == null || isDirty) {
                 this.write();
             }
         } catch (final Exception e) {
@@ -145,6 +163,8 @@ public class City implements ITaggable {
         tag.put(CityTags.TAG_PLAYERS, players);
         tag.put(CityTags.TAG_BUILDING_MANAGER, buildingManager.write());
         tag.put(CityTags.TAG_ECONOMY_MANAGER, economyManager.write());
+        tag.put(CityTags.TAG_WASTE_MANAGER, wasteManager.write());
+        tag.put(CityTags.TAG_WATER_MANAGER, waterManager.write());
         this.cityTag = tag;
         return tag;
     }
@@ -162,6 +182,8 @@ public class City implements ITaggable {
         }
         this.buildingManager = BuildingManager.load(tag.getCompound(CityTags.TAG_BUILDING_MANAGER), this);
         this.economyManager = EconomyManager.load(tag.getCompound(CityTags.TAG_ECONOMY_MANAGER), this);
+        this.wasteManager = WasteManager.load(tag.getCompound(CityTags.TAG_WASTE_MANAGER), this);
+        this.waterManager = WaterManager.load(tag.getCompound(CityTags.TAG_WATER_MANAGER), this);
     }
 
     public static @Nullable City load(@NotNull CompoundTag tag) {

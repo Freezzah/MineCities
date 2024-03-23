@@ -61,12 +61,15 @@ public class BuildingManager extends AbstractCityManager{
         CompoundTag tag = new CompoundTag();
 
         ListTag buildings = new ListTag();
+        ListTag blockPos = new ListTag();
         int i = 0;
         for(Map.Entry<BlockPos, IBuilding> entry : this.buildings.entrySet()) {
             buildings.add(i, entry.getValue().write());
+            blockPos.add(i, BlockPosHelper.writeBlockPos(new CompoundTag(), entry.getKey()));
             i++;
         }
         tag.put(CityTags.TAG_BUILDINGS, buildings);
+        tag.put(CityTags.TAG_BUILDINGS_POS, blockPos);
         this.setManagerTag(tag);
         return tag;
     }
@@ -74,21 +77,23 @@ public class BuildingManager extends AbstractCityManager{
     @Override
     public void read(@NotNull CompoundTag tag) {
         final ListTag buildingTagList = tag.getList(CityTags.TAG_BUILDINGS, Tag.TAG_COMPOUND);
+        final ListTag blockPosTagList = tag.getList(CityTags.TAG_BUILDINGS_POS, Tag.TAG_COMPOUND);
         for (int i = 0; i < buildingTagList.size(); ++i)
         {
             final CompoundTag buildingCompound = buildingTagList.getCompound(i);
-            @Nullable final Pair<BlockPos, IBuilding> b = createFrom(getCity(), buildingCompound);
+            final CompoundTag posCompound = blockPosTagList.getCompound(i);
+            @Nullable final Pair<BlockPos, IBuilding> b = createFrom(getCity(), buildingCompound, posCompound);
             this.buildings.put(b.getFirst(), b.getSecond());
         }
     }
 
-    @Contract("_, _ -> new")
-    private static @NotNull Pair<BlockPos, IBuilding> createFrom(final City city, @NotNull CompoundTag tag) {
-        final ResourceLocation type = new ResourceLocation(tag.getString(BuildingTags.TAG_BUILDING_TYPE));
+    @Contract("_, _, _ -> new")
+    private static @NotNull Pair<BlockPos, IBuilding> createFrom(final City city, @NotNull CompoundTag buildingTag, @NotNull CompoundTag buildingPosTag) {
+        final ResourceLocation type = new ResourceLocation(buildingTag.getString(BuildingTags.TAG_BUILDING_TYPE));
         final BuildingEntry entry = ModBuildingRegistry.buildingRegistry.get(type);
-        final BlockPos pos = BlockPosHelper.readBlockPos(tag);
+        final BlockPos pos = BlockPosHelper.readBlockPos(buildingPosTag);
         IBuilding building = entry.produceBuilding(city);
-        building.read(tag);
+        building.read(buildingTag);
         return new Pair<>(pos, building);
     }
 

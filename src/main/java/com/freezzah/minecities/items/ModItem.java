@@ -28,6 +28,8 @@ public class ModItem {
             ITEMS.register(ModItemId.BANK_BLOCK_ITEM_ID, () -> new ItemNameBlockItem(ModBlock.BANK_BLOCK.get(), new Item.Properties()));
     public static final Supplier<Item> HOUSE_BLOCK_ITEM =
             ITEMS.register(ModItemId.HOUSE_BLOCK_ITEM_ID, () -> new ItemNameBlockItem(ModBlock.HOUSE_BLOCK.get(), new Item.Properties()));
+    public static final Supplier<Item> WATER_COLLECTOR_BLOCK_ITEM =
+            ITEMS.register(ModItemId.WATER_COLLECTOR_BLOCK_ITEM_ID, () -> new ItemNameBlockItem(ModBlock.WATER_COLLECTOR_BLOCK.get(), new Item.Properties()));
     public static final Supplier<Item> COIN =
             ITEMS.register(ModItemId.COIN_ITEM_ID, () -> new Item(new Item.Properties().stacksTo(256)));
     /*

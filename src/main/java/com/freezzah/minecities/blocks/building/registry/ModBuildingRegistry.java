@@ -10,12 +10,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.neoforged.neoforge.registries.RegistryBuilder;
-import org.jetbrains.annotations.NotNull;
 
-import java.io.ObjectInputStream;
-import java.util.Arrays;
 import java.util.function.Supplier;
 
 import static com.freezzah.minecities.Constants.MOD_ID;
@@ -33,22 +29,26 @@ public class ModBuildingRegistry {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
             DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, Constants.MOD_ID);
 
-    public static final Supplier<BuildingEntry> bank = DEFERRED_REGISTER.register(ModBuildingId.BANK_ID, () -> new BuildingEntry.Builder()
+    public static final Supplier<BuildingEntry> TOWNHALL = DEFERRED_REGISTER.register(ModBuildingId.TOWNHALL_ID, () -> new BuildingEntry.Builder()
+            .setBuildingBlock(ModBlock.TOWNHALL_BLOCK.get())
+            .setBuildingProducer(TownhallBuilding::new)
+            .setRegistryName(new ResourceLocation(MOD_ID, ModBuildingId.TOWNHALL_ID))
+            .createBuildingEntry());
+    public static final Supplier<BuildingEntry> BANK = DEFERRED_REGISTER.register(ModBuildingId.BANK_ID, () -> new BuildingEntry.Builder()
                 .setBuildingBlock(ModBlock.BANK_BLOCK.get())
                 .setBuildingProducer(BankBuilding::new)
                 .setRegistryName(new ResourceLocation(MOD_ID, ModBuildingId.BANK_ID))
                 .createBuildingEntry());
-    public static final Supplier<BuildingEntry> townhall = DEFERRED_REGISTER.register(ModBuildingId.TOWNHALL_ID, () -> new BuildingEntry.Builder()
-                .setBuildingBlock(ModBlock.TOWNHALL_BLOCK.get())
-                .setBuildingProducer(TownhallBuilding::new)
-                .setRegistryName(new ResourceLocation(MOD_ID, ModBuildingId.TOWNHALL_ID))
-                .createBuildingEntry());
-    public static final Supplier<BuildingEntry> house = DEFERRED_REGISTER.register(ModBuildingId.HOUSE_ID, () -> new BuildingEntry.Builder()
+    public static final Supplier<BuildingEntry> HOUSE = DEFERRED_REGISTER.register(ModBuildingId.HOUSE_ID, () -> new BuildingEntry.Builder()
             .setBuildingBlock(ModBlock.HOUSE_BLOCK.get())
             .setBuildingProducer(HouseBuilding::new)
             .setRegistryName(new ResourceLocation(MOD_ID, ModBuildingId.HOUSE_ID))
             .createBuildingEntry());
-
+    public static final Supplier<BuildingEntry> WATER_COLLECTOR = DEFERRED_REGISTER.register(ModBuildingId.WATER_COLLECTOR_ID, () -> new BuildingEntry.Builder()
+            .setBuildingBlock(ModBlock.WATER_COLLECTOR_BLOCK.get())
+            .setBuildingProducer(WaterCollectorBuilding::new)
+            .setRegistryName(new ResourceLocation(MOD_ID, ModBuildingId.WATER_COLLECTOR_ID))
+            .createBuildingEntry());
 
     public static final Supplier<BlockEntityType<? extends TileEntityBuilding>> building = BLOCK_ENTITIES.register(
             "blockentitytypes", () ->

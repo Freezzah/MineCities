@@ -14,7 +14,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -28,7 +27,7 @@ public class BankBlock extends AbstractBuildingBlock {
     }
 
     public BuildingEntry getBuildingType(){
-        return ModBuildingRegistry.bank.get();
+        return ModBuildingRegistry.BANK.get();
     }
 
     @Override
@@ -54,7 +53,7 @@ public class BankBlock extends AbstractBuildingBlock {
 
     @Nullable
     @Override
-    public MenuProvider getMenuProvider(BlockState pState, Level pLevel, BlockPos pPos) {
+    public MenuProvider getMenuProvider(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos) {
         return new SimpleMenuProvider(
                 (pContainerId, pPlayerInventory, pPlayer) -> new BankMenu(pContainerId, pPlayerInventory, CityManager.getInstance().getCityByBuilding(pPos).getId()),
                 Component.literal("mymenu"));
