@@ -46,25 +46,10 @@ public interface ICityManager {
     void setOwner(@NotNull City city, @NotNull IInhabitant inhabitant);
 
     /**
-     * Adds a {@link IBuilding} to the {@link City}
-     * @param city {@link City} to add the {@link IBuilding} to
-     * @param building {@link IBuilding} to add to the {@link City}
-     * @param pos The {@link BlockPos} of the building
-     */
-    void addBuilding(@NotNull City city, @NotNull IBuildingBlock building, @NotNull BlockPos pos);
-
-    /**
      * Removes a city.
      * @param city {@link City} to be removed
      */
     void destroyCity(@NotNull City city);
-
-    /**
-     * Removes a building from a city
-     * @param city {@link City} to remove the {@link IBuilding} from
-     * @param pos {@link BlockPos} associated with the {@link IBuilding} to remove from the {@link City}
-     */
-    void removeBuilding(@NotNull City city, @NotNull BlockPos pos);
 
     /**
      * Method that ticks every 100 ticks

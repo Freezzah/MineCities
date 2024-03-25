@@ -68,6 +68,7 @@ public class EconomyManager extends AbstractCityManager {
 
     public void setGold(long gold) {
         this.gold = gold;
+        setDirty(true);
     }
 
     public long getGold() {
@@ -76,11 +77,25 @@ public class EconomyManager extends AbstractCityManager {
 
     public void addGold(int count) {
         this.gold += count;
+        setDirty(true);
     }
 
     public long withdrawStack() {
         long count = (Math.min(gold, 256));
         this.gold -= count;
+        setDirty(true);
         return count;
+    }
+
+    public boolean tryTakeGold(int requiredGold, boolean performTake) {
+        if(requiredGold > gold)
+            return false;
+        else {
+            if(performTake) {
+                this.gold -= requiredGold;
+                setDirty(true);
+            }
+            return true;
+        }
     }
 }

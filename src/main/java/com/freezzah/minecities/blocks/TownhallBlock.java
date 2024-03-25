@@ -9,6 +9,7 @@ import com.freezzah.minecities.entities.Inhabitant;
 import com.freezzah.minecities.utils.FriendlyByteBufHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -29,9 +30,15 @@ public class TownhallBlock extends AbstractBuildingBlock implements IBuildingBlo
     @Override
     public @NotNull InteractionResult use(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull Player pPlayer, @NotNull InteractionHand pHand, @NotNull BlockHitResult pHit) {
         if(!pLevel.isClientSide) {
-            City city = CityManager.getInstance().getCityByBuilding(pPos);
-            if (city != null) {
-                pPlayer.openMenu(pState.getMenuProvider(pLevel, pPos), new FriendlyByteBufHelper(city.getId())::writeUUID);
+            if(pLevel instanceof ServerLevel serverLevel) {
+                City city = CityManager.getInstance().getCityByBuilding(pPos);
+                if (city != null) {
+                    if (pPlayer.isCrouching()) {
+                        boolean success = city.getBuildingManager().getBuildingByPos(pPos).increaseLevel(serverLevel, Inhabitant.fromPlayer(pPlayer));
+                        return InteractionResult.sidedSuccess(pLevel.isClientSide);
+                    }
+                    pPlayer.openMenu(pState.getMenuProvider(pLevel, pPos), new FriendlyByteBufHelper(city.getId())::writeUUID);
+                }
             }
         }
         return InteractionResult.sidedSuccess(pLevel.isClientSide);
@@ -67,7 +74,7 @@ public class TownhallBlock extends AbstractBuildingBlock implements IBuildingBlo
             return true;
         }
         city = CityManager.getInstance().createCity(Inhabitant.fromPlayer(player));
-        CityManager.getInstance().addBuilding(city, this, pos);
+        city.getBuildingManager().addBuilding(pos, this);
         return false;
     }
 

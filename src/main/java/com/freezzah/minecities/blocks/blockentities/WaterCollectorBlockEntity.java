@@ -32,6 +32,8 @@ public class WaterCollectorBlockEntity extends AbstractBlockEntity{
     private void collectWater(@NotNull Level level) {
         if(!level.isClientSide){
             City city = CityManager.getInstance().getCityByBuilding(blockPos);
+            if(city == null)
+                return;
             IBuilding building = city.getBuildingManager().getBuildingByPos(blockPos);
             if(building instanceof WaterCollectorBuilding waterCollectorBuilding){
                 int sides = 0;

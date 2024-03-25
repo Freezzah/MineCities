@@ -4,4 +4,5 @@ package com.freezzah.minecities.tag;
  */
 public class BuildingTags {
     public static final String TAG_BUILDING_TYPE = "buildingtype";
+    public static final String TAG_BUILDING_LEVEL = "level";
 }

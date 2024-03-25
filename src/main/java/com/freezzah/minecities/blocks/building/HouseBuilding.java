@@ -6,6 +6,8 @@ import com.freezzah.minecities.tag.CityTags;
 import net.minecraft.nbt.CompoundTag;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 public class HouseBuilding extends AbstractBuilding implements  ITaxable,
                                                                 IWasteGenerator {
 
@@ -47,5 +49,15 @@ public class HouseBuilding extends AbstractBuilding implements  ITaxable,
     public void read(@NotNull CompoundTag tag) {
         super.read(tag);
         this.villagers = tag.getInt(CityTags.TAG_VILLAGER_COUNT);
+    }
+
+    @Override
+    public List<Integer> getGoldUpgradeRequirements(){
+        return List.of(200, 400, 700);
+    }
+
+    @Override
+    public boolean checkLevelRequirements(byte desiredLevel) {
+        return true;
     }
 }

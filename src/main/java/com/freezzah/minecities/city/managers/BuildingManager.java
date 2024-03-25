@@ -1,6 +1,7 @@
 package com.freezzah.minecities.city.managers;
 
 import com.freezzah.minecities.Constants;
+import com.freezzah.minecities.blocks.AbstractBuildingBlock;
 import com.freezzah.minecities.blocks.IBuildingBlock;
 import com.freezzah.minecities.blocks.building.IBuilding;
 import com.freezzah.minecities.blocks.building.TownhallBuilding;
@@ -125,5 +126,10 @@ public class BuildingManager extends AbstractCityManager{
 
     public List<IBuilding> getBuildings() {
         return buildings.values().stream().toList();
+    }
+
+    public void addBuilding(BlockPos pos, AbstractBuildingBlock abstractBuildingBlock) {
+        this.addBuilding(pos, createFrom(getCity(), abstractBuildingBlock));
+        setDirty(true);
     }
 }

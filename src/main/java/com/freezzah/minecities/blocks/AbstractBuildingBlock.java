@@ -27,10 +27,11 @@ public abstract class AbstractBuildingBlock extends Block implements IBuildingBl
         if (player instanceof ServerPlayer serverPlayer) {
             City city = CityManager.getInstance().getCityByPlayer(Inhabitant.fromPlayer(serverPlayer));
             if (city != null) {
-                CityManager.getInstance().removeBuilding(city, pos);
+                CityManager.getInstance().getCityByBuilding(pos).getBuildingManager().removeBuilding(pos);
                 return false;
             } else if(CityManager.getInstance().getCityByBuilding(pos) == null) {
                 CityManager.getInstance().removeUnassociatedBuilding(pos);
+                return false;
             }
         }
         return true;
@@ -40,7 +41,7 @@ public abstract class AbstractBuildingBlock extends Block implements IBuildingBl
     public boolean onPlace(ServerPlayer serverPlayer, BlockPos pos){
         City city = CityManager.getInstance().getCityByPlayer(Inhabitant.fromPlayer(serverPlayer));
         if (city != null) {
-            CityManager.getInstance().addBuilding(city, this, pos);
+            city.getBuildingManager().addBuilding(pos, this);
             return false;
         }
         return true;

@@ -65,19 +65,8 @@ public class CityManager implements ICityManager {
     }
 
     @Override
-    public void addBuilding(@NotNull City city, @NotNull IBuildingBlock building, @NotNull BlockPos pos) {
-        city.addBuilding(pos, city.getBuildingManager().createFrom(city, building));
-    }
-
-
-    @Override
     public void destroyCity(@NotNull City city) {
         savedData.destroyCity(city);
-    }
-
-    @Override
-    public void removeBuilding(@NotNull City city, @NotNull BlockPos pos) {
-        city.removeBuilding(pos);
     }
 
     @Override

@@ -59,19 +59,6 @@ public class City implements ITaggable {
         return this.owner.equals(inhabitant);
     }
 
-    protected boolean addBuilding(@NotNull BlockPos pos, @NotNull IBuilding building) {
-        boolean result = buildingManager.addBuilding(pos, building);
-        if(result)
-            setDirty(true);
-        return result;
-    }
-
-    public void removeBuilding(@NotNull BlockPos pos) {
-        boolean result = buildingManager.removeBuilding(pos);
-        if(result)
-            setDirty(true);
-    }
-
     public @NotNull List<IInhabitant> getPlayers() {
         return inhabitants.keySet().stream().toList();
     }
