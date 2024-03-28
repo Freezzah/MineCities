@@ -1,18 +1,22 @@
 package com.freezzah.minecities.blocks.building;
 
+import com.freezzah.minecities.city.extensions.IFoodConsumer;
 import com.freezzah.minecities.city.extensions.ITaxable;
 import com.freezzah.minecities.city.extensions.IWasteGenerator;
 import com.freezzah.minecities.tag.CityTags;
 import net.minecraft.nbt.CompoundTag;
 import org.jetbrains.annotations.NotNull;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class HouseBuilding extends AbstractBuilding implements  ITaxable,
-                                                                IWasteGenerator {
+                                                                IWasteGenerator,
+                                                                IFoodConsumer {
 
     private static final int VILLAGER_TAX = 1;
     private int villagers = 0;
+
     public HouseBuilding() {
     }
 
@@ -34,7 +38,21 @@ public class HouseBuilding extends AbstractBuilding implements  ITaxable,
         return (long) this.villagers * getWasteFactor();
     }
 
+
+    @Override
+    public double consumeFood(double food) {
+        double consumed = Math.min(villagers * getFoodFactor(), food);
+        if(consumed < getFoodFactor()) {
+            //TODO REDUCE HAPPINESS
+        }
+        return consumed;
+    }
+
     private int getWasteFactor() {
+        return 1;
+    }
+
+    private int getFoodFactor(){
         return 1;
     }
 

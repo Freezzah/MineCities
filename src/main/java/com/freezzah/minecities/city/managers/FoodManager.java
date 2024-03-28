@@ -3,10 +3,10 @@ package com.freezzah.minecities.city.managers;
 import com.freezzah.minecities.Constants;
 import com.freezzah.minecities.blocks.building.IBuilding;
 import com.freezzah.minecities.city.City;
-import com.freezzah.minecities.city.extensions.IWaterConsumer;
-import com.freezzah.minecities.city.extensions.IWaterGenerator;
+import com.freezzah.minecities.city.extensions.IFoodConsumer;
+import com.freezzah.minecities.city.extensions.IFoodGenerator;
 import com.freezzah.minecities.entities.IInhabitant;
-import com.freezzah.minecities.network.packet.UpdateWaterPacket;
+import com.freezzah.minecities.network.packet.UpdateFoodPacket;
 import com.freezzah.minecities.tag.CityTags;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
@@ -16,39 +16,39 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class WaterManager extends AbstractCityManager{
-    public WaterManager(City city) {
+public class FoodManager extends AbstractCityManager{
+    public FoodManager(City city) {
         super(city);
     }
 
-    long water = 0;
+    double food = 0;
 
-    public long getWater() {
-        return water;
+    public double getFood() {
+        return food;
     }
 
-    public void setWater(long water) {
-        this.water = water;
+    public void setFood(double food) {
+        this.food = food;
     }
 
     @Override
     public @NotNull CompoundTag write() {
         CompoundTag tag = new CompoundTag();
-        tag.putLong(CityTags.TAG_WATER, water);
+        tag.putDouble(CityTags.TAG_FOOD, food);
         setManagerTag(tag);
         return tag;
     }
 
     @Override
     public void read(@NotNull CompoundTag tag) {
-        this.water = tag.getLong(CityTags.TAG_WATER);
+        this.food = tag.getDouble(CityTags.TAG_FOOD);
     }
 
-    public static @Nullable WaterManager load(@NotNull CompoundTag tag, City city) {
+    public static @Nullable FoodManager load(@NotNull CompoundTag tag, City city) {
         try {
-            WaterManager waterManager = new WaterManager(city);
-            waterManager.read(tag);
-            return waterManager;
+            FoodManager foodManager = new FoodManager(city);
+            foodManager.read(tag);
+            return foodManager;
         } catch (Exception e) {
             Constants.LOGGER.warn("Something went wrong loading the cities");
         }
@@ -59,16 +59,16 @@ public class WaterManager extends AbstractCityManager{
     public void tickSlow(Level level) {
         super.tickSlow(level);
         for(IBuilding building : getCity().getBuildingManager().getBuildings()) {
-            if (building instanceof IWaterGenerator waterGenerator)
-                water += waterGenerator.generateWater();
-            if (building instanceof IWaterConsumer waterConsumer) {
-                water -= waterConsumer.consumeWater(this.getWater());
+            if (building instanceof IFoodGenerator foodGenerator)
+                food += foodGenerator.generateFood();
+            if (building instanceof IFoodConsumer foodConsumer) {
+                food -= foodConsumer.consumeFood(this.getFood());
             }
             setDirty(true);
             for(IInhabitant inhabitant : getCity().getPlayers()) {
                 Player player = level.getPlayerByUUID(inhabitant.getUUID());
                 if(player instanceof ServerPlayer serverPlayer) {
-                    PacketDistributor.PLAYER.with(serverPlayer).send(new UpdateWaterPacket(water, getCity().getId()));
+                    PacketDistributor.PLAYER.with(serverPlayer).send(new UpdateFoodPacket(food, getCity().getId()));
                 }
             }
         }

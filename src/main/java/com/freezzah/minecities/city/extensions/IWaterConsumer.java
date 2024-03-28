@@ -7,5 +7,5 @@ public interface IWaterConsumer {
      * @param water Available water in city
      * @return consumed water
      */
-    long consume(long water);
+    long consumeWater(long water);
 }

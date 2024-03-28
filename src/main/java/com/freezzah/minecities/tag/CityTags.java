@@ -21,4 +21,6 @@ public class CityTags {
     public static final String TAG_WASTE_MANAGER = "wasteManager";
     public static final String TAG_BUILDINGS_POS = "buildPos";
     public static final String TAG_VILLAGER_COUNT = "villagerCount";
+    public static final String TAG_FOOD = "food";
+    public static final String TAG_FOOD_MANAGER = "foodManager";
 }
