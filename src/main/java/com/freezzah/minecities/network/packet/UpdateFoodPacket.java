@@ -1,8 +1,6 @@
 package com.freezzah.minecities.network.packet;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.PacketListener;
-import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
@@ -15,7 +13,7 @@ public record UpdateFoodPacket(double food, UUID cityUUID) implements CustomPack
 
     public static final ResourceLocation ID = new ResourceLocation(MOD_ID, "updatefoodpacket");
 
-    public UpdateFoodPacket(final FriendlyByteBuf buffer){
+    public UpdateFoodPacket(final FriendlyByteBuf buffer) {
         this(buffer.readDouble(), buffer.readUUID());
     }
 

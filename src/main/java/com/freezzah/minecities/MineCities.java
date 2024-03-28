@@ -1,7 +1,7 @@
 package com.freezzah.minecities;
 
-import com.freezzah.minecities.blocks.registry.ModBlock;
 import com.freezzah.minecities.blocks.building.registry.ModBuildingRegistry;
+import com.freezzah.minecities.blocks.registry.ModBlock;
 import com.freezzah.minecities.blocks.registry.ModBlockEntity;
 import com.freezzah.minecities.client.gui.menu.ModMenuType;
 import com.freezzah.minecities.event.EventHandler;
@@ -12,8 +12,8 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.NeoForge;
 import org.jetbrains.annotations.NotNull;
 
-import static com.freezzah.minecities.Constants.MOD_ID;
 import static com.freezzah.minecities.Constants.LOGGER;
+import static com.freezzah.minecities.Constants.MOD_ID;
 
 @Mod(MOD_ID)
 public class MineCities {

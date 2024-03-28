@@ -9,10 +9,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.TickEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
-import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
 import org.jetbrains.annotations.NotNull;
-
-import java.awt.*;
 
 public class EventHandler {
 
@@ -31,8 +28,8 @@ public class EventHandler {
 
     @SubscribeEvent
     @SuppressWarnings("unused")
-    public void onBreakEvent(BlockEvent.@NotNull BreakEvent event){
-        if(event.getState().getBlock() instanceof IBuildingBlock iBuildingBlock) {
+    public void onBreakEvent(BlockEvent.@NotNull BreakEvent event) {
+        if (event.getState().getBlock() instanceof IBuildingBlock iBuildingBlock) {
             boolean cancel = iBuildingBlock.onBreak(event.getPlayer(), event.getPos());
             event.setCanceled(cancel);
         }
@@ -40,8 +37,8 @@ public class EventHandler {
 
     @SubscribeEvent
     @SuppressWarnings("unused")
-    public void levelLoad(LevelEvent.@NotNull Load event){
-        if(event.getLevel() instanceof ServerLevel serverLevel) {
+    public void levelLoad(LevelEvent.@NotNull Load event) {
+        if (event.getLevel() instanceof ServerLevel serverLevel) {
             CityManager manager = new CityManager(serverLevel);
         }
     }
@@ -56,7 +53,7 @@ public class EventHandler {
     public void tickEvent(@NotNull TickEvent.LevelTickEvent levelTickEvent) {
         if (levelTickEvent.side.isServer()) {
             if (levelTickEvent.level.getGameTime() % 100 == 0 && levelTickEvent.phase == TickEvent.Phase.END && levelTickEvent.level.dimension() == Level.OVERWORLD) {
-                    CityManager.getInstance().tickSlow(levelTickEvent.level);
+                CityManager.getInstance().tickSlow(levelTickEvent.level);
 
             } else {
                 CityManager.getInstance().tick(levelTickEvent.level);

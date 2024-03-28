@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class WaterCollectorBlock extends AbstractBuildingBlock{
+public class WaterCollectorBlock extends AbstractBuildingBlock {
     public WaterCollectorBlock(Properties properties) {
         super(properties);
     }
@@ -27,7 +27,7 @@ public class WaterCollectorBlock extends AbstractBuildingBlock{
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level pLevel, @NotNull BlockState pState, @NotNull BlockEntityType<T> pBlockEntityType) {
-        if(pLevel instanceof ServerLevel) {
+        if (pLevel instanceof ServerLevel) {
             return pBlockEntityType == ModBlockEntity.WATER_COLLECTOR_BLOCK_ENTITY.get() ? WaterCollectorBlockEntity::tick : null;
         }
         return null;

@@ -25,12 +25,33 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class BuildingManager extends AbstractCityManager{
+public class BuildingManager extends AbstractCityManager {
 
     private final Map<BlockPos, IBuilding> buildings = new HashMap<>();
 
     public BuildingManager(@NotNull City city) {
         super(city);
+    }
+
+    @Contract("_, _, _ -> new")
+    private static @NotNull Pair<BlockPos, IBuilding> createFrom(final City city, @NotNull CompoundTag buildingTag, @NotNull CompoundTag buildingPosTag) {
+        final ResourceLocation type = new ResourceLocation(buildingTag.getString(BuildingTags.TAG_BUILDING_TYPE));
+        final BuildingEntry entry = ModBuildingRegistry.buildingRegistry.get(type);
+        final BlockPos pos = BlockPosHelper.readBlockPos(buildingPosTag);
+        IBuilding building = entry.produceBuilding(city);
+        building.read(buildingTag);
+        return new Pair<>(pos, building);
+    }
+
+    public static @Nullable BuildingManager load(@NotNull CompoundTag tag, City city) {
+        try {
+            BuildingManager buildingManager = new BuildingManager(city);
+            buildingManager.read(tag);
+            return buildingManager;
+        } catch (Exception e) {
+            Constants.LOGGER.warn("Something went wrong loading the cities");
+        }
+        return null;
     }
 
     public boolean addBuilding(@NotNull BlockPos pos, @NotNull IBuilding building) {
@@ -39,23 +60,23 @@ public class BuildingManager extends AbstractCityManager{
         return true;
     }
 
+    /*
+     * NBT Stuff
+     */
+
     public boolean removeBuilding(@NotNull BlockPos blockPos) {
         buildings.remove(blockPos);
         setDirty(true);
         return true;
     }
 
-    public @Nullable TownhallBuilding getTownhall(){
-        for (IBuilding building: buildings.values()) {
-            if(building instanceof TownhallBuilding)
+    public @Nullable TownhallBuilding getTownhall() {
+        for (IBuilding building : buildings.values()) {
+            if (building instanceof TownhallBuilding)
                 return (TownhallBuilding) building;
         }
         return null;
     }
-
-    /*
-     * NBT Stuff
-     */
 
     @Override
     public @NotNull CompoundTag write() {
@@ -64,7 +85,7 @@ public class BuildingManager extends AbstractCityManager{
         ListTag buildings = new ListTag();
         ListTag blockPos = new ListTag();
         int i = 0;
-        for(Map.Entry<BlockPos, IBuilding> entry : this.buildings.entrySet()) {
+        for (Map.Entry<BlockPos, IBuilding> entry : this.buildings.entrySet()) {
             buildings.add(i, entry.getValue().write());
             blockPos.add(i, BlockPosHelper.writeBlockPos(new CompoundTag(), entry.getKey()));
             i++;
@@ -79,8 +100,7 @@ public class BuildingManager extends AbstractCityManager{
     public void read(@NotNull CompoundTag tag) {
         final ListTag buildingTagList = tag.getList(CityTags.TAG_BUILDINGS, Tag.TAG_COMPOUND);
         final ListTag blockPosTagList = tag.getList(CityTags.TAG_BUILDINGS_POS, Tag.TAG_COMPOUND);
-        for (int i = 0; i < buildingTagList.size(); ++i)
-        {
+        for (int i = 0; i < buildingTagList.size(); ++i) {
             final CompoundTag buildingCompound = buildingTagList.getCompound(i);
             final CompoundTag posCompound = blockPosTagList.getCompound(i);
             @Nullable final Pair<BlockPos, IBuilding> b = createFrom(getCity(), buildingCompound, posCompound);
@@ -88,36 +108,13 @@ public class BuildingManager extends AbstractCityManager{
         }
     }
 
-    @Contract("_, _, _ -> new")
-    private static @NotNull Pair<BlockPos, IBuilding> createFrom(final City city, @NotNull CompoundTag buildingTag, @NotNull CompoundTag buildingPosTag) {
-        final ResourceLocation type = new ResourceLocation(buildingTag.getString(BuildingTags.TAG_BUILDING_TYPE));
-        final BuildingEntry entry = ModBuildingRegistry.buildingRegistry.get(type);
-        final BlockPos pos = BlockPosHelper.readBlockPos(buildingPosTag);
-        IBuilding building = entry.produceBuilding(city);
-        building.read(buildingTag);
-        return new Pair<>(pos, building);
-    }
-
-    public IBuilding createFrom(final City city, final @NotNull IBuildingBlock buildingBlock)
-    {
+    public IBuilding createFrom(final City city, final @NotNull IBuildingBlock buildingBlock) {
         return this.createFrom(city, buildingBlock.getBuildingName());
     }
 
-    public IBuilding createFrom(final City city, final ResourceLocation buildingName)
-    {
+    public IBuilding createFrom(final City city, final ResourceLocation buildingName) {
         final BuildingEntry entry = ModBuildingRegistry.buildingRegistry.get(buildingName);
         return entry.produceBuilding(city);
-    }
-
-    public static @Nullable BuildingManager load(@NotNull CompoundTag tag, City city) {
-        try {
-            BuildingManager buildingManager = new BuildingManager(city);
-            buildingManager.read(tag);
-            return buildingManager;
-        } catch (Exception e) {
-            Constants.LOGGER.warn("Something went wrong loading the cities");
-        }
-        return null;
     }
 
     public @Nullable IBuilding getBuildingByPos(@NotNull BlockPos pos) {

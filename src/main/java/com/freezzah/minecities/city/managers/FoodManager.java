@@ -16,12 +16,23 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class FoodManager extends AbstractCityManager{
+public class FoodManager extends AbstractCityManager {
+    double food = 0;
+
     public FoodManager(City city) {
         super(city);
     }
 
-    double food = 0;
+    public static @Nullable FoodManager load(@NotNull CompoundTag tag, City city) {
+        try {
+            FoodManager foodManager = new FoodManager(city);
+            foodManager.read(tag);
+            return foodManager;
+        } catch (Exception e) {
+            Constants.LOGGER.warn("Something went wrong loading the cities");
+        }
+        return null;
+    }
 
     public double getFood() {
         return food;
@@ -44,30 +55,19 @@ public class FoodManager extends AbstractCityManager{
         this.food = tag.getDouble(CityTags.TAG_FOOD);
     }
 
-    public static @Nullable FoodManager load(@NotNull CompoundTag tag, City city) {
-        try {
-            FoodManager foodManager = new FoodManager(city);
-            foodManager.read(tag);
-            return foodManager;
-        } catch (Exception e) {
-            Constants.LOGGER.warn("Something went wrong loading the cities");
-        }
-        return null;
-    }
-
     @Override
     public void tickSlow(Level level) {
         super.tickSlow(level);
-        for(IBuilding building : getCity().getBuildingManager().getBuildings()) {
+        for (IBuilding building : getCity().getBuildingManager().getBuildings()) {
             if (building instanceof IFoodGenerator foodGenerator)
                 food += foodGenerator.generateFood();
             if (building instanceof IFoodConsumer foodConsumer) {
                 food -= foodConsumer.consumeFood(this.getFood());
             }
             setDirty(true);
-            for(IInhabitant inhabitant : getCity().getPlayers()) {
+            for (IInhabitant inhabitant : getCity().getPlayers()) {
                 Player player = level.getPlayerByUUID(inhabitant.getUUID());
-                if(player instanceof ServerPlayer serverPlayer) {
+                if (player instanceof ServerPlayer serverPlayer) {
                     PacketDistributor.PLAYER.with(serverPlayer).send(new UpdateFoodPacket(food, getCity().getId()));
                 }
             }

@@ -12,19 +12,24 @@ public interface IBuildingBlock extends EntityBlock {
     /**
      * Should be called from events.
      * Returns true if event should be cancelled.
+     *
      * @param player player
-     * @param pos position
+     * @param pos    position
      * @return true if cancel, false if continue
      */
     boolean onBreak(@NotNull Player player, @NotNull BlockPos pos);
+
     /**
      * Should be called from events.
      * Returns true if event should be cancelled.
+     *
      * @param player player
-     * @param pos position
+     * @param pos    position
      * @return true if cancel, false if continue
      */
     boolean onPlace(ServerPlayer player, BlockPos pos);
+
     BuildingEntry getBuildingType();
+
     ResourceLocation getBuildingName();
 }

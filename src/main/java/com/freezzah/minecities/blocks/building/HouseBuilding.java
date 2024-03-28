@@ -7,12 +7,11 @@ import com.freezzah.minecities.tag.CityTags;
 import net.minecraft.nbt.CompoundTag;
 import org.jetbrains.annotations.NotNull;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
-public class HouseBuilding extends AbstractBuilding implements  ITaxable,
-                                                                IWasteGenerator,
-                                                                IFoodConsumer {
+public class HouseBuilding extends AbstractBuilding implements ITaxable,
+        IWasteGenerator,
+        IFoodConsumer {
 
     private static final int VILLAGER_TAX = 1;
     private int villagers = 0;
@@ -21,13 +20,13 @@ public class HouseBuilding extends AbstractBuilding implements  ITaxable,
     }
 
     public void addVillager() {
-        villagers +=1;
+        villagers += 1;
     }
-    
-    public void removeVillager(){
+
+    public void removeVillager() {
         villagers = Math.max(0, villagers - 1);
     }
-    
+
     @Override
     public int collectTax() {
         return villagers * VILLAGER_TAX;
@@ -42,7 +41,7 @@ public class HouseBuilding extends AbstractBuilding implements  ITaxable,
     @Override
     public double consumeFood(double food) {
         double consumed = Math.min(villagers * getFoodFactor(), food);
-        if(consumed < getFoodFactor()) {
+        if (consumed < getFoodFactor()) {
             //TODO REDUCE HAPPINESS
         }
         return consumed;
@@ -52,7 +51,7 @@ public class HouseBuilding extends AbstractBuilding implements  ITaxable,
         return 1;
     }
 
-    private int getFoodFactor(){
+    private int getFoodFactor() {
         return 1;
     }
 
@@ -70,7 +69,7 @@ public class HouseBuilding extends AbstractBuilding implements  ITaxable,
     }
 
     @Override
-    public List<Integer> getGoldUpgradeRequirements(){
+    public List<Integer> getGoldUpgradeRequirements() {
         return List.of(200, 400, 700);
     }
 

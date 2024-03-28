@@ -1,14 +1,12 @@
 package com.freezzah.minecities.city;
 
 import com.freezzah.minecities.Constants;
-import com.freezzah.minecities.blocks.building.IBuilding;
 import com.freezzah.minecities.blocks.building.TownhallBuilding;
 import com.freezzah.minecities.city.managers.*;
 import com.freezzah.minecities.entities.IInhabitant;
 import com.freezzah.minecities.entities.Inhabitant;
 import com.freezzah.minecities.tag.CityTags;
 import com.freezzah.minecities.utils.ITaggable;
-import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -18,11 +16,14 @@ import org.jetbrains.annotations.Nullable;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public class City implements ITaggable {
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-//    private final List<IInhabitant> inhabitants = new ArrayList<>();
+    //    private final List<IInhabitant> inhabitants = new ArrayList<>();
     private final Map<IInhabitant, LocalDateTime> inhabitants = new HashMap<>();
     private String name;
     private IInhabitant owner;
@@ -43,6 +44,18 @@ public class City implements ITaggable {
         this.waterManager = new WaterManager(this);
         this.foodManager = new FoodManager(this);
         setDirty(true);
+    }
+
+    public static @Nullable City load(@NotNull CompoundTag tag) {
+        try {
+            UUID id = tag.getUUID(CityTags.TAG_CITY_ID);
+            City city = new City(id);
+            city.read(tag);
+            return city;
+        } catch (Exception e) {
+            Constants.LOGGER.warn("Something went wrong loading the cities");
+        }
+        return null;
     }
 
     public @NotNull UUID getId() {
@@ -67,7 +80,7 @@ public class City implements ITaggable {
         setDirty(true);
     }
 
-    public @Nullable TownhallBuilding getTownhall(){
+    public @Nullable TownhallBuilding getTownhall() {
         return buildingManager.getTownhall();
     }
 
@@ -92,7 +105,7 @@ public class City implements ITaggable {
         return buildingManager;
     }
 
-    public @NotNull  EconomyManager getEconomyManager() {
+    public @NotNull EconomyManager getEconomyManager() {
         return economyManager;
     }
 
@@ -100,11 +113,16 @@ public class City implements ITaggable {
         return wasteManager;
     }
 
-    public @NotNull WaterManager getWaterManager() { return waterManager; }
-    public @NotNull FoodManager getFoodManager() { return foodManager; }
+    public @NotNull WaterManager getWaterManager() {
+        return waterManager;
+    }
     /*
      * NBT related methods
      */
+
+    public @NotNull FoodManager getFoodManager() {
+        return foodManager;
+    }
 
     public void setDirty(boolean dirty) {
         this.isDirty = dirty;
@@ -141,7 +159,7 @@ public class City implements ITaggable {
         tag.put(CityTags.TAG_OWNER, owner.write());
         ListTag players = new ListTag();
         int i = 0;
-        for(Map.Entry<IInhabitant, LocalDateTime> inhabitant: inhabitants.entrySet()) {
+        for (Map.Entry<IInhabitant, LocalDateTime> inhabitant : inhabitants.entrySet()) {
             CompoundTag playerTag = new CompoundTag();
             playerTag.put(CityTags.TAG_PLAYER, inhabitant.getKey().write());
             playerTag.putString(CityTags.TAG_JOIN_DATE, inhabitant.getValue().format(formatter));
@@ -164,7 +182,7 @@ public class City implements ITaggable {
         CompoundTag ownerTag = tag.getCompound(CityTags.TAG_OWNER);
         setOwner(Inhabitant.load(ownerTag));
         ListTag players = tag.getList(CityTags.TAG_PLAYERS, ListTag.TAG_COMPOUND);
-        for(int i = 0; i < players.size(); i++) {
+        for (int i = 0; i < players.size(); i++) {
             CompoundTag playerTag = players.getCompound(i);
             inhabitants.put(Inhabitant.load(playerTag.getCompound(CityTags.TAG_PLAYER)),
                     LocalDateTime.parse(playerTag.getString(CityTags.TAG_JOIN_DATE), formatter));
@@ -174,18 +192,6 @@ public class City implements ITaggable {
         this.wasteManager = WasteManager.load(tag.getCompound(CityTags.TAG_WASTE_MANAGER), this);
         this.waterManager = WaterManager.load(tag.getCompound(CityTags.TAG_WATER_MANAGER), this);
         this.foodManager = FoodManager.load(tag.getCompound(CityTags.TAG_FOOD_MANAGER), this);
-    }
-
-    public static @Nullable City load(@NotNull CompoundTag tag) {
-        try {
-            UUID id = tag.getUUID(CityTags.TAG_CITY_ID);
-            City city = new City(id);
-            city.read(tag);
-            return city;
-        } catch (Exception e) {
-            Constants.LOGGER.warn("Something went wrong loading the cities");
-        }
-        return null;
     }
 
     public String getCityName() {

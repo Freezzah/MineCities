@@ -8,7 +8,7 @@ public class FriendlyByteBufHelper {
     private final UUID uuid;
 
     public FriendlyByteBufHelper(UUID uuid) {
-       this.uuid = uuid;
+        this.uuid = uuid;
     }
 
     public void writeUUID(FriendlyByteBuf byteBuf) {

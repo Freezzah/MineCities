@@ -13,7 +13,7 @@ public record UpdateWastePacket(long waste, UUID cityUUID) implements CustomPack
 
     public static final ResourceLocation ID = new ResourceLocation(MOD_ID, "updatewastepacket");
 
-    public UpdateWastePacket(final FriendlyByteBuf buffer){
+    public UpdateWastePacket(final FriendlyByteBuf buffer) {
         this(buffer.readLong(), buffer.readUUID());
     }
 

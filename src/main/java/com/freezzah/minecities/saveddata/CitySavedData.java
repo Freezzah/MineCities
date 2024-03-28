@@ -28,6 +28,7 @@ public class CitySavedData extends SavedData {
 
     /**
      * Loads SavedData from NBT
+     *
      * @param compoundTag tag to load cityData from
      * @return new instance of the cityData
      */
@@ -44,6 +45,7 @@ public class CitySavedData extends SavedData {
 
     /**
      * Writes SavedData to NBT.
+     *
      * @param compoundTag the {@code CompoundTag} to save the {@code SavedData} to
      * @return Compound tag where cities are added.
      */
@@ -56,6 +58,7 @@ public class CitySavedData extends SavedData {
 
     /**
      * Adds a city to the trackable object
+     *
      * @param city {@link City}
      */
     public void add(@NotNull City city) {
@@ -66,20 +69,23 @@ public class CitySavedData extends SavedData {
 
     /**
      * Returns the {@link City} if any exist with UUID, otherwise null
+     *
      * @param uuid {@link UUID} of the {@link City}
      * @return {@link City} or null
      */
-    public @Nullable City getById(@NotNull UUID uuid){
+    public @Nullable City getById(@NotNull UUID uuid) {
         return cities.stream().filter(c -> c.getId().equals(uuid)).findFirst().orElse(null);
     }
+
     /**
      * Returns the {@link City} if any exist with UUID, otherwise null
+     *
      * @param inhabitant {@link IInhabitant} of the {@link City}
      * @return {@link City} or null
      */
     public @Nullable City getCityByPlayer(@NotNull IInhabitant inhabitant) {
-        for(City city : cities) {
-            if(city.getPlayers().contains(inhabitant)) return city;
+        for (City city : cities) {
+            if (city.getPlayers().contains(inhabitant)) return city;
         }
         return null;
     }
@@ -94,7 +100,7 @@ public class CitySavedData extends SavedData {
 
     public void removeUnassociatedBuilding(BlockPos pos) {
         for (City city : cities) {
-            if(city.getBuildingManager().getBuildingByPos(pos) != null) {
+            if (city.getBuildingManager().getBuildingByPos(pos) != null) {
                 city.getBuildingManager().removeBuilding(pos);
             }
         }
@@ -102,7 +108,7 @@ public class CitySavedData extends SavedData {
 
     public @Nullable City getCityByBuilding(BlockPos pos) {
         for (City city : cities) {
-            if(city.getBuildingManager().getBuildingByPos(pos) != null) {
+            if (city.getBuildingManager().getBuildingByPos(pos) != null) {
                 return city;
             }
         }

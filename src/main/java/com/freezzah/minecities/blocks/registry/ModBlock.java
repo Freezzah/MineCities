@@ -31,12 +31,12 @@ public class ModBlock {
 
     @Contract(value = " -> new", pure = true)
     @NotNull
-    public static AbstractBuildingBlock[] getBuildingSuppliers()
-    {
-        return new AbstractBuildingBlock[] {
+    public static AbstractBuildingBlock[] getBuildingSuppliers() {
+        return new AbstractBuildingBlock[]{
                 TOWNHALL_BLOCK.get(), BANK_BLOCK.get(), HOUSE_BLOCK.get()
         };
     }
+
     /*
      * Function to call from mod init phase to register all blocks
      */

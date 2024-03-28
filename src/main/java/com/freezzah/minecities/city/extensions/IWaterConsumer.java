@@ -4,6 +4,7 @@ public interface IWaterConsumer {
 
     /**
      * Consumes water
+     *
      * @param water Available water in city
      * @return consumed water
      */

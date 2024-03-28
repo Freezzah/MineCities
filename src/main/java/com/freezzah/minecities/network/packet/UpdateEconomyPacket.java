@@ -12,7 +12,7 @@ public record UpdateEconomyPacket(long gold, UUID cityUUID) implements CustomPac
 
     public static final ResourceLocation ID = new ResourceLocation(MOD_ID, "updateeconomypacket");
 
-    public UpdateEconomyPacket(final FriendlyByteBuf buffer){
+    public UpdateEconomyPacket(final FriendlyByteBuf buffer) {
         this(buffer.readLong(), buffer.readUUID());
     }
 

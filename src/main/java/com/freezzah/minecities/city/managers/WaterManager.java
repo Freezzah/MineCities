@@ -16,12 +16,23 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class WaterManager extends AbstractCityManager{
+public class WaterManager extends AbstractCityManager {
+    long water = 0;
+
     public WaterManager(City city) {
         super(city);
     }
 
-    long water = 0;
+    public static @Nullable WaterManager load(@NotNull CompoundTag tag, City city) {
+        try {
+            WaterManager waterManager = new WaterManager(city);
+            waterManager.read(tag);
+            return waterManager;
+        } catch (Exception e) {
+            Constants.LOGGER.warn("Something went wrong loading the cities");
+        }
+        return null;
+    }
 
     public long getWater() {
         return water;
@@ -44,30 +55,19 @@ public class WaterManager extends AbstractCityManager{
         this.water = tag.getLong(CityTags.TAG_WATER);
     }
 
-    public static @Nullable WaterManager load(@NotNull CompoundTag tag, City city) {
-        try {
-            WaterManager waterManager = new WaterManager(city);
-            waterManager.read(tag);
-            return waterManager;
-        } catch (Exception e) {
-            Constants.LOGGER.warn("Something went wrong loading the cities");
-        }
-        return null;
-    }
-
     @Override
     public void tickSlow(Level level) {
         super.tickSlow(level);
-        for(IBuilding building : getCity().getBuildingManager().getBuildings()) {
+        for (IBuilding building : getCity().getBuildingManager().getBuildings()) {
             if (building instanceof IWaterGenerator waterGenerator)
                 water += waterGenerator.generateWater();
             if (building instanceof IWaterConsumer waterConsumer) {
                 water -= waterConsumer.consumeWater(this.getWater());
             }
             setDirty(true);
-            for(IInhabitant inhabitant : getCity().getPlayers()) {
+            for (IInhabitant inhabitant : getCity().getPlayers()) {
                 Player player = level.getPlayerByUUID(inhabitant.getUUID());
-                if(player instanceof ServerPlayer serverPlayer) {
+                if (player instanceof ServerPlayer serverPlayer) {
                     PacketDistributor.PLAYER.with(serverPlayer).send(new UpdateWaterPacket(water, getCity().getId()));
                 }
             }

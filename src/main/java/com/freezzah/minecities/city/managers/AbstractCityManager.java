@@ -31,6 +31,7 @@ public abstract class AbstractCityManager implements IManager {
 
     public void tickSlow(Level level) {
     }
+
     public void tick(Level _level) {
         checkDirty();
     }

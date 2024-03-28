@@ -17,23 +17,23 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 
-public class HouseBlock extends AbstractBuildingBlock{
+public class HouseBlock extends AbstractBuildingBlock {
 
     public HouseBlock(Properties properties) {
         super(properties);
     }
 
-    public BuildingEntry getBuildingType(){
+    public BuildingEntry getBuildingType() {
         return ModBuildingRegistry.HOUSE.get();
     }
 
     @Override
     public @NotNull InteractionResult use(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull Player pPlayer, @NotNull InteractionHand pHand, @NotNull BlockHitResult pHit) {
-        if(!pLevel.isClientSide){
+        if (!pLevel.isClientSide) {
             super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
             City city = CityManager.getInstance().getCityByBuilding(pPos);
             if (pPlayer.isCrouching()) {
-                if(pLevel instanceof ServerLevel serverLevel) {
+                if (pLevel instanceof ServerLevel serverLevel) {
                     boolean success = city.getBuildingManager().getBuildingByPos(pPos).increaseLevel(serverLevel, Inhabitant.fromPlayer(pPlayer));
                     return InteractionResult.sidedSuccess(pLevel.isClientSide);
                 }

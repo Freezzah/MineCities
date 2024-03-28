@@ -26,15 +26,15 @@ public class BankBlock extends AbstractBuildingBlock {
         super(properties);
     }
 
-    public BuildingEntry getBuildingType(){
+    public BuildingEntry getBuildingType() {
         return ModBuildingRegistry.BANK.get();
     }
 
     @Override
     public @NotNull InteractionResult use(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull Player pPlayer, @NotNull InteractionHand pHand, @NotNull BlockHitResult pHit) {
-        if(!pLevel.isClientSide){
+        if (!pLevel.isClientSide) {
             City city = CityManager.getInstance().getCityByBuilding(pPos);
-            if(city != null) {
+            if (city != null) {
                 if (pPlayer.getMainHandItem().getItem() == ModItem.COIN.get()) {
                     ItemStack stack = pPlayer.getMainHandItem();
                     int count = stack.getCount();

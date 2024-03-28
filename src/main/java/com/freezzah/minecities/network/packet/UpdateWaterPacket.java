@@ -13,7 +13,7 @@ public record UpdateWaterPacket(long water, UUID cityUUID) implements CustomPack
 
     public static final ResourceLocation ID = new ResourceLocation(MOD_ID, "updatewaterpacket");
 
-    public UpdateWaterPacket(final FriendlyByteBuf buffer){
+    public UpdateWaterPacket(final FriendlyByteBuf buffer) {
         this(buffer.readLong(), buffer.readUUID());
     }
 

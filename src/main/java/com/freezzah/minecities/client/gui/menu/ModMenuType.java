@@ -19,6 +19,11 @@ public class ModMenuType {
             DeferredRegister.create(BuiltInRegistries.MENU, MOD_ID);
 
     /*
+     * Function to call from mod init phase to register all blocks
+     */
+    public static void register(@NotNull IEventBus eventBus) {
+        MENUS.register(eventBus);
+    }    /*
      * All menus added by this mod.
      */
     public static final Supplier<MenuType<BankMenu>> BANK_MENU = MENUS.register(ModMenuId.BANK_MENU_ID, () ->
@@ -26,10 +31,5 @@ public class ModMenuType {
     public static final Supplier<MenuType<CityOverviewMenu>> CITY_OVERVIEW_MENU = MENUS.register(ModMenuId.CITY_OVERVIEW_MENU_ID, () ->
             IMenuTypeExtension.create(CityOverviewMenu::new));
 
-    /*
-     * Function to call from mod init phase to register all blocks
-     */
-    public static void register(@NotNull IEventBus eventBus) {
-        MENUS.register(eventBus);
-    }
+
 }

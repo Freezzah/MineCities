@@ -16,7 +16,7 @@ import java.util.UUID;
 
 public class CityOverviewMenu extends AbstractContainerMenu {
 
-    private City city;
+    private final City city;
 
     //Client
     public CityOverviewMenu(int containerId, Inventory inventory, @NotNull FriendlyByteBuf buf) {
@@ -24,7 +24,7 @@ public class CityOverviewMenu extends AbstractContainerMenu {
     }
 
     //Server
-    public CityOverviewMenu(int containerId, Inventory _unused, UUID cityUuid){
+    public CityOverviewMenu(int containerId, Inventory _unused, UUID cityUuid) {
         super(ModMenuType.CITY_OVERVIEW_MENU.get(), containerId);
         this.city = CityManager.getInstance().getCityById(cityUuid);
     }
@@ -47,10 +47,12 @@ public class CityOverviewMenu extends AbstractContainerMenu {
         EconomyManager mgr = city.getEconomyManager();
         return mgr.getGold();
     }
+
     public long getWater() {
         WaterManager mgr = city.getWaterManager();
         return mgr.getWater();
     }
+
     public long getWaste() {
         WasteManager mgr = city.getWasteManager();
         return mgr.getWaste();

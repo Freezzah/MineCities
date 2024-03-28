@@ -7,6 +7,7 @@ import net.minecraft.server.level.ServerLevel;
 
 public interface IBuilding extends ITaggable {
     BuildingEntry getBuildingType();
+
     void setBuildingType(BuildingEntry buildingType);
 
     byte getBuildingLevel();

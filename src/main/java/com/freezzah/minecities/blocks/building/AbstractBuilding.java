@@ -15,8 +15,8 @@ import java.util.List;
 
 
 public abstract class AbstractBuilding implements IBuilding {
-    private BuildingEntry buildingType = null;
     List<Integer> requirements = getGoldUpgradeRequirements();
+    private BuildingEntry buildingType = null;
     private byte buildingLevel = 1;
 
     @Override
@@ -51,13 +51,14 @@ public abstract class AbstractBuilding implements IBuilding {
     public byte getMaxLevel() {
         return (byte) (requirements.size());
     }
+
     @Override
     public boolean increaseLevel(ServerLevel level, IInhabitant initiator) {
         try {
             City city = CityManager.getInstance().getCityByPlayer(initiator);
-            if(canUpgrade((byte) (this.getBuildingLevel() + 1), city)) {
+            if (canUpgrade((byte) (this.getBuildingLevel() + 1), city)) {
                 boolean moneyTaken = withdrawMaterials((byte) (this.getBuildingLevel() + 1), city, true);
-                if(moneyTaken) {
+                if (moneyTaken) {
                     this.buildingLevel = (byte) Math.min(getBuildingLevel() + 1, getMaxLevel());
                     city.getBuildingManager().setDirty(true);
                     return true;
@@ -71,12 +72,12 @@ public abstract class AbstractBuilding implements IBuilding {
         return false;
     }
 
-    private boolean canUpgrade(byte desiredLevel, City city) throws UpgradeException{
-        if(desiredLevel > getMaxLevel())
+    private boolean canUpgrade(byte desiredLevel, City city) throws UpgradeException {
+        if (desiredLevel > getMaxLevel())
             throw new UpgradeException("Max level reached");
         if (!checkGold(desiredLevel, city))
             throw new UpgradeException("Not enough gold");
-        if(!checkLevelRequirements(desiredLevel))
+        if (!checkLevelRequirements(desiredLevel))
             throw new UpgradeException("Requirements not met");
         return true;
     }
@@ -95,5 +96,6 @@ public abstract class AbstractBuilding implements IBuilding {
     }
 
     public abstract List<Integer> getGoldUpgradeRequirements();
+
     public abstract boolean checkLevelRequirements(byte desiredLevel);
 }

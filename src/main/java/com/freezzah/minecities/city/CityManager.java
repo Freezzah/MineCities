@@ -1,6 +1,5 @@
 package com.freezzah.minecities.city;
 
-import com.freezzah.minecities.blocks.IBuildingBlock;
 import com.freezzah.minecities.entities.IInhabitant;
 import com.freezzah.minecities.saveddata.CitySavedData;
 import net.minecraft.core.BlockPos;
@@ -17,10 +16,6 @@ public class CityManager implements ICityManager {
     private final ServerLevel level;
     private final CitySavedData savedData;
 
-    public static @NotNull CityManager getInstance(){
-        return instance;
-    }
-
     public CityManager(@NotNull ServerLevel level) {
         this.level = level;
         savedData = level.getDataStorage().computeIfAbsent(
@@ -28,9 +23,13 @@ public class CityManager implements ICityManager {
         instance = this;
     }
 
+    public static @NotNull CityManager getInstance() {
+        return instance;
+    }
+
     @Override
-    public @Nullable City createCity(@NotNull IInhabitant inhabitant){
-        if(getCityByPlayer(inhabitant) != null) {
+    public @Nullable City createCity(@NotNull IInhabitant inhabitant) {
+        if (getCityByPlayer(inhabitant) != null) {
             return null;
         }
         City city = new City(UUID.randomUUID());
@@ -53,7 +52,7 @@ public class CityManager implements ICityManager {
 
     @Override
     public boolean addInhabitant(@NotNull City city, @NotNull IInhabitant inhabitant) {
-        if(savedData.getCityByPlayer(inhabitant) != null)
+        if (savedData.getCityByPlayer(inhabitant) != null)
             return false;
         city.addInhabitant(inhabitant);
         return true;
@@ -86,14 +85,14 @@ public class CityManager implements ICityManager {
 
     @Override
     public void tickSlow(Level level) {
-        for(City city : savedData.getCities()){
+        for (City city : savedData.getCities()) {
             city.tickSlow(level);
         }
     }
 
     @Override
     public void tick(Level level) {
-        for(City city : savedData.getCities()){
+        for (City city : savedData.getCities()) {
             city.tick(level);
         }
     }

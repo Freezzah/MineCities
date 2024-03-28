@@ -52,27 +52,27 @@ public class EconomyManager extends AbstractCityManager {
     @Override
     public void tickSlow(Level level) {
         super.tickSlow(level);
-        for(IBuilding building : getCity().getBuildingManager().getBuildings()) {
+        for (IBuilding building : getCity().getBuildingManager().getBuildings()) {
             if (building instanceof ITaxable taxableBuilding) {
                 gold += taxableBuilding.collectTax();
             }
             setDirty(true);
-            for(IInhabitant inhabitant : getCity().getPlayers()) {
+            for (IInhabitant inhabitant : getCity().getPlayers()) {
                 Player player = level.getPlayerByUUID(inhabitant.getUUID());
-                if(player instanceof ServerPlayer serverPlayer) {
+                if (player instanceof ServerPlayer serverPlayer) {
                     PacketDistributor.PLAYER.with(serverPlayer).send(new UpdateEconomyPacket(gold, getCity().getId()));
                 }
             }
         }
     }
 
+    public long getGold() {
+        return this.gold;
+    }
+
     public void setGold(long gold) {
         this.gold = gold;
         setDirty(true);
-    }
-
-    public long getGold() {
-        return this.gold;
     }
 
     public void addGold(int count) {
@@ -88,10 +88,10 @@ public class EconomyManager extends AbstractCityManager {
     }
 
     public boolean tryTakeGold(int requiredGold, boolean performTake) {
-        if(requiredGold > gold)
+        if (requiredGold > gold)
             return false;
         else {
-            if(performTake) {
+            if (performTake) {
                 this.gold -= requiredGold;
                 setDirty(true);
             }

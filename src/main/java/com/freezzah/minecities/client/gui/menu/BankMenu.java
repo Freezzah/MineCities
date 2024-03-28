@@ -3,12 +3,10 @@ package com.freezzah.minecities.client.gui.menu;
 import com.freezzah.minecities.city.City;
 import com.freezzah.minecities.city.CityManager;
 import com.freezzah.minecities.city.managers.EconomyManager;
-import com.freezzah.minecities.tag.CityTags;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
@@ -16,7 +14,7 @@ import java.util.UUID;
 
 public class BankMenu extends AbstractContainerMenu {
 
-    private City city;
+    private final City city;
 
     //Client
     public BankMenu(int containerId, Inventory inventory, @NotNull FriendlyByteBuf buf) {
@@ -24,7 +22,7 @@ public class BankMenu extends AbstractContainerMenu {
     }
 
     //Server
-    public BankMenu(int containerId, Inventory _unused, UUID cityUuid){
+    public BankMenu(int containerId, Inventory _unused, UUID cityUuid) {
         super(ModMenuType.BANK_MENU.get(), containerId);
         this.city = CityManager.getInstance().getCityById(cityUuid);
     }

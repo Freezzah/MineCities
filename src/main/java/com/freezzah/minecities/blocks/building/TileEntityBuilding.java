@@ -29,10 +29,8 @@ public class TileEntityBuilding extends BlockEntity {
         super(pType, pPos, pBlockState);
     }
 
-    public ResourceLocation getBuildingName()
-    {
-        if (registryName != null && !registryName.getPath().isEmpty())
-        {
+    public ResourceLocation getBuildingName() {
+        if (registryName != null && !registryName.getPath().isEmpty()) {
             return registryName;
         }
         return getBlockState().getBlock() instanceof IBuildingBlock ?
@@ -40,7 +38,7 @@ public class TileEntityBuilding extends BlockEntity {
     }
 
     public City getCity() {
-        if(city == null) {
+        if (city == null) {
             city = CityManager.getInstance().getCityByBuilding(getBlockPos());
         }
         return city;

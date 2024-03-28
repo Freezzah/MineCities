@@ -29,8 +29,8 @@ public class TownhallBlock extends AbstractBuildingBlock implements IBuildingBlo
 
     @Override
     public @NotNull InteractionResult use(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull Player pPlayer, @NotNull InteractionHand pHand, @NotNull BlockHitResult pHit) {
-        if(!pLevel.isClientSide) {
-            if(pLevel instanceof ServerLevel serverLevel) {
+        if (!pLevel.isClientSide) {
+            if (pLevel instanceof ServerLevel serverLevel) {
                 City city = CityManager.getInstance().getCityByBuilding(pPos);
                 if (city != null) {
                     if (pPlayer.isCrouching()) {
@@ -57,7 +57,7 @@ public class TownhallBlock extends AbstractBuildingBlock implements IBuildingBlo
         if (player instanceof ServerPlayer serverPlayer) {
             City city = CityManager.getInstance().getCityByPlayer(Inhabitant.fromPlayer(serverPlayer));
             if (city != null) {
-                if(city.isOwner(Inhabitant.fromPlayer(player))) {
+                if (city.isOwner(Inhabitant.fromPlayer(player))) {
                     CityManager.getInstance().destroyCity(city);
                     return false;
                 }
@@ -79,7 +79,7 @@ public class TownhallBlock extends AbstractBuildingBlock implements IBuildingBlo
     }
 
     @Override
-    public BuildingEntry getBuildingType(){
+    public BuildingEntry getBuildingType() {
         return ModBuildingRegistry.TOWNHALL.get();
     }
 }

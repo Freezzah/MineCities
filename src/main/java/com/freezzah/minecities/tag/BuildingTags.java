@@ -1,4 +1,5 @@
 package com.freezzah.minecities.tag;
+
 /**
  * Class that holds all tags related to {@link com.freezzah.minecities.blocks.building.IBuilding}.
  */

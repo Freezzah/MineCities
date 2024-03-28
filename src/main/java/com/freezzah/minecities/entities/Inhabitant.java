@@ -10,6 +10,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.UUID;
 
 public class Inhabitant implements IInhabitant {
+    private static final String UUID = "uuid";
+    private static final String USERNAME = "username";
     private final UUID uuid;
     private final String name;
 
@@ -21,6 +23,16 @@ public class Inhabitant implements IInhabitant {
     @Contract("_ -> new")
     public static @NotNull Inhabitant fromPlayer(@NotNull Player player) {
         return new Inhabitant(player.getUUID(), player.getName().toString());
+    }
+
+    public static @Nullable Inhabitant load(@NotNull CompoundTag tag) {
+        if (!(tag.contains(UUID) && tag.contains(USERNAME))) {
+            return null;
+        }
+        UUID uuid = tag.getUUID(UUID);
+        String username = tag.getString(USERNAME);
+        if (username.isEmpty()) return null;
+        return new Inhabitant(uuid, username);
     }
 
     @Override
@@ -54,9 +66,6 @@ public class Inhabitant implements IInhabitant {
         return getName().hashCode() + getUUID().hashCode();
     }
 
-    private static final String UUID = "uuid";
-    private static final String USERNAME = "username";
-
     @Override
     public @NotNull CompoundTag write() {
         CompoundTag tag = new CompoundTag();
@@ -68,15 +77,5 @@ public class Inhabitant implements IInhabitant {
     @Override
     public void read(@NotNull CompoundTag tag) {
 
-    }
-
-    public static @Nullable Inhabitant load(@NotNull CompoundTag tag) {
-        if(!(tag.contains(UUID) && tag.contains(USERNAME))){
-            return null;
-        }
-        UUID uuid = tag.getUUID(UUID);
-        String username = tag.getString(USERNAME);
-        if(username.isEmpty()) return null;
-        return new Inhabitant(uuid, username);
     }
 }

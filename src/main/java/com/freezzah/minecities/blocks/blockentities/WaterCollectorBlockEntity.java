@@ -15,14 +15,16 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.WaterFluid;
 import org.jetbrains.annotations.NotNull;
 
-public class WaterCollectorBlockEntity extends AbstractBlockEntity{
+public class WaterCollectorBlockEntity extends AbstractBlockEntity {
     private final BlockPos blockPos;
+
     public WaterCollectorBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(ModBlockEntity.WATER_COLLECTOR_BLOCK_ENTITY.get(), pPos, pBlockState);
         this.blockPos = pPos;
     }
+
     public static <T extends BlockEntity> void tick(Level level, BlockPos blockPos, BlockState blockState, T t) {
-        if(t instanceof WaterCollectorBlockEntity waterCollectorBlockEntity) {
+        if (t instanceof WaterCollectorBlockEntity waterCollectorBlockEntity) {
             if (level.getGameTime() % 100 == 0) {
                 waterCollectorBlockEntity.collectWater(level);
             }
@@ -30,17 +32,17 @@ public class WaterCollectorBlockEntity extends AbstractBlockEntity{
     }
 
     private void collectWater(@NotNull Level level) {
-        if(!level.isClientSide){
+        if (!level.isClientSide) {
             City city = CityManager.getInstance().getCityByBuilding(blockPos);
-            if(city == null)
+            if (city == null)
                 return;
             IBuilding building = city.getBuildingManager().getBuildingByPos(blockPos);
-            if(building instanceof WaterCollectorBuilding waterCollectorBuilding){
+            if (building instanceof WaterCollectorBuilding waterCollectorBuilding) {
                 int sides = 0;
-                for(Direction direction : Direction.values()) {
+                for (Direction direction : Direction.values()) {
                     Block block = level.getBlockState(blockPos.relative(direction)).getBlock();
-                    if(block instanceof LiquidBlock liquidBlock){
-                        if(liquidBlock.getFluid() instanceof WaterFluid) {
+                    if (block instanceof LiquidBlock liquidBlock) {
+                        if (liquidBlock.getFluid() instanceof WaterFluid) {
                             sides++;
                         }
                     }
@@ -50,7 +52,7 @@ public class WaterCollectorBlockEntity extends AbstractBlockEntity{
         }
     }
 
-    private int getMultiplier(){
+    private int getMultiplier() {
         return 20;
     }
 }

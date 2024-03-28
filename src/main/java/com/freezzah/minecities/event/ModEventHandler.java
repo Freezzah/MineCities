@@ -33,7 +33,7 @@ public class ModEventHandler {
     @SuppressWarnings("unused")
     @SubscribeEvent
     public void createTabBuildContent(@NotNull BuildCreativeModeTabContentsEvent event) {
-        if(event.getTabKey() == CreativeModeTabs.INGREDIENTS){
+        if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
             event.accept(ModBlock.TOWNHALL_BLOCK.get());
             event.accept(ModBlock.BANK_BLOCK.get());
             event.accept(ModBlock.HOUSE_BLOCK.get());
@@ -49,7 +49,7 @@ public class ModEventHandler {
 
 
     @SubscribeEvent
-    public void onRegisterPayloads(RegisterPayloadHandlerEvent event){
+    public void onRegisterPayloads(RegisterPayloadHandlerEvent event) {
         final IPayloadRegistrar registrar = event.registrar(MOD_ID);
         registrar.play(UpdateEconomyPacket.ID, UpdateEconomyPacket::new, ClientPayloadHandler.getInstance()::handleData);
         registrar.play(UpdateWastePacket.ID, UpdateWastePacket::new, ClientPayloadHandler.getInstance()::handleData);

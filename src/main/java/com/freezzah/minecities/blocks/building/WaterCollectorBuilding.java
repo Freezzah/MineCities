@@ -21,7 +21,7 @@ public class WaterCollectorBuilding extends AbstractBuilding implements IWaterGe
 
     @Override
     public List<Integer> getGoldUpgradeRequirements() {
-        return List.of(100,200,300,400);
+        return List.of(100, 200, 300, 400);
     }
 
     @Override
