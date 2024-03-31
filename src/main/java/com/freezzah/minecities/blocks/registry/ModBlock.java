@@ -1,12 +1,15 @@
 package com.freezzah.minecities.blocks.registry;
 
 import com.freezzah.minecities.blocks.*;
+import com.freezzah.minecities.blocks.building.FarmBuilding;
+import com.freezzah.minecities.blocks.building.WellBuilding;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.ObjectInputStream;
 import java.util.function.Supplier;
 
 import static com.freezzah.minecities.Constants.MOD_ID;
@@ -28,12 +31,16 @@ public class ModBlock {
             BLOCKS.register(ModBlockId.HOUSE_BLOCK_ID, () -> new HouseBlock(BlockBehaviour.Properties.of()));
     public static final @NotNull Supplier<WaterCollectorBlock> WATER_COLLECTOR_BLOCK =
             BLOCKS.register(ModBlockId.WATER_COLLECTOR_BLOCK_ID, () -> new WaterCollectorBlock(BlockBehaviour.Properties.of()));
+    public static final @NotNull Supplier<FarmBlock> FARM_BLOCK =
+            BLOCKS.register(ModBlockId.FARM_BLOCK_ID, () -> new FarmBlock(BlockBehaviour.Properties.of()));
+    public static final @NotNull Supplier<WellBlock> WELL_BLOCK =
+            BLOCKS.register(ModBlockId.WELL_BLOCK_ID, () -> new WellBlock(BlockBehaviour.Properties.of()));
 
     @Contract(value = " -> new", pure = true)
     @NotNull
     public static AbstractBuildingBlock[] getBuildingSuppliers() {
         return new AbstractBuildingBlock[]{
-                TOWNHALL_BLOCK.get(), BANK_BLOCK.get(), HOUSE_BLOCK.get()
+                TOWNHALL_BLOCK.get(), BANK_BLOCK.get(), HOUSE_BLOCK.get(), FARM_BLOCK.get()
         };
     }
 

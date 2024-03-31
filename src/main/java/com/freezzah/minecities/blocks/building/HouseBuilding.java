@@ -4,9 +4,11 @@ import com.freezzah.minecities.city.extensions.IFoodConsumer;
 import com.freezzah.minecities.city.extensions.ITaxable;
 import com.freezzah.minecities.city.extensions.IWasteGenerator;
 import com.freezzah.minecities.tag.CityTags;
+import com.freezzah.minecities.utils.Requirement;
 import net.minecraft.nbt.CompoundTag;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class HouseBuilding extends AbstractBuilding implements ITaxable,
@@ -68,9 +70,10 @@ public class HouseBuilding extends AbstractBuilding implements ITaxable,
         this.villagers = tag.getInt(CityTags.TAG_VILLAGER_COUNT);
     }
 
+
     @Override
-    public List<Integer> getGoldUpgradeRequirements() {
-        return List.of(200, 400, 700);
+    List<Requirement> getRequirements() {
+        return Arrays.asList(new Requirement(0,0,0));
     }
 
     @Override

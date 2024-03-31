@@ -6,6 +6,7 @@ import com.freezzah.minecities.city.CityManager;
 import com.freezzah.minecities.entities.IInhabitant;
 import com.freezzah.minecities.exception.UpgradeException;
 import com.freezzah.minecities.tag.BuildingTags;
+import com.freezzah.minecities.utils.Requirement;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -15,7 +16,6 @@ import java.util.List;
 
 
 public abstract class AbstractBuilding implements IBuilding {
-    List<Integer> requirements = getGoldUpgradeRequirements();
     private BuildingEntry buildingType = null;
     private byte buildingLevel = 1;
 
@@ -49,7 +49,7 @@ public abstract class AbstractBuilding implements IBuilding {
 
     @Override
     public byte getMaxLevel() {
-        return (byte) (requirements.size());
+        return (byte) (getRequirements().size());
     }
 
     @Override
@@ -87,15 +87,11 @@ public abstract class AbstractBuilding implements IBuilding {
     }
 
     private boolean withdrawMaterials(byte desiredLevel, City city, boolean performTake) {
-        int requiredGold = getRequiredGold(desiredLevel);
+        long requiredGold = getRequirements().get(desiredLevel-1).gold();
         return city.getEconomyManager().tryTakeGold(requiredGold, performTake);
     }
 
-    private int getRequiredGold(byte desiredLevel) {
-        return requirements.get(desiredLevel - 1);
-    }
-
-    public abstract List<Integer> getGoldUpgradeRequirements();
+    abstract List<Requirement> getRequirements();
 
     public abstract boolean checkLevelRequirements(byte desiredLevel);
 }

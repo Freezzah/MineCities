@@ -3,6 +3,7 @@ package com.freezzah.minecities.client.gui.menu;
 import com.freezzah.minecities.city.City;
 import com.freezzah.minecities.city.CityManager;
 import com.freezzah.minecities.city.managers.EconomyManager;
+import com.freezzah.minecities.city.managers.FoodManager;
 import com.freezzah.minecities.city.managers.WasteManager;
 import com.freezzah.minecities.city.managers.WaterManager;
 import net.minecraft.network.FriendlyByteBuf;
@@ -56,5 +57,10 @@ public class CityOverviewMenu extends AbstractContainerMenu {
     public long getWaste() {
         WasteManager mgr = city.getWasteManager();
         return mgr.getWaste();
+    }
+
+    public double getFood() {
+        FoodManager mgr = city.getFoodManager();
+        return mgr.getFood();
     }
 }

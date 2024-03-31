@@ -30,6 +30,10 @@ public class ModItem {
             ITEMS.register(ModItemId.HOUSE_BLOCK_ITEM_ID, () -> new ItemNameBlockItem(ModBlock.HOUSE_BLOCK.get(), new Item.Properties()));
     public static final Supplier<Item> WATER_COLLECTOR_BLOCK_ITEM =
             ITEMS.register(ModItemId.WATER_COLLECTOR_BLOCK_ITEM_ID, () -> new ItemNameBlockItem(ModBlock.WATER_COLLECTOR_BLOCK.get(), new Item.Properties()));
+    public static final Supplier<Item> FARM_BLOCK_ITEM =
+            ITEMS.register(ModItemId.FARM_BLOCK_ITEM_ID, () -> new ItemNameBlockItem(ModBlock.FARM_BLOCK.get(), new Item.Properties()));
+    public static final Supplier<Item> WELL_BLOCK_ITEM =
+            ITEMS.register(ModItemId.WELL_BLOCK_ITEM_ID, () -> new ItemNameBlockItem(ModBlock.WELL_BLOCK.get(), new Item.Properties()));
     public static final Supplier<Item> COIN =
             ITEMS.register(ModItemId.COIN_ITEM_ID, () -> new Item(new Item.Properties().stacksTo(256)));
 

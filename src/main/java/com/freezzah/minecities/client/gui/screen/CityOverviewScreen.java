@@ -43,6 +43,9 @@ public class CityOverviewScreen extends AbstractContainerScreen<CityOverviewMenu
         offsetTop += verticalSpacing;
         graphics.drawString(this.font, "Water: ", offsetLeft, offsetTop, 4210752);
         graphics.drawString(this.font, Component.literal(String.valueOf(this.menu.getWater())), startOffsetLeftMiddle, offsetTop, 4210752);
+        offsetTop += verticalSpacing;
+        graphics.drawString(this.font, "Food: ", offsetLeft, offsetTop, 4210752);
+        graphics.drawString(this.font, Component.literal(String.valueOf(this.menu.getFood())), startOffsetLeftMiddle, offsetTop, 4210752);
         super.render(graphics, mouseX, mouseY, partialTick);
         offsetTop = this.topPos + 30;
     }

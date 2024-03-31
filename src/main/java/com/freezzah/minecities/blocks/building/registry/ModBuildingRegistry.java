@@ -46,6 +46,16 @@ public class ModBuildingRegistry {
             .setBuildingProducer(WaterCollectorBuilding::new)
             .setRegistryName(new ResourceLocation(MOD_ID, ModBuildingId.WATER_COLLECTOR_ID))
             .createBuildingEntry());
+    public static final Supplier<BuildingEntry> FARM = DEFERRED_REGISTER.register(ModBuildingId.FARM_ID, () -> new BuildingEntry.Builder()
+            .setBuildingBlock(ModBlock.FARM_BLOCK.get())
+            .setBuildingProducer(FarmBuilding::new)
+            .setRegistryName(new ResourceLocation(MOD_ID, ModBuildingId.FARM_ID))
+            .createBuildingEntry());
+    public static final Supplier<BuildingEntry> WELL = DEFERRED_REGISTER.register(ModBuildingId.WELL_ID, () -> new BuildingEntry.Builder()
+            .setBuildingBlock(ModBlock.WELL_BLOCK.get())
+            .setBuildingProducer(WellBuilding::new)
+            .setRegistryName(new ResourceLocation(MOD_ID, ModBuildingId.WELL_ID))
+            .createBuildingEntry());
 
     public static void register(IEventBus modEventBus) {
         DEFERRED_REGISTER.register(modEventBus);

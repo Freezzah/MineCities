@@ -6,4 +6,6 @@ public class ModItemId {
     public static final String HOUSE_BLOCK_ITEM_ID = "houseblockitem";
     public static final String COIN_ITEM_ID = "coin";
     public static final String WATER_COLLECTOR_BLOCK_ITEM_ID = "watercollectorblockitem";
+    public static final String FARM_BLOCK_ITEM_ID = "farmblockitem";
+    public static final String WELL_BLOCK_ITEM_ID = "wellblockitem";
 }

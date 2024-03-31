@@ -5,4 +5,6 @@ public class ModBuildingId {
     public static final String BANK_ID = "bank";
     public static final String HOUSE_ID = "house";
     public static final String WATER_COLLECTOR_ID = "watercollector";
+    public static final String FARM_ID = "farm";
+    public static final String WELL_ID = "well";
 }

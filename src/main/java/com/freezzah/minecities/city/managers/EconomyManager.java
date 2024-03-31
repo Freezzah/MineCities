@@ -87,7 +87,7 @@ public class EconomyManager extends AbstractCityManager {
         return count;
     }
 
-    public boolean tryTakeGold(int requiredGold, boolean performTake) {
+    public boolean tryTakeGold(long requiredGold, boolean performTake) {
         if (requiredGold > gold)
             return false;
         else {

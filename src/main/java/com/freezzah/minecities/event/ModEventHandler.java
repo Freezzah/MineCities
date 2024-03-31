@@ -38,6 +38,8 @@ public class ModEventHandler {
             event.accept(ModBlock.BANK_BLOCK.get());
             event.accept(ModBlock.HOUSE_BLOCK.get());
             event.accept(ModBlock.WATER_COLLECTOR_BLOCK.get());
+            event.accept(ModBlock.FARM_BLOCK.get());
+            event.accept(ModBlock.WELL_BLOCK.get());
         }
     }
 
