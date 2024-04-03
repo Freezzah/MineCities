@@ -9,4 +9,6 @@ public interface IWaterConsumer {
      * @return consumed water
      */
     long consumeWater(long water);
+
+    boolean canConsumeNearbyWater();
 }

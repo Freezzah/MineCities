@@ -5,6 +5,7 @@ import com.freezzah.minecities.blocks.building.IBuilding;
 import com.freezzah.minecities.city.City;
 import com.freezzah.minecities.city.extensions.IWaterConsumer;
 import com.freezzah.minecities.city.extensions.IWaterGenerator;
+import com.freezzah.minecities.city.extensions.IWaterGeneratorNearby;
 import com.freezzah.minecities.entities.IInhabitant;
 import com.freezzah.minecities.network.packet.UpdateWaterPacket;
 import com.freezzah.minecities.tag.CityTags;
@@ -58,11 +59,23 @@ public class WaterManager extends AbstractCityManager {
     @Override
     public void tickSlow(Level level) {
         super.tickSlow(level);
+        BuildingManager buildingManager = getCity().getBuildingManager();
         for (IBuilding building : getCity().getBuildingManager().getBuildings()) {
+            //Collect water
             if (building instanceof IWaterGenerator waterGenerator)
                 water += waterGenerator.generateWater();
-            if (building instanceof IWaterConsumer waterConsumer) {
-                water -= waterConsumer.consumeWater(this.getWater());
+
+            //If water consumer
+            if(building instanceof IWaterConsumer waterConsumer) {
+                //And can consume from well, consume from well
+                if(waterConsumer.canConsumeNearbyWater() &&
+                        !buildingManager.getBuildingsWithinRange(building, 3, IWaterGeneratorNearby.class).isEmpty()) {
+                    waterConsumer.consumeWater(Long.MAX_VALUE);
+                }
+                // Otherwise, consume from city.
+                else {
+                    water -= waterConsumer.consumeWater(water);
+                }
             }
             setDirty(true);
             for (IInhabitant inhabitant : getCity().getPlayers()) {

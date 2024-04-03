@@ -3,11 +3,13 @@ package com.freezzah.minecities.city.managers;
 import com.freezzah.minecities.Constants;
 import com.freezzah.minecities.blocks.AbstractBuildingBlock;
 import com.freezzah.minecities.blocks.IBuildingBlock;
+import com.freezzah.minecities.blocks.building.AbstractBuilding;
 import com.freezzah.minecities.blocks.building.IBuilding;
 import com.freezzah.minecities.blocks.building.TownhallBuilding;
 import com.freezzah.minecities.blocks.building.registry.BuildingEntry;
 import com.freezzah.minecities.blocks.building.registry.ModBuildingRegistry;
 import com.freezzah.minecities.city.City;
+import com.freezzah.minecities.city.extensions.IWaterGeneratorNearby;
 import com.freezzah.minecities.tag.BuildingTags;
 import com.freezzah.minecities.tag.CityTags;
 import com.freezzah.minecities.utils.BlockPosHelper;
@@ -17,10 +19,12 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.DistanceManager;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -128,5 +132,32 @@ public class BuildingManager extends AbstractCityManager {
     public void addBuilding(BlockPos pos, AbstractBuildingBlock abstractBuildingBlock) {
         this.addBuilding(pos, createFrom(getCity(), abstractBuildingBlock));
         setDirty(true);
+    }
+
+    public @Nullable BlockPos getPosByBuilding(IBuilding building) {
+        for(Map.Entry<BlockPos, IBuilding> entry : this.buildings.entrySet()) {
+            if(entry.getValue().equals(building)){
+                return entry.getKey();
+            }
+        }
+        return null;
+    }
+
+    public <T, Y> List<? extends IBuilding> getBuildingsWithinRange(T building, int i, Class<Y> type) {
+        List<IBuilding> buildings = new ArrayList<>();
+        if(building instanceof IBuilding iBuilding) {
+            BlockPos pos = getPosByBuilding(iBuilding);
+            for(IBuilding building1 : getBuildings()) {
+                if(type.isAssignableFrom(building1.getClass())) {
+                    BlockPos pos1 = getPosByBuilding(building1);
+                    double dist = BlockPosHelper.distance(pos, pos1);
+                    if(dist < i){
+                        buildings.add(building1);
+                    }
+                }
+            }
+        }
+        return buildings;
+
     }
 }

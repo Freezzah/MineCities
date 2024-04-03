@@ -3,6 +3,7 @@ package com.freezzah.minecities.blocks.building;
 import com.freezzah.minecities.city.extensions.IFoodConsumer;
 import com.freezzah.minecities.city.extensions.ITaxable;
 import com.freezzah.minecities.city.extensions.IWasteGenerator;
+import com.freezzah.minecities.city.extensions.IWaterConsumer;
 import com.freezzah.minecities.tag.CityTags;
 import com.freezzah.minecities.utils.Requirement;
 import net.minecraft.nbt.CompoundTag;
@@ -13,7 +14,8 @@ import java.util.List;
 
 public class HouseBuilding extends AbstractBuilding implements ITaxable,
         IWasteGenerator,
-        IFoodConsumer {
+        IFoodConsumer,
+        IWaterConsumer {
 
     private static final int VILLAGER_TAX = 1;
     private int villagers = 0;
@@ -47,6 +49,25 @@ public class HouseBuilding extends AbstractBuilding implements ITaxable,
             //TODO REDUCE HAPPINESS
         }
         return consumed;
+    }
+
+    @Override
+    public long consumeWater(long water) {
+        long consumed = Math.min(villagers * getWaterFactor(), water);
+        if (consumed < getWaterFactor()) {
+            //TODO REDUCE HAPPINESS
+        }
+        return consumed;
+    }
+
+
+    @Override
+    public boolean canConsumeNearbyWater() {
+        return true;
+    }
+
+    private int getWaterFactor() {
+        return 1;
     }
 
     private int getWasteFactor() {

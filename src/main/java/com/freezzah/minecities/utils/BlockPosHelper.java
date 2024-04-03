@@ -45,4 +45,11 @@ public class BlockPosHelper {
         CompoundTag compoundTag = tag.getCompound(TAG);
         return new BlockPos(compoundTag.getInt("x"), compoundTag.getInt("y"), compoundTag.getInt("z"));
     }
+
+    public static double distance(BlockPos blockPos1, BlockPos blockPos2){
+        double x = Math.pow(Math.abs(blockPos1.getX() - blockPos2.getX()), 2);
+        double y = Math.pow(Math.abs(blockPos1.getY() - blockPos2.getY()), 2);
+        double z = Math.pow(Math.abs(blockPos1.getZ() - blockPos2.getZ()), 2);
+        return Math.sqrt(x + y + z);
+    }
 }
