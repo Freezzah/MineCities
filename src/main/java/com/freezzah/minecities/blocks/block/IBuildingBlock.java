@@ -1,4 +1,4 @@
-package com.freezzah.minecities.blocks;
+package com.freezzah.minecities.blocks.block;
 
 import com.freezzah.minecities.blocks.building.registry.BuildingEntry;
 import net.minecraft.core.BlockPos;
@@ -18,7 +18,6 @@ public interface IBuildingBlock extends EntityBlock {
      * @return true if cancel, false if continue
      */
     boolean onBreak(@NotNull Player player, @NotNull BlockPos pos);
-
     /**
      * Should be called from events.
      * Returns true if event should be cancelled.
@@ -28,8 +27,6 @@ public interface IBuildingBlock extends EntityBlock {
      * @return true if cancel, false if continue
      */
     boolean onPlace(ServerPlayer player, BlockPos pos);
-
     BuildingEntry getBuildingType();
-
     ResourceLocation getBuildingName();
 }

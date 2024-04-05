@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class FarmBuilding extends AbstractBuilding implements IFoodGenerator {
-
+    //region IBuilding
     @Override
     List<Requirement> getRequirements() {
         return Arrays.asList(new Requirement(100, 100, 100));
@@ -18,9 +18,12 @@ public class FarmBuilding extends AbstractBuilding implements IFoodGenerator {
     public boolean checkLevelRequirements(byte desiredLevel) {
         return true;
     }
+    //endregion
 
+    //region IFoodGenerator
     @Override
     public double generateFood() {
         return 10;
     }
+    //endregion
 }

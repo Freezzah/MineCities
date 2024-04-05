@@ -1,15 +1,13 @@
 package com.freezzah.minecities.city.managers;
 
 import com.freezzah.minecities.Constants;
-import com.freezzah.minecities.blocks.AbstractBuildingBlock;
-import com.freezzah.minecities.blocks.IBuildingBlock;
-import com.freezzah.minecities.blocks.building.AbstractBuilding;
+import com.freezzah.minecities.blocks.block.AbstractBuildingBlock;
+import com.freezzah.minecities.blocks.block.IBuildingBlock;
 import com.freezzah.minecities.blocks.building.IBuilding;
 import com.freezzah.minecities.blocks.building.TownhallBuilding;
 import com.freezzah.minecities.blocks.building.registry.BuildingEntry;
 import com.freezzah.minecities.blocks.building.registry.ModBuildingRegistry;
 import com.freezzah.minecities.city.City;
-import com.freezzah.minecities.city.extensions.IWaterGeneratorNearby;
 import com.freezzah.minecities.tag.BuildingTags;
 import com.freezzah.minecities.tag.CityTags;
 import com.freezzah.minecities.utils.BlockPosHelper;
@@ -19,7 +17,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.DistanceManager;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

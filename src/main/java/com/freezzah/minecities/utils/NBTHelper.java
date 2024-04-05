@@ -9,6 +9,12 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class NBTHelper {
+    /**
+     * Returns a collector that collects {@link CompoundTag}s and forms a {@link ListTag}
+     * Example usage:
+     * {@code myList.stream().map(myObject::getCompoundTag).collect(NBTHelper.toListNBT());}
+     * @return Collector
+     */
     @Contract(" -> new")
     public static @NotNull Collector<CompoundTag, ?, ListTag> toListNBT() {
         return Collectors.collectingAndThen(
@@ -16,7 +22,6 @@ public class NBTHelper {
                 list -> {
                     final ListTag tagList = new ListTag();
                     tagList.addAll(list);
-
                     return tagList;
                 });
     }

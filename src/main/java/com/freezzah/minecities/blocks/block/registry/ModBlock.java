@@ -1,15 +1,12 @@
-package com.freezzah.minecities.blocks.registry;
+package com.freezzah.minecities.blocks.block.registry;
 
-import com.freezzah.minecities.blocks.*;
-import com.freezzah.minecities.blocks.building.FarmBuilding;
-import com.freezzah.minecities.blocks.building.WellBuilding;
+import com.freezzah.minecities.blocks.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.ObjectInputStream;
 import java.util.function.Supplier;
 
 import static com.freezzah.minecities.Constants.MOD_ID;
@@ -40,7 +37,8 @@ public class ModBlock {
     @NotNull
     public static AbstractBuildingBlock[] getBuildingSuppliers() {
         return new AbstractBuildingBlock[]{
-                TOWNHALL_BLOCK.get(), BANK_BLOCK.get(), HOUSE_BLOCK.get(), FARM_BLOCK.get()
+                TOWNHALL_BLOCK.get(), BANK_BLOCK.get(), HOUSE_BLOCK.get(), FARM_BLOCK.get(),
+                WATER_COLLECTOR_BLOCK.get(), WELL_BLOCK.get()
         };
     }
 
@@ -49,5 +47,6 @@ public class ModBlock {
      */
     public static void register(@NotNull IEventBus eventBus) {
         BLOCKS.register(eventBus);
+        assert getBuildingSuppliers().length == BLOCKS.getEntries().size();
     }
 }

@@ -1,4 +1,4 @@
-package com.freezzah.minecities.blocks;
+package com.freezzah.minecities.blocks.block;
 
 import com.freezzah.minecities.blocks.building.HouseBuilding;
 import com.freezzah.minecities.blocks.building.IBuilding;

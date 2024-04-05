@@ -1,9 +1,9 @@
-package com.freezzah.minecities.blocks;
+package com.freezzah.minecities.blocks.block;
 
 import com.freezzah.minecities.blocks.blockentities.WaterCollectorBlockEntity;
 import com.freezzah.minecities.blocks.building.registry.BuildingEntry;
 import com.freezzah.minecities.blocks.building.registry.ModBuildingRegistry;
-import com.freezzah.minecities.blocks.registry.ModBlockEntity;
+import com.freezzah.minecities.blocks.blockentities.registry.ModBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
@@ -14,14 +14,14 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class WellBlock extends AbstractBuildingBlock {
-    public WellBlock(Properties properties) {
+public class WaterCollectorBlock extends AbstractBuildingBlock {
+    public WaterCollectorBlock(Properties properties) {
         super(properties);
     }
 
     @Override
     public BuildingEntry getBuildingType() {
-        return ModBuildingRegistry.WELL.get();
+        return ModBuildingRegistry.WATER_COLLECTOR.get();
     }
 
     @Nullable

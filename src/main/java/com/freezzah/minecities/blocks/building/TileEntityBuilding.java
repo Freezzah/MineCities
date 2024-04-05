@@ -1,7 +1,7 @@
 package com.freezzah.minecities.blocks.building;
 
-import com.freezzah.minecities.blocks.AbstractBuildingBlock;
-import com.freezzah.minecities.blocks.IBuildingBlock;
+import com.freezzah.minecities.blocks.block.AbstractBuildingBlock;
+import com.freezzah.minecities.blocks.block.IBuildingBlock;
 import com.freezzah.minecities.blocks.building.registry.ModBuildingRegistry;
 import com.freezzah.minecities.city.City;
 import com.freezzah.minecities.city.CityManager;

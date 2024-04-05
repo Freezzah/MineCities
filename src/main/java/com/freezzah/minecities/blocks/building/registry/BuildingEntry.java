@@ -1,6 +1,6 @@
 package com.freezzah.minecities.blocks.building.registry;
 
-import com.freezzah.minecities.blocks.IBuildingBlock;
+import com.freezzah.minecities.blocks.block.IBuildingBlock;
 import com.freezzah.minecities.blocks.building.IBuilding;
 import com.freezzah.minecities.city.City;
 import net.minecraft.resources.ResourceLocation;

@@ -1,6 +1,6 @@
 package com.freezzah.minecities.event;
 
-import com.freezzah.minecities.blocks.IBuildingBlock;
+import com.freezzah.minecities.blocks.block.IBuildingBlock;
 import com.freezzah.minecities.city.CityManager;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;

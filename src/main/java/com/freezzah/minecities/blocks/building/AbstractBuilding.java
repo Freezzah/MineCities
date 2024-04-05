@@ -16,6 +16,9 @@ import java.util.List;
 
 
 public abstract class AbstractBuilding implements IBuilding {
+
+    //TODO This class is a mess, clean up
+
     private BuildingEntry buildingType = null;
     private byte buildingLevel = 1;
 
@@ -86,7 +89,7 @@ public abstract class AbstractBuilding implements IBuilding {
         return withdrawMaterials(desiredLevel, city, false);
     }
 
-    private boolean withdrawMaterials(byte desiredLevel, City city, boolean performTake) {
+    private boolean withdrawMaterials(byte desiredLevel, @NotNull City city, boolean performTake) {
         long requiredGold = getRequirements().get(desiredLevel-1).gold();
         return city.getEconomyManager().tryTakeGold(requiredGold, performTake);
     }

@@ -23,4 +23,7 @@ public class CityTags {
     public static final String TAG_VILLAGER_COUNT = "villagerCount";
     public static final String TAG_FOOD = "food";
     public static final String TAG_FOOD_MANAGER = "foodManager";
+    public static final String TAG_FOOD_HAPPINESS = "foodHappiness";
+    public static final String TAG_WATER_HAPPINESS = "waterHappiness";
+    public static final String TAG_HAPPINESS = "happiness";
 }

@@ -1,6 +1,6 @@
 package com.freezzah.minecities.items;
 
-import com.freezzah.minecities.blocks.registry.ModBlock;
+import com.freezzah.minecities.blocks.block.registry.ModBlock;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemNameBlockItem;
 import net.neoforged.bus.api.IEventBus;

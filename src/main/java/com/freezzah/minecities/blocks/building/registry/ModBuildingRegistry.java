@@ -2,7 +2,7 @@ package com.freezzah.minecities.blocks.building.registry;
 
 import com.freezzah.minecities.Constants;
 import com.freezzah.minecities.blocks.building.*;
-import com.freezzah.minecities.blocks.registry.ModBlock;
+import com.freezzah.minecities.blocks.block.registry.ModBlock;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;

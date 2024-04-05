@@ -1,7 +1,6 @@
 package com.freezzah.minecities.city.extensions;
 
 public interface IWaterConsumer {
-
     /**
      * Consumes water
      *
@@ -9,6 +8,8 @@ public interface IWaterConsumer {
      * @return consumed water
      */
     long consumeWater(long water);
-
     boolean canConsumeNearbyWater();
+    int getWaterConsumptionPerInhabitant();
+
+    float getWaterSatisfiedRatio();
 }

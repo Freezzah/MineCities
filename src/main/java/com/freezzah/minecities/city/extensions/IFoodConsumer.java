@@ -8,4 +8,7 @@ public interface IFoodConsumer {
      * @return consumed water
      */
     double consumeFood(double food);
+    int getFoodConsumptionPerInhabitant();
+
+    float getFoodSatisfiedRatio();
 }

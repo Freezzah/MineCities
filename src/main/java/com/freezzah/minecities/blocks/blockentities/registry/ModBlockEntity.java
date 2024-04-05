@@ -1,5 +1,6 @@
-package com.freezzah.minecities.blocks.registry;
+package com.freezzah.minecities.blocks.blockentities.registry;
 
+import com.freezzah.minecities.blocks.block.registry.ModBlock;
 import com.freezzah.minecities.blocks.blockentities.WaterCollectorBlockEntity;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntityType;

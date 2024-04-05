@@ -1,4 +1,4 @@
-package com.freezzah.minecities.blocks.registry;
+package com.freezzah.minecities.blocks.block.registry;
 
 public class ModBlockId {
     public static final String TOWNHALL_BLOCK_ID = "townhallblock";

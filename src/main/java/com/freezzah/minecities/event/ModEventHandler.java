@@ -1,7 +1,7 @@
 package com.freezzah.minecities.event;
 
 import com.freezzah.minecities.blocks.building.registry.ModBuildingRegistry;
-import com.freezzah.minecities.blocks.registry.ModBlock;
+import com.freezzah.minecities.blocks.block.registry.ModBlock;
 import com.freezzah.minecities.client.gui.menu.ModMenuType;
 import com.freezzah.minecities.client.gui.screen.BankScreen;
 import com.freezzah.minecities.client.gui.screen.CityOverviewScreen;
