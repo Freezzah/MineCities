@@ -51,14 +51,13 @@ runs {
     }
 
     data {
-        workingDirectory project.file('run')
+
         systemProperty 'forge.logging.markers', 'REGISTRIES'
         systemProperty 'forge.logging.console.level', 'debug'
-
-        programArguments.addAll '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+        systemProperty 'forge.enabledGameTestNamespaces', mod_id
 
         modSource project.sourceSets.main
-
+        programArguments.addAll '--mod', mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
     }
 }
 

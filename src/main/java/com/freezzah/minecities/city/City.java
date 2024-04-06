@@ -32,6 +32,7 @@ public class City implements ITaggable {
     private WasteManager wasteManager;
     private WaterManager waterManager;
     private FoodManager foodManager;
+    private HappinessManager happinessManager;
     private CompoundTag cityTag;
     private boolean isDirty = true;
     private UUID id;
@@ -43,6 +44,7 @@ public class City implements ITaggable {
         this.wasteManager = new WasteManager(this);
         this.waterManager = new WaterManager(this);
         this.foodManager = new FoodManager(this);
+        this.happinessManager = new HappinessManager(this);
         setDirty(true);
     }
 
@@ -75,6 +77,7 @@ public class City implements ITaggable {
         return inhabitants.keySet().stream().toList();
     }
 
+    //TODO move
     protected void addInhabitant(@NotNull IInhabitant inhabitant) {
         inhabitants.put(inhabitant, LocalDateTime.now());
         setDirty(true);
@@ -90,6 +93,7 @@ public class City implements ITaggable {
         this.waterManager.tickSlow(level);
         this.wasteManager.tickSlow(level);
         this.foodManager.tickSlow(level);
+        this.happinessManager.tickSlow(level);
     }
 
     public void tick(Level level) {
@@ -99,6 +103,7 @@ public class City implements ITaggable {
         this.waterManager.tick(level);
         this.wasteManager.tick(level);
         this.foodManager.tick(level);
+        this.happinessManager.tick(level);
     }
 
     public @NotNull BuildingManager getBuildingManager() {
@@ -116,14 +121,13 @@ public class City implements ITaggable {
     public @NotNull WaterManager getWaterManager() {
         return waterManager;
     }
-    /*
-     * NBT related methods
-     */
-
     public @NotNull FoodManager getFoodManager() {
         return foodManager;
     }
-
+    public @NotNull HappinessManager getHappinessManager() { return happinessManager; }
+    /*
+     * NBT related methods
+     */
     public void setDirty(boolean dirty) {
         this.isDirty = dirty;
     }
@@ -172,6 +176,7 @@ public class City implements ITaggable {
         tag.put(CityTags.TAG_WASTE_MANAGER, wasteManager.write());
         tag.put(CityTags.TAG_WATER_MANAGER, waterManager.write());
         tag.put(CityTags.TAG_FOOD_MANAGER, foodManager.write());
+        tag.put(CityTags.TAG_HAPPINESS_MANAGER, happinessManager.write());
         this.cityTag = tag;
         return tag;
     }

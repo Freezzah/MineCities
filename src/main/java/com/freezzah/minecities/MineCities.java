@@ -4,6 +4,7 @@ import com.freezzah.minecities.blocks.building.registry.ModBuildingRegistry;
 import com.freezzah.minecities.blocks.block.registry.ModBlock;
 import com.freezzah.minecities.blocks.blockentities.registry.ModBlockEntity;
 import com.freezzah.minecities.client.gui.menu.ModMenuType;
+import com.freezzah.minecities.data.DataGenerators;
 import com.freezzah.minecities.event.EventHandler;
 import com.freezzah.minecities.event.ModEventHandler;
 import com.freezzah.minecities.items.ModItem;
@@ -24,6 +25,8 @@ public class MineCities {
         LOGGER.info("MineCities: Registering event listeners");
         modEventBus.register(new ModEventHandler());
         NeoForge.EVENT_BUS.register(new EventHandler());
+
+        modEventBus.addListener(DataGenerators::gatherData);
 
         LOGGER.info("Setting up client event listener");
         modEventBus.addListener(ModEventHandler::clientSetup);

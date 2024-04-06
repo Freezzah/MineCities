@@ -37,8 +37,8 @@ public class ModBlock {
     @NotNull
     public static AbstractBuildingBlock[] getBuildingSuppliers() {
         return new AbstractBuildingBlock[]{
-                TOWNHALL_BLOCK.get(), BANK_BLOCK.get(), HOUSE_BLOCK.get(), FARM_BLOCK.get(),
-                WATER_COLLECTOR_BLOCK.get(), WELL_BLOCK.get()
+                TOWNHALL_BLOCK.get(), BANK_BLOCK.get(), HOUSE_BLOCK.get(),
+                FARM_BLOCK.get(), WATER_COLLECTOR_BLOCK.get(), WELL_BLOCK.get()
         };
     }
 
