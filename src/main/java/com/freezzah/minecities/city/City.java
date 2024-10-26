@@ -106,7 +106,7 @@ public class City implements ITaggable {
         this.happinessManager.tick(level);
     }
 
-    public @NotNull BuildingManager getBuildingManager() {
+    public @Nullable BuildingManager getBuildingManager() {
         return buildingManager;
     }
 
