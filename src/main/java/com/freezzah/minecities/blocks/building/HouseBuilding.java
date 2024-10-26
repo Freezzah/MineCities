@@ -10,7 +10,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class HouseBuilding extends AbstractBuilding implements ILiveable,
-                                                               ITaxable,
                                                                IWasteGenerator,
                                                                IFoodConsumer,
                                                                IWaterConsumer {
@@ -20,6 +19,8 @@ public class HouseBuilding extends AbstractBuilding implements ILiveable,
     private float waterSatisfiedFactor = 1;
     private float foodSatisfiedFactor = 1;
     private float happiness = 1;
+    private int ticksUnhappy = 0;
+    private int ticksHappy = 0;
     //endregion
 
     //region Constructor
@@ -28,6 +29,10 @@ public class HouseBuilding extends AbstractBuilding implements ILiveable,
     //endregion
 
     //region ILiveable
+    @Override
+    public int getVillagers(){
+        return villagers;
+    }
     @Override
     public void addVillager() {
         villagers = Math.min(getMaxVillagers(), villagers + 1);
@@ -45,14 +50,54 @@ public class HouseBuilding extends AbstractBuilding implements ILiveable,
 
     @Override
     public float calculateHappiness() {
-        return this.happiness = Math.max(0, Math.min(1, happiness + foodSatisfiedFactor + waterSatisfiedFactor));
+        return Math.max(0, Math.min(1, happiness + foodSatisfiedFactor + waterSatisfiedFactor));
     }
-    //endregion
-
-    //region ITaxable
     @Override
     public int collectTax() {
         return villagers * VILLAGER_TAX;
+    }
+
+    @Override
+    public float getHappiness() {
+        return happiness;
+    }
+
+    @Override
+    public void tickUnhappy() {
+        if(getVillagers() != 0) {
+            ticksUnhappy++;
+        }
+        ticksHappy = 0;
+    }
+
+    @Override
+    public int getTicksUnhappy(){
+        return ticksUnhappy;
+    }
+
+    @Override
+    public void removeUnhappyInhabitant(){
+        this.ticksUnhappy = 0;
+        removeVillager();
+    }
+
+    @Override
+    public void tickHappy() {
+        if(getVillagers() < getMaxVillagers()) {
+            ticksHappy++;
+        }
+        ticksUnhappy = 0;
+    }
+
+    @Override
+    public int getTicksHappy(){
+        return ticksHappy;
+    }
+
+    @Override
+    public void addHappyVillager() {
+        ticksHappy = 0;
+        addVillager();
     }
 
     //endregion
@@ -72,13 +117,20 @@ public class HouseBuilding extends AbstractBuilding implements ILiveable,
     //region IFoodConsumer
     @Override
     public double consumeFood(double food) {
+        //Empty house, skip
+        if(villagers == 0) {
+            //Do update happiness, otherwise nobody will join back
+            if(food > 0) {
+                foodSatisfiedFactor = getFoodSatisfiedRatio();
+            }
+            return 0;
+        }
         int foodConsumptionRequired = villagers * getFoodConsumptionPerInhabitant();
         double consumed = Math.min(foodConsumptionRequired, food);
-        //Prevent division by 0
-        if(foodConsumptionRequired <= 0)
-            foodSatisfiedFactor = getFoodSatisfiedRatio();
-        else
+        if (consumed < foodConsumptionRequired)
             foodSatisfiedFactor = -getFoodSatisfiedRatio();
+        else
+            foodSatisfiedFactor = getFoodSatisfiedRatio();
         return consumed;
     }
 
@@ -95,13 +147,17 @@ public class HouseBuilding extends AbstractBuilding implements ILiveable,
     //region IWaterConsumer
     @Override
     public long consumeWater(long water) {
+        //Empty house, skip
+        if(villagers == 0) {
+            return 0;
+        }
         int waterConsumptionRequired = villagers * getWaterConsumptionPerInhabitant();
         long consumed = Math.min(waterConsumptionRequired, water);
         //Prevent division by 0
-        if(waterConsumptionRequired <= 0 )
-            waterSatisfiedFactor = 1;
+        if(consumed < waterConsumptionRequired)
+            waterSatisfiedFactor = -getWaterSatisfiedRatio();
         else
-            waterSatisfiedFactor = (float) (consumed / waterConsumptionRequired);
+            waterSatisfiedFactor = getWaterSatisfiedRatio();
         return consumed;
     }
 
@@ -141,6 +197,8 @@ public class HouseBuilding extends AbstractBuilding implements ILiveable,
         superTag.putFloat(CityTags.TAG_FOOD_HAPPINESS, foodSatisfiedFactor);
         superTag.putFloat(CityTags.TAG_WATER_HAPPINESS, waterSatisfiedFactor);
         superTag.putFloat(CityTags.TAG_HAPPINESS, happiness);
+        superTag.putInt(CityTags.TAG_TICKS_UNHAPPY, ticksUnhappy);
+        superTag.putInt(CityTags.TAG_TICKS_HAPPY, ticksHappy);
         return superTag;
     }
 
@@ -151,6 +209,8 @@ public class HouseBuilding extends AbstractBuilding implements ILiveable,
         this.foodSatisfiedFactor = tag.getFloat(CityTags.TAG_FOOD_HAPPINESS);
         this.waterSatisfiedFactor = tag.getFloat(CityTags.TAG_WATER_HAPPINESS);
         this.happiness = tag.getFloat(CityTags.TAG_HAPPINESS);
+        this.ticksUnhappy = tag.getInt(CityTags.TAG_TICKS_UNHAPPY);
+        this.ticksHappy = tag.getInt(CityTags.TAG_TICKS_HAPPY);
     }
     //endregion
 }

@@ -7,6 +7,7 @@ import com.freezzah.minecities.client.gui.screen.BankScreen;
 import com.freezzah.minecities.client.gui.screen.CityOverviewScreen;
 import com.freezzah.minecities.network.handler.ClientPayloadHandler;
 import com.freezzah.minecities.network.packet.UpdateEconomyPacket;
+import com.freezzah.minecities.network.packet.UpdateFoodPacket;
 import com.freezzah.minecities.network.packet.UpdateWastePacket;
 import com.freezzah.minecities.network.packet.UpdateWaterPacket;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -56,5 +57,6 @@ public class ModEventHandler {
         registrar.play(UpdateEconomyPacket.ID, UpdateEconomyPacket::new, ClientPayloadHandler.getInstance()::handleData);
         registrar.play(UpdateWastePacket.ID, UpdateWastePacket::new, ClientPayloadHandler.getInstance()::handleData);
         registrar.play(UpdateWaterPacket.ID, UpdateWaterPacket::new, ClientPayloadHandler.getInstance()::handleData);
+        registrar.play(UpdateFoodPacket.ID, UpdateFoodPacket::new, ClientPayloadHandler.getInstance()::handleData);
     }
 }

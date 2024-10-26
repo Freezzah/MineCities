@@ -58,18 +58,18 @@ public class FoodManager extends AbstractCityManager {
     @Override
     public void tickSlow(Level level) {
         super.tickSlow(level);
-        for (IBuilding building : getCity().getBuildingManager().getBuildings()) {
-            if (building instanceof IFoodGenerator foodGenerator)
-                food += foodGenerator.generateFood();
-            if (building instanceof IFoodConsumer foodConsumer) {
-                food -= foodConsumer.consumeFood(this.getFood());
-            }
-            setDirty(true);
-            for (IInhabitant inhabitant : getCity().getPlayers()) {
-                Player player = level.getPlayerByUUID(inhabitant.getUUID());
-                if (player instanceof ServerPlayer serverPlayer) {
-                    PacketDistributor.PLAYER.with(serverPlayer).send(new UpdateFoodPacket(food, getCity().getId()));
-                }
+        getCity().getBuildingManager().getBuildingWithManager(IFoodGenerator.class);
+        for (IFoodGenerator foodGenerator : getCity().getBuildingManager().getBuildingWithManager(IFoodGenerator.class)) {
+            food += foodGenerator.generateFood();
+        }
+        for (IFoodConsumer foodConsumer : getCity().getBuildingManager().getBuildingWithManager(IFoodConsumer.class)) {
+            food -= foodConsumer.consumeFood(this.getFood());
+        }
+        setDirty(true);
+        for (IInhabitant inhabitant : getCity().getPlayers()) {
+            Player player = level.getPlayerByUUID(inhabitant.getUUID());
+            if (player instanceof ServerPlayer serverPlayer) {
+                 PacketDistributor.PLAYER.with(serverPlayer).send(new UpdateFoodPacket(food, getCity().getId()));
             }
         }
     }

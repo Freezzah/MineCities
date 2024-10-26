@@ -69,7 +69,7 @@ public class WaterManager extends AbstractCityManager {
             if(building instanceof IWaterConsumer waterConsumer) {
                 //And can consume from well, consume from well
                 if(waterConsumer.canConsumeNearbyWater() &&
-                        !buildingManager.getBuildingsWithinRange(building, 3, IWaterGeneratorNearby.class).isEmpty()) {
+                        !buildingManager.getBuildingWithManagerWithinRange(building, 3, IWaterGeneratorNearby.class).isEmpty()) {
                     waterConsumer.consumeWater(Long.MAX_VALUE);
                 }
                 // Otherwise, consume from city.

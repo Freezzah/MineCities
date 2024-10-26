@@ -9,6 +9,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.TickEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
+import net.neoforged.neoforge.event.tick.LevelTickEvent;
 import org.jetbrains.annotations.NotNull;
 
 public class EventHandler {
@@ -50,15 +51,14 @@ public class EventHandler {
 
 
     @SubscribeEvent
-    public void tickEvent(@NotNull TickEvent.LevelTickEvent levelTickEvent) {
-        if (levelTickEvent.side.isServer()) {
-            if (levelTickEvent.level.getGameTime() % 100 == 0 && levelTickEvent.phase == TickEvent.Phase.END && levelTickEvent.level.dimension() == Level.OVERWORLD) {
-                CityManager.getInstance().tickSlow(levelTickEvent.level);
+    public void tickEvent(@NotNull LevelTickEvent.Post levelTickEvent) {
+        if(levelTickEvent.getLevel() instanceof ServerLevel) {
+            if (levelTickEvent.getLevel().getGameTime() % 100 == 0  && levelTickEvent.getLevel().dimension() == Level.OVERWORLD) {
+                CityManager.getInstance().tickSlow(levelTickEvent.getLevel());
 
             } else {
-                CityManager.getInstance().tick(levelTickEvent.level);
+                CityManager.getInstance().tick(levelTickEvent.getLevel());
             }
         }
     }
-
 }

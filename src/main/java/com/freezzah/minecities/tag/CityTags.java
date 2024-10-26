@@ -27,4 +27,6 @@ public class CityTags {
     public static final String TAG_WATER_HAPPINESS = "waterHappiness";
     public static final String TAG_HAPPINESS = "happiness";
     public static final String TAG_HAPPINESS_MANAGER = "happinessManager";
+    public static final String TAG_TICKS_UNHAPPY = "ticksUnhappy";
+    public static final String TAG_TICKS_HAPPY = "ticksHappy";
 }

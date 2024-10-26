@@ -3,6 +3,7 @@ package com.freezzah.minecities.network.handler;
 import com.freezzah.minecities.city.City;
 import com.freezzah.minecities.city.CityManager;
 import com.freezzah.minecities.network.packet.UpdateEconomyPacket;
+import com.freezzah.minecities.network.packet.UpdateFoodPacket;
 import com.freezzah.minecities.network.packet.UpdateWastePacket;
 import com.freezzah.minecities.network.packet.UpdateWaterPacket;
 import net.neoforged.neoforge.network.handling.PlayPayloadContext;
@@ -28,5 +29,10 @@ public class ClientPayloadHandler {
     public void handleData(final @NotNull UpdateWaterPacket data, final @NotNull PlayPayloadContext context) {
         City city = CityManager.getInstance().getCityById(data.cityUUID());
         context.workHandler().submitAsync(() -> city.getWaterManager().setWater(data.water()));
+    }
+
+    public void handleData(final @NotNull UpdateFoodPacket data, final @NotNull PlayPayloadContext context) {
+        City city = CityManager.getInstance().getCityById(data.cityUUID());
+        context.workHandler().submitAsync(() -> city.getFoodManager().setFood(data.food()));
     }
 }

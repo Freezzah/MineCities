@@ -4,6 +4,7 @@ import com.freezzah.minecities.city.City;
 import com.freezzah.minecities.entities.IInhabitant;
 import com.freezzah.minecities.tag.CityTags;
 import com.freezzah.minecities.utils.NBTHelper;
+import com.sun.jna.platform.win32.Guid;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -21,6 +22,7 @@ public class CitySavedData extends SavedData {
      * List of cities to track
      */
     private final List<City> cities = new ArrayList<>();
+    public UUID uuid = UUID.randomUUID();
     public CitySavedData() {
         this.setDirty();
     }

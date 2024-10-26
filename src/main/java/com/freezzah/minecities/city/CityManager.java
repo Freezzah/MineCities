@@ -20,7 +20,9 @@ public class CityManager implements ICityManager {
         this.level = level;
         savedData = level.getDataStorage().computeIfAbsent(
                 new SavedData.Factory<>(CitySavedData::new, CitySavedData::load), "minecities_cities");
-        instance = this;
+        //TODO, this seems to break if other worlds load later than the overworld
+        if(level.dimension() == Level.OVERWORLD)
+            instance = this;
     }
 
     public static @NotNull CityManager getInstance() {

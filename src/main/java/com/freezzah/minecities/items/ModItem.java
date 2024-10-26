@@ -2,7 +2,7 @@ package com.freezzah.minecities.items;
 
 import com.freezzah.minecities.blocks.block.registry.ModBlock;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemNameBlockItem;
+import net.minecraft.world.item.BlockItem;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.jetbrains.annotations.NotNull;

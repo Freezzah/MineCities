@@ -3,7 +3,7 @@ package com.freezzah.minecities.city.managers;
 import com.freezzah.minecities.Constants;
 import com.freezzah.minecities.blocks.building.IBuilding;
 import com.freezzah.minecities.city.City;
-import com.freezzah.minecities.city.extensions.ITaxable;
+import com.freezzah.minecities.city.extensions.ILiveable;
 import com.freezzah.minecities.entities.IInhabitant;
 import com.freezzah.minecities.network.packet.UpdateEconomyPacket;
 import com.freezzah.minecities.tag.CityTags;
@@ -53,7 +53,7 @@ public class EconomyManager extends AbstractCityManager {
     public void tickSlow(Level level) {
         super.tickSlow(level);
         for (IBuilding building : getCity().getBuildingManager().getBuildings()) {
-            if (building instanceof ITaxable taxableBuilding) {
+            if (building instanceof ILiveable taxableBuilding) {
                 gold += taxableBuilding.collectTax();
             }
             setDirty(true);

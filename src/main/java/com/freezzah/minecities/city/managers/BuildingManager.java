@@ -140,7 +140,7 @@ public class BuildingManager extends AbstractCityManager {
         return null;
     }
 
-    public <T, Y> List<? extends IBuilding> getBuildingsWithinRange(T building, int i, Class<Y> type) {
+    public <T, Y> List<? extends IBuilding> getBuildingWithManagerWithinRange(T building, int i, Class<Y> type) {
         List<IBuilding> buildings = new ArrayList<>();
         if(building instanceof IBuilding iBuilding) {
             BlockPos pos = getPosByBuilding(iBuilding);
@@ -155,6 +155,15 @@ public class BuildingManager extends AbstractCityManager {
             }
         }
         return buildings;
+    }
 
+    public <T> List<T> getBuildingWithManager(Class<T> type) {
+        List<T> buildings = new ArrayList<>();
+        for(IBuilding building1 : getBuildings()) {
+            if(type.isAssignableFrom(building1.getClass())) {
+                buildings.add((T)building1);
+            }
+        }
+        return buildings;
     }
 }
