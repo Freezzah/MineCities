@@ -6,7 +6,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.event.TickEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
 import net.neoforged.neoforge.event.tick.LevelTickEvent;
@@ -45,7 +44,7 @@ public class EventHandler {
     }
 
     @SubscribeEvent
-    public void levelUnload(LevelEvent.@NotNull Unload event) {
+    public void levelUnload(LevelEvent.@NotNull Unload ignoredEvent) {
         CityManager.getInstance().save();
     }
 

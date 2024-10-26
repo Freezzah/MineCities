@@ -31,11 +31,11 @@ public class BankBlock extends AbstractBuildingBlock {
     }
 
     @Override
-    public @NotNull InteractionResult use(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull Player pPlayer, @NotNull InteractionHand pHand, @NotNull BlockHitResult pHit) {
+    public @NotNull InteractionResult useItemOn(@NotNull ItemStack itemStack, @NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull Player pPlayer, @NotNull InteractionHand pHand, @NotNull BlockHitResult pHit) {
         if (!pLevel.isClientSide) {
             City city = CityManager.getInstance().getCityByBuilding(pPos);
             if (city != null) {
-                if (pPlayer.getMainHandItem().getItem() == ModItem.COIN.get()) {
+                if (itemStack.getItem() == ModItem.COIN.get()) {
                     ItemStack stack = pPlayer.getMainHandItem();
                     int count = stack.getCount();
                     stack.setCount(0);
@@ -48,7 +48,7 @@ public class BankBlock extends AbstractBuildingBlock {
                 }
             }
         }
-        return InteractionResult.sidedSuccess(pLevel.isClientSide);
+        return InteractionResult.SUCCESS_SERVER; //MIGRATION MAYBE WRONG
     }
 
     @Nullable

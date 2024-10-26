@@ -13,6 +13,7 @@ import net.minecraft.server.level.ServerLevel;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Objects;
 
 
 public abstract class AbstractBuilding implements IBuilding {
@@ -70,7 +71,7 @@ public abstract class AbstractBuilding implements IBuilding {
                 }
             }
         } catch (UpgradeException upgradeException) {
-            level.getPlayerByUUID(initiator.getUUID()).sendSystemMessage(Component.literal(upgradeException.getMessage()));
+            Objects.requireNonNull(level.getPlayerByUUID(initiator.getUUID())).displayClientMessage(Component.literal(upgradeException.getMessage()), false);
         }
         return false;
     }

@@ -5,6 +5,7 @@ import com.freezzah.minecities.client.gui.menu.CityOverviewMenu;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -13,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import static com.freezzah.minecities.Constants.MOD_ID;
 
 public class CityOverviewScreen extends AbstractContainerScreen<CityOverviewMenu> {
-    private static final ResourceLocation BACKGROUND_LOCATION = new ResourceLocation(MOD_ID, "textures/gui/screen/base_background.png");
+    private static final ResourceLocation BACKGROUND_LOCATION = ResourceLocation.fromNamespaceAndPath(MOD_ID, "textures/gui/screen/base_background.png");
     private final CityOverviewMenu menu;
     private final City city;
 
@@ -50,13 +51,12 @@ public class CityOverviewScreen extends AbstractContainerScreen<CityOverviewMenu
         graphics.drawString(this.font, "Inhabitants: ", offsetLeft, offsetTop, 4210752);
         graphics.drawString(this.font, Component.literal(String.valueOf(this.menu.getInhabitants())), startOffsetLeftMiddle, offsetTop, 4210752);
         super.render(graphics, mouseX, mouseY, partialTick);
-        offsetTop = this.topPos + 30;
     }
 
     @Override
     protected void renderBg(@NotNull GuiGraphics graphics, float partialTick, int mouseX, int mouesY) {
         RenderSystem.setShaderTexture(0, BACKGROUND_LOCATION);
-        graphics.blit(BACKGROUND_LOCATION, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+        graphics.blit(RenderType::guiTextured, BACKGROUND_LOCATION, this.leftPos, this.topPos, 0f, 0f, this.imageWidth, this.imageHeight,0,0);
     }
 
     @Override

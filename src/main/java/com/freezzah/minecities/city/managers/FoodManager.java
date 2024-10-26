@@ -1,7 +1,6 @@
 package com.freezzah.minecities.city.managers;
 
 import com.freezzah.minecities.Constants;
-import com.freezzah.minecities.blocks.building.IBuilding;
 import com.freezzah.minecities.city.City;
 import com.freezzah.minecities.city.extensions.IFoodConsumer;
 import com.freezzah.minecities.city.extensions.IFoodGenerator;
@@ -69,7 +68,7 @@ public class FoodManager extends AbstractCityManager {
         for (IInhabitant inhabitant : getCity().getPlayers()) {
             Player player = level.getPlayerByUUID(inhabitant.getUUID());
             if (player instanceof ServerPlayer serverPlayer) {
-                 PacketDistributor.PLAYER.with(serverPlayer).send(new UpdateFoodPacket(food, getCity().getId()));
+                 PacketDistributor.sendToPlayer(serverPlayer, new UpdateFoodPacket(food, getCity().getId()));
             }
         }
     }

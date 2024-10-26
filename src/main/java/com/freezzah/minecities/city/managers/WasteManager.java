@@ -65,7 +65,7 @@ public class WasteManager extends AbstractCityManager {
             for (IInhabitant inhabitant : getCity().getPlayers()) {
                 Player player = level.getPlayerByUUID(inhabitant.getUUID());
                 if (player instanceof ServerPlayer serverPlayer) {
-                    PacketDistributor.PLAYER.with(serverPlayer).send(new UpdateWastePacket(waste, getCity().getId()));
+                    PacketDistributor.sendToPlayer(serverPlayer, new UpdateWastePacket(waste, getCity().getId()));
                 }
             }
         }

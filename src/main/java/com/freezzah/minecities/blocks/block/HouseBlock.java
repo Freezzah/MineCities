@@ -9,7 +9,6 @@ import com.freezzah.minecities.city.CityManager;
 import com.freezzah.minecities.entities.Inhabitant;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -28,14 +27,14 @@ public class HouseBlock extends AbstractBuildingBlock {
     }
 
     @Override
-    public @NotNull InteractionResult use(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull Player pPlayer, @NotNull InteractionHand pHand, @NotNull BlockHitResult pHit) {
+    public @NotNull InteractionResult useWithoutItem(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull Player pPlayer, @NotNull BlockHitResult pHit) {
         if (!pLevel.isClientSide) {
-            super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
+            super.useWithoutItem(pState, pLevel, pPos, pPlayer, pHit);
             City city = CityManager.getInstance().getCityByBuilding(pPos);
             if (pPlayer.isCrouching()) {
                 if (pLevel instanceof ServerLevel serverLevel) {
-                    boolean success = city.getBuildingManager().getBuildingByPos(pPos).increaseLevel(serverLevel, Inhabitant.fromPlayer(pPlayer));
-                    return InteractionResult.sidedSuccess(pLevel.isClientSide);
+                    city.getBuildingManager().getBuildingByPos(pPos).increaseLevel(serverLevel, Inhabitant.fromPlayer(pPlayer));
+                    return InteractionResult.SUCCESS_SERVER;
                 }
             } else {
                 IBuilding building = city.getBuildingManager().getBuildingByPos(pPos);
@@ -44,6 +43,6 @@ public class HouseBlock extends AbstractBuildingBlock {
                 }
             }
         }
-        return InteractionResult.sidedSuccess(pLevel.isClientSide);
+        return InteractionResult.SUCCESS;
     }
 }

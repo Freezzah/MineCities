@@ -1,6 +1,9 @@
 package com.freezzah.minecities.items;
 
 import com.freezzah.minecities.blocks.block.registry.ModBlock;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.BlockItem;
 import net.neoforged.bus.api.IEventBus;
@@ -22,21 +25,44 @@ public class ModItem {
     /*
      * All items added by this mod.
      */
-    public static final Supplier<Item> TOWNHALL_BLOCK_ITEM =
-            ITEMS.register(ModItemId.TOWNHALL_BLOCK_ITEM_ID, () -> new ItemNameBlockItem(ModBlock.TOWNHALL_BLOCK.get(), new Item.Properties()));
-    public static final Supplier<Item> BANK_BLOCK_ITEM =
-            ITEMS.register(ModItemId.BANK_BLOCK_ITEM_ID, () -> new ItemNameBlockItem(ModBlock.BANK_BLOCK.get(), new Item.Properties()));
-    public static final Supplier<Item> HOUSE_BLOCK_ITEM =
-            ITEMS.register(ModItemId.HOUSE_BLOCK_ITEM_ID, () -> new ItemNameBlockItem(ModBlock.HOUSE_BLOCK.get(), new Item.Properties()));
-    public static final Supplier<Item> WATER_COLLECTOR_BLOCK_ITEM =
-            ITEMS.register(ModItemId.WATER_COLLECTOR_BLOCK_ITEM_ID, () -> new ItemNameBlockItem(ModBlock.WATER_COLLECTOR_BLOCK.get(), new Item.Properties()));
-    public static final Supplier<Item> FARM_BLOCK_ITEM =
-            ITEMS.register(ModItemId.FARM_BLOCK_ITEM_ID, () -> new ItemNameBlockItem(ModBlock.FARM_BLOCK.get(), new Item.Properties()));
-    public static final Supplier<Item> WELL_BLOCK_ITEM =
-            ITEMS.register(ModItemId.WELL_BLOCK_ITEM_ID, () -> new ItemNameBlockItem(ModBlock.WELL_BLOCK.get(), new Item.Properties()));
-    public static final Supplier<Item> COIN =
-            ITEMS.register(ModItemId.COIN_ITEM_ID, () -> new Item(new Item.Properties().stacksTo(256)));
+//    public static final Supplier<Item> TOWNHALL_BLOCK_ITEM =
+//            ITEMS.register(ModItemId.TOWNHALL_BLOCK_ITEM_ID, () -> new Item(new Item.Properties().setId(
+//                    ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MOD_ID, ModItemId.TOWNHALL_BLOCK_ITEM_ID))).useItemDescriptionPrefix()));
+//    public static final Supplier<Item> BANK_BLOCK_ITEM =
+//            ITEMS.register(ModItemId.BANK_BLOCK_ITEM_ID, () -> new Item(new Item.Properties().setId(
+//                    ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MOD_ID, ModItemId.BANK_BLOCK_ITEM_ID))).useItemDescriptionPrefix()));
+//    public static final Supplier<Item> HOUSE_BLOCK_ITEM =
+//            ITEMS.register(ModItemId.HOUSE_BLOCK_ITEM_ID, () -> new Item(new Item.Properties().setId(
+//                    ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MOD_ID, ModItemId.HOUSE_BLOCK_ITEM_ID))).useItemDescriptionPrefix()));
+//    public static final Supplier<Item> WATER_COLLECTOR_BLOCK_ITEM =
+//            ITEMS.register(ModItemId.WATER_COLLECTOR_BLOCK_ITEM_ID, () -> new Item(new Item.Properties().setId(
+//                    ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MOD_ID, ModItemId.WATER_COLLECTOR_BLOCK_ITEM_ID))).useItemDescriptionPrefix()));
+//    public static final Supplier<Item> FARM_BLOCK_ITEM =
+//            ITEMS.register(ModItemId.FARM_BLOCK_ITEM_ID, () -> new Item(new Item.Properties().setId(
+//                    ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MOD_ID, ModItemId.FARM_BLOCK_ITEM_ID))).useItemDescriptionPrefix()));
+//    public static final Supplier<Item> WELL_BLOCK_ITEM =
+//            ITEMS.register(ModItemId.WELL_BLOCK_ITEM_ID, () -> new Item(new Item.Properties().setId(
+//                    ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MOD_ID, ModItemId.WELL_BLOCK_ITEM_ID))).useItemDescriptionPrefix()));
+//    public static final Supplier<Item> COIN =
+//            ITEMS.register(ModItemId.COIN_ITEM_ID, () -> new Item(new Item.Properties().setId(
+//                    ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MOD_ID, ModItemId.COIN_ITEM_ID))).stacksTo(256)));
 
+
+    public static final Supplier<BlockItem> TOWNHALL_BLOCK_ITEM =
+            ITEMS.registerSimpleBlockItem(ModBlock.TOWNHALL_BLOCK);
+    public static final Supplier<BlockItem> BANK_BLOCK_ITEM =
+            ITEMS.registerSimpleBlockItem(ModBlock.BANK_BLOCK);
+    public static final Supplier<BlockItem> HOUSE_BLOCK_ITEM =
+            ITEMS.registerSimpleBlockItem(ModBlock.HOUSE_BLOCK);
+    public static final Supplier<BlockItem> WATER_COLLECTOR_BLOCK_ITEM
+            =ITEMS.registerSimpleBlockItem(ModBlock.WATER_COLLECTOR_BLOCK);
+    public static final Supplier<BlockItem> FARM_BLOCK_ITEM =
+            ITEMS.registerSimpleBlockItem(ModBlock.FARM_BLOCK);
+    public static final Supplier<BlockItem> WELL_BLOCK_ITEM =
+            ITEMS.registerSimpleBlockItem(ModBlock.WELL_BLOCK);
+    public static final Supplier<Item> COIN =
+            ITEMS.register(ModItemId.COIN_ITEM_ID, () -> new Item(new Item.Properties().setId(
+                    ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MOD_ID, ModItemId.COIN_ITEM_ID))).stacksTo(256)));
     /*
      * Function to call from mod init phase to register all items
      */

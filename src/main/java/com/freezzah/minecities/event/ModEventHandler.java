@@ -10,25 +10,21 @@ import com.freezzah.minecities.network.packet.UpdateEconomyPacket;
 import com.freezzah.minecities.network.packet.UpdateFoodPacket;
 import com.freezzah.minecities.network.packet.UpdateWastePacket;
 import com.freezzah.minecities.network.packet.UpdateWaterPacket;
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
-import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
-import net.neoforged.neoforge.network.registration.IPayloadRegistrar;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.neoforged.neoforge.registries.NewRegistryEvent;
 import org.jetbrains.annotations.NotNull;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 
 import static com.freezzah.minecities.Constants.MOD_ID;
 
 public class ModEventHandler {
-
-    public static void clientSetup(final FMLClientSetupEvent event) {
-        event.enqueueWork(() -> {
-            MenuScreens.register(ModMenuType.BANK_MENU.get(), BankScreen::new);
-            MenuScreens.register(ModMenuType.CITY_OVERVIEW_MENU.get(), CityOverviewScreen::new);
-        });
+    public static void clientSetup(final RegisterMenuScreensEvent event) {
+        event.register(ModMenuType.BANK_MENU.get(), BankScreen::new);
+        event.register(ModMenuType.CITY_OVERVIEW_MENU.get(), CityOverviewScreen::new);
     }
 
     @SuppressWarnings("unused")
@@ -52,11 +48,11 @@ public class ModEventHandler {
 
 
     @SubscribeEvent
-    public void onRegisterPayloads(RegisterPayloadHandlerEvent event) {
-        final IPayloadRegistrar registrar = event.registrar(MOD_ID);
-        registrar.play(UpdateEconomyPacket.ID, UpdateEconomyPacket::new, ClientPayloadHandler.getInstance()::handleData);
-        registrar.play(UpdateWastePacket.ID, UpdateWastePacket::new, ClientPayloadHandler.getInstance()::handleData);
-        registrar.play(UpdateWaterPacket.ID, UpdateWaterPacket::new, ClientPayloadHandler.getInstance()::handleData);
-        registrar.play(UpdateFoodPacket.ID, UpdateFoodPacket::new, ClientPayloadHandler.getInstance()::handleData);
+    public void onRegisterPayloads(RegisterPayloadHandlersEvent event) {
+        final PayloadRegistrar registrar = event.registrar(MOD_ID);
+        registrar.playToClient(UpdateEconomyPacket.TYPE, UpdateEconomyPacket.STREAM_CODEC, ClientPayloadHandler.getInstance()::handleData);
+        registrar.playToClient(UpdateWastePacket.TYPE, UpdateWastePacket.STREAM_CODEC, ClientPayloadHandler.getInstance()::handleData);
+        registrar.playToClient(UpdateWaterPacket.TYPE, UpdateWaterPacket.STREAM_CODEC, ClientPayloadHandler.getInstance()::handleData);
+        registrar.playToClient(UpdateFoodPacket.TYPE, UpdateFoodPacket.STREAM_CODEC, ClientPayloadHandler.getInstance()::handleData);
     }
 }

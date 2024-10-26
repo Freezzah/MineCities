@@ -36,9 +36,11 @@ public class BuildingManager extends AbstractCityManager {
 
     @Contract("_, _, _ -> new")
     private static @NotNull Pair<BlockPos, IBuilding> createFrom(final City city, @NotNull CompoundTag buildingTag, @NotNull CompoundTag buildingPosTag) {
-        final ResourceLocation type = new ResourceLocation(buildingTag.getString(BuildingTags.TAG_BUILDING_TYPE));
-        final BuildingEntry entry = ModBuildingRegistry.buildingRegistry.get(type);
+        final ResourceLocation type = ResourceLocation.parse(buildingTag.getString(BuildingTags.TAG_BUILDING_TYPE));
+        final BuildingEntry entry = ModBuildingRegistry.buildingRegistry.getValue(type);
         final BlockPos pos = BlockPosHelper.readBlockPos(buildingPosTag);
+        //Part of update in ModBuildingRegistry.buildingRegistry.get(type); -> ModBuildingRegistry.buildingRegistry.getValue(type);
+        assert entry != null;
         IBuilding building = entry.produceBuilding(city);
         building.read(buildingTag);
         return new Pair<>(pos, building);
@@ -114,7 +116,9 @@ public class BuildingManager extends AbstractCityManager {
     }
 
     public IBuilding createFrom(final City city, final ResourceLocation buildingName) {
-        final BuildingEntry entry = ModBuildingRegistry.buildingRegistry.get(buildingName);
+        final BuildingEntry entry = ModBuildingRegistry.buildingRegistry.getValue(buildingName);
+        //Part of update, see above
+        assert entry != null;
         return entry.produceBuilding(city);
     }
 

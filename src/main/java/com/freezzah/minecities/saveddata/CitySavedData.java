@@ -4,8 +4,8 @@ import com.freezzah.minecities.city.City;
 import com.freezzah.minecities.entities.IInhabitant;
 import com.freezzah.minecities.tag.CityTags;
 import com.freezzah.minecities.utils.NBTHelper;
-import com.sun.jna.platform.win32.Guid;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -32,7 +32,7 @@ public class CitySavedData extends SavedData {
      * @param compoundTag tag to load cityData from
      * @return new instance of the cityData
      */
-    public static @NotNull CitySavedData load(@NotNull CompoundTag compoundTag) {
+    public static @NotNull CitySavedData load(@NotNull CompoundTag compoundTag, HolderLookup.Provider ignoredProvider) {
         CitySavedData savedData = new CitySavedData();
         for (final Tag tag : compoundTag.getList(CityTags.TAG_CITIES, Tag.TAG_COMPOUND)) {
             final City city = City.load((CompoundTag) tag);
@@ -49,7 +49,7 @@ public class CitySavedData extends SavedData {
      * @return Compound tag where cities are added.
      */
     @Override
-    public @NotNull CompoundTag save(@NotNull CompoundTag compoundTag) {
+    public @NotNull CompoundTag save(@NotNull CompoundTag compoundTag, HolderLookup.@NotNull Provider provider) {
         ListTag tag = cities.stream().map(City::getCityTag).collect(NBTHelper.toListNBT());
         compoundTag.put(CityTags.TAG_CITIES, tag);
         return compoundTag;

@@ -23,7 +23,7 @@ public class WaterCollectorBlockEntity extends AbstractBlockEntity {
         this.blockPos = pPos;
     }
 
-    public static <T extends BlockEntity> void tick(Level level, BlockPos blockPos, BlockState blockState, T t) {
+    public static <T extends BlockEntity> void tick(Level level, BlockPos ignoredBlockPos, BlockState ignoredBlockState, T t) {
         if (t instanceof WaterCollectorBlockEntity waterCollectorBlockEntity) {
             if (level.getGameTime() % 100 == 0) {
                 waterCollectorBlockEntity.collectWater(level);
@@ -42,7 +42,7 @@ public class WaterCollectorBlockEntity extends AbstractBlockEntity {
                 for (Direction direction : Direction.values()) {
                     Block block = level.getBlockState(blockPos.relative(direction)).getBlock();
                     if (block instanceof LiquidBlock liquidBlock) {
-                        if (liquidBlock.getFluid() instanceof WaterFluid) {
+                        if (liquidBlock.fluid instanceof WaterFluid) {
                             sides++;
                         }
                     }
