@@ -57,7 +57,7 @@ public class WaterManager extends AbstractCityManager {
     }
 
     @Override
-    public void tickSlow(Level level) {
+    public void tickSlow(@NotNull Level level) {
         super.tickSlow(level);
         BuildingManager buildingManager = getCity().getBuildingManager();
         for (IBuilding building : getCity().getBuildingManager().getBuildings()) {

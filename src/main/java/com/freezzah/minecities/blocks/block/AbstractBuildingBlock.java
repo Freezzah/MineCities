@@ -21,6 +21,11 @@ public abstract class AbstractBuildingBlock extends Block implements IBuildingBl
     }
 
     @Override
+    public ResourceLocation getBuildingName() {
+        return getBuildingType().getRegistryName();
+    }
+
+    @Override
     public boolean onBreak(@NotNull Player player, @NotNull BlockPos pos) {
         if (player instanceof ServerPlayer serverPlayer) {
             City city = CityManager.getInstance().getCityByPlayer(Inhabitant.fromPlayer(serverPlayer));
@@ -43,10 +48,6 @@ public abstract class AbstractBuildingBlock extends Block implements IBuildingBl
             return false;
         }
         return true;
-    }
-
-    public ResourceLocation getBuildingName() {
-        return getBuildingType().getRegistryName();
     }
 
     @Nullable

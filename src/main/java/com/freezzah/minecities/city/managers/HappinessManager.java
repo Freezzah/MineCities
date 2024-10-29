@@ -1,14 +1,11 @@
 package com.freezzah.minecities.city.managers;
 
-import com.freezzah.minecities.blocks.building.IBuilding;
 import com.freezzah.minecities.city.City;
 import com.freezzah.minecities.city.extensions.ILiveable;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.FenceGateBlock;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class HappinessManager extends AbstractCityManager{
@@ -16,8 +13,8 @@ public class HappinessManager extends AbstractCityManager{
         super(city);
     }
 
-    public void tick(Level level){}
-    public void tickSlow(Level level){
+    public void tick(@NotNull Level level){}
+    public void tickSlow(@NotNull Level level){
         List<ILiveable> buildingList = getCity().getBuildingManager().getBuildingWithManager(ILiveable.class);
         float happiness = 0;
         int count = 0;

@@ -26,6 +26,7 @@ public class BankBlock extends AbstractBuildingBlock {
         super(properties);
     }
 
+    @Override
     public BuildingEntry getBuildingType() {
         return ModBuildingRegistry.BANK.get();
     }

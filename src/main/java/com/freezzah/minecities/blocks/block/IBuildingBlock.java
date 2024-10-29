@@ -27,6 +27,16 @@ public interface IBuildingBlock extends EntityBlock {
      * @return true if cancel, false if continue
      */
     boolean onPlace(ServerPlayer player, BlockPos pos);
+
+    /**
+     * Method to return building type
+     * @return {@link BuildingEntry}
+     */
     BuildingEntry getBuildingType();
+
+    /**
+     * Return the name of the building as a {@link ResourceLocation}
+     * @return {@link ResourceLocation}
+     */
     ResourceLocation getBuildingName();
 }

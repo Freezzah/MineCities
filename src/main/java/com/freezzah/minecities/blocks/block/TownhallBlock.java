@@ -65,7 +65,6 @@ public class TownhallBlock extends AbstractBuildingBlock implements IBuildingBlo
         return true;
     }
 
-
     @Override
     public boolean onPlace(ServerPlayer player, BlockPos pos) {
         City city = CityManager.getInstance().getCityByPlayer(Inhabitant.fromPlayer(player));

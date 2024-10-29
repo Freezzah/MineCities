@@ -50,7 +50,7 @@ public class EconomyManager extends AbstractCityManager {
     }
 
     @Override
-    public void tickSlow(Level level) {
+    public void tickSlow(@NotNull Level level) {
         super.tickSlow(level);
         for (IBuilding building : getCity().getBuildingManager().getBuildings()) {
             if (building instanceof ILiveable taxableBuilding) {

@@ -26,7 +26,7 @@ runs {
         systemProperty 'forge.logging.console.level', 'debug'
         systemProperty 'forge.enabledGameTestNamespaces', mod_id
         //programArguments '--username', 'Dev###'
-        programArguments '-ea'
+        arguments '-ea'
         modSource project.sourceSets.main
     }
 
@@ -57,7 +57,7 @@ runs {
         systemProperty 'forge.enabledGameTestNamespaces', mod_id
 
         modSource project.sourceSets.main
-        programArguments.addAll '--mod', mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+        arguments.addAll '--mod', mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
     }
 }
 

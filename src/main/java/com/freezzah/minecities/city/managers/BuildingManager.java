@@ -111,11 +111,11 @@ public class BuildingManager extends AbstractCityManager {
         }
     }
 
-    public IBuilding createFrom(final City city, final @NotNull IBuildingBlock buildingBlock) {
+    public @NotNull IBuilding createFrom(@NotNull final City city, @NotNull final IBuildingBlock buildingBlock) {
         return this.createFrom(city, buildingBlock.getBuildingName());
     }
 
-    public IBuilding createFrom(final City city, final ResourceLocation buildingName) {
+    public @NotNull IBuilding createFrom(@NotNull final City city, @NotNull final ResourceLocation buildingName) {
         final BuildingEntry entry = ModBuildingRegistry.buildingRegistry.getValue(buildingName);
         //Part of update, see above
         assert entry != null;
@@ -126,11 +126,11 @@ public class BuildingManager extends AbstractCityManager {
         return buildings.get(pos);
     }
 
-    public List<IBuilding> getBuildings() {
+    public @NotNull List<IBuilding> getBuildings() {
         return buildings.values().stream().toList();
     }
 
-    public void addBuilding(BlockPos pos, AbstractBuildingBlock abstractBuildingBlock) {
+    public void addBuilding(@NotNull BlockPos pos, @NotNull AbstractBuildingBlock abstractBuildingBlock) {
         this.addBuilding(pos, createFrom(getCity(), abstractBuildingBlock));
         setDirty(true);
     }
@@ -144,7 +144,7 @@ public class BuildingManager extends AbstractCityManager {
         return null;
     }
 
-    public <T, Y> List<? extends IBuilding> getBuildingWithManagerWithinRange(T building, int i, Class<Y> type) {
+    public <T, Y> @NotNull List<? extends IBuilding> getBuildingWithManagerWithinRange(@NotNull T building, int range, @NotNull Class<Y> type) {
         List<IBuilding> buildings = new ArrayList<>();
         if(building instanceof IBuilding iBuilding) {
             BlockPos pos = getPosByBuilding(iBuilding);
@@ -152,7 +152,7 @@ public class BuildingManager extends AbstractCityManager {
                 if(type.isAssignableFrom(building1.getClass())) {
                     BlockPos pos1 = getPosByBuilding(building1);
                     double dist = BlockPosHelper.distance(pos, pos1);
-                    if(dist < i){
+                    if(dist < range){
                         buildings.add(building1);
                     }
                 }
@@ -161,11 +161,11 @@ public class BuildingManager extends AbstractCityManager {
         return buildings;
     }
 
-    public <T> List<T> getBuildingWithManager(Class<T> type) {
+    public <T> @NotNull List<T> getBuildingWithManager(@NotNull Class<T> type) {
         List<T> buildings = new ArrayList<>();
-        for(IBuilding building1 : getBuildings()) {
-            if(type.isAssignableFrom(building1.getClass())) {
-                buildings.add((T)building1);
+        for(IBuilding building : getBuildings()) {
+            if(type.isAssignableFrom(building.getClass())) {
+                buildings.add((T)building);
             }
         }
         return buildings;

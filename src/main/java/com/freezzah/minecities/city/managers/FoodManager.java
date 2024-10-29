@@ -22,7 +22,7 @@ public class FoodManager extends AbstractCityManager {
         super(city);
     }
 
-    public static @Nullable FoodManager load(@NotNull CompoundTag tag, City city) {
+    public static @Nullable FoodManager load(@NotNull CompoundTag tag, @NotNull City city) {
         try {
             FoodManager foodManager = new FoodManager(city);
             foodManager.read(tag);
@@ -55,7 +55,7 @@ public class FoodManager extends AbstractCityManager {
     }
 
     @Override
-    public void tickSlow(Level level) {
+    public void tickSlow(@NotNull Level level) {
         super.tickSlow(level);
         getCity().getBuildingManager().getBuildingWithManager(IFoodGenerator.class);
         for (IFoodGenerator foodGenerator : getCity().getBuildingManager().getBuildingWithManager(IFoodGenerator.class)) {

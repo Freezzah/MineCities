@@ -20,7 +20,7 @@ public class ModBlock {
     public static final DeferredRegister.Blocks BLOCKS =
             DeferredRegister.createBlocks(MOD_ID);
     /*
-     * All items added by this mod.
+     * All blocks added by this mod.
      */
     public static final @NotNull DeferredHolder<net.minecraft.world.level.block.Block, TownhallBlock> TOWNHALL_BLOCK =
             BLOCKS.register(ModBlockId.TOWNHALL_BLOCK_ID, () -> new TownhallBlock(BlockBehaviour.Properties.of().setId(

@@ -15,6 +15,7 @@ public class FarmBlock extends AbstractBuildingBlock {
         super(properties);
     }
 
+    @Override
     public BuildingEntry getBuildingType() {
         return ModBuildingRegistry.FARM.get();
     }

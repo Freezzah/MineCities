@@ -17,9 +17,6 @@ import java.util.Objects;
 
 
 public abstract class AbstractBuilding implements IBuilding {
-
-    //TODO This class is a mess, clean up
-
     private BuildingEntry buildingType = null;
     private byte buildingLevel = 1;
 

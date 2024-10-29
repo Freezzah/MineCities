@@ -11,7 +11,7 @@ public abstract class AbstractCityManager implements IManager {
     public boolean isDirty = false;
     private CompoundTag managerTag;
 
-    public AbstractCityManager(City city) {
+    public AbstractCityManager(@NotNull City city) {
         this.city = city;
         setDirty(true);
     }
@@ -29,10 +29,10 @@ public abstract class AbstractCityManager implements IManager {
         }
     }
 
-    public void tickSlow(Level level) {
+    public void tickSlow(@NotNull Level level) {
     }
 
-    public void tick(Level _level) {
+    public void tick(@NotNull Level ignoredLevel) {
         checkDirty();
     }
 
@@ -53,11 +53,11 @@ public abstract class AbstractCityManager implements IManager {
         return this.managerTag;
     }
 
-    public void setManagerTag(CompoundTag managerTag) {
+    public void setManagerTag(@NotNull CompoundTag managerTag) {
         this.managerTag = managerTag;
     }
 
-    public City getCity() {
+    public @NotNull City getCity() {
         return city;
     }
 }

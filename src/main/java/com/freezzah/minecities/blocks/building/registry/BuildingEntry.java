@@ -4,6 +4,7 @@ import com.freezzah.minecities.blocks.block.IBuildingBlock;
 import com.freezzah.minecities.blocks.building.IBuilding;
 import com.freezzah.minecities.city.City;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -22,7 +23,7 @@ public class BuildingEntry {
         this.buildingProducer = buildingProducer;
     }
 
-    public IBuilding produceBuilding(final City city) {
+    public @NotNull IBuilding produceBuilding(@NotNull final City city) {
         final IBuilding building = buildingProducer.get();
         building.setBuildingType(this);
         return building;

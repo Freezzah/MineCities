@@ -80,10 +80,8 @@ public class CitySavedData extends SavedData {
      * @return {@link City} or null
      */
     public @Nullable City getCityByPlayer(@NotNull IInhabitant inhabitant) {
-        for (City city : cities) {
-            if (city.getPlayers().contains(inhabitant)) return city;
-        }
-        return null;
+        return cities.stream().filter(city -> city.getPlayers().contains(inhabitant))
+                .findFirst().orElse(null);
     }
     public @NotNull List<City> getCities() {
         return cities;
@@ -92,18 +90,11 @@ public class CitySavedData extends SavedData {
         cities.remove(city);
     }
     public void removeUnassociatedBuilding(BlockPos pos) {
-        for (City city : cities) {
-            if (city.getBuildingManager().getBuildingByPos(pos) != null) {
-                city.getBuildingManager().removeBuilding(pos);
-            }
-        }
+        cities.stream().filter(city -> city.getBuildingManager().getBuildingByPos(pos) != null)
+                .forEach(city -> city.getBuildingManager().removeBuilding(pos));
     }
     public @Nullable City getCityByBuilding(BlockPos pos) {
-        for (City city : cities) {
-            if (city.getBuildingManager().getBuildingByPos(pos) != null) {
-                return city;
-            }
-        }
-        return null;
+        return cities.stream().filter(city -> city.getBuildingManager().getBuildingByPos(pos) != null)
+                .findFirst().orElse(null);
     }
 }
