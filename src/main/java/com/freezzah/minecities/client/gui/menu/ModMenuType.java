@@ -28,6 +28,8 @@ public class ModMenuType {
      */
     public static final Supplier<MenuType<BankMenu>> BANK_MENU = MENUS.register(ModMenuId.BANK_MENU_ID, () ->
             IMenuTypeExtension.create(BankMenu::new));
+    public static final Supplier<MenuType<WasteMenu>> WASTE_MENU = MENUS.register(ModMenuId.WASTE_MENU_ID, () ->
+            IMenuTypeExtension.create(WasteMenu::new));
     public static final Supplier<MenuType<CityOverviewMenu>> CITY_OVERVIEW_MENU = MENUS.register(ModMenuId.CITY_OVERVIEW_MENU_ID, () ->
             IMenuTypeExtension.create(CityOverviewMenu::new));
 

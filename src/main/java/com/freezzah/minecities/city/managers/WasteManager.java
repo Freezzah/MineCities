@@ -3,6 +3,7 @@ package com.freezzah.minecities.city.managers;
 import com.freezzah.minecities.Constants;
 import com.freezzah.minecities.blocks.building.IBuilding;
 import com.freezzah.minecities.city.City;
+import com.freezzah.minecities.city.extensions.IWasteConsumer;
 import com.freezzah.minecities.city.extensions.IWasteGenerator;
 import com.freezzah.minecities.entities.IInhabitant;
 import com.freezzah.minecities.network.packet.UpdateWastePacket;
@@ -60,6 +61,11 @@ public class WasteManager extends AbstractCityManager {
         for (IBuilding building : getCity().getBuildingManager().getBuildings()) {
             if (building instanceof IWasteGenerator wasteGenerator) {
                 waste += wasteGenerator.generateWaste();
+            }
+            if (building instanceof IWasteConsumer wasteConsumer) {
+                if(wasteConsumer.getCurrentWaste() < wasteConsumer.getMaxWaste()){
+                    waste -= wasteConsumer.consumeWaste(waste);
+                }
             }
             setDirty(true);
             for (IInhabitant inhabitant : getCity().getPlayers()) {

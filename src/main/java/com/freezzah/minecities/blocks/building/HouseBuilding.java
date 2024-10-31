@@ -6,7 +6,6 @@ import com.freezzah.minecities.utils.Requirement;
 import net.minecraft.nbt.CompoundTag;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class HouseBuilding extends AbstractBuilding implements ILiveable,
@@ -179,8 +178,9 @@ public class HouseBuilding extends AbstractBuilding implements ILiveable,
 
     //region IBuilding
     @Override
+    @NotNull
     List<Requirement> getRequirements() {
-        return Arrays.asList(new Requirement(0,0,0));
+        return List.of(new Requirement(0, 0, 0));
     }
 
     @Override

@@ -56,6 +56,11 @@ public class ModBuildingRegistry {
             .setBuildingProducer(WellBuilding::new)
             .setRegistryName(ResourceLocation.fromNamespaceAndPath(MOD_ID, ModBuildingId.WELL_ID))
             .createBuildingEntry());
+    public static final Supplier<BuildingEntry> WASTE_DUMP = DEFERRED_REGISTER.register(ModBuildingId.WASTE_DUMP_ID, () -> new BuildingEntry.Builder()
+            .setBuildingBlock(ModBlock.WASTE_DUMP_BLOCK.get())
+            .setBuildingProducer(WasteDumpBuilding::new)
+            .setRegistryName(ResourceLocation.fromNamespaceAndPath(MOD_ID, ModBuildingId.WASTE_DUMP_ID))
+            .createBuildingEntry());
 
     public static void register(IEventBus modEventBus) {
         DEFERRED_REGISTER.register(modEventBus);

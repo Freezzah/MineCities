@@ -1,15 +1,16 @@
 package com.freezzah.minecities.blocks.building;
 
 import com.freezzah.minecities.utils.Requirement;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class TownhallBuilding extends AbstractBuilding {
     //region IBuilding
     @Override
+    @NotNull
     List<Requirement> getRequirements() {
-        return Arrays.asList(new Requirement(0,0,0));
+        return List.of(new Requirement(0, 0, 0));
     }
 
     @Override

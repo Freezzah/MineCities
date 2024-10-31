@@ -7,4 +7,5 @@ public class ModBlockId {
     public static final String WATER_COLLECTOR_BLOCK_ID = "watercollectorblock";
     public static final String FARM_BLOCK_ID = "farmblock";
     public static final String WELL_BLOCK_ID = "wellblock";
+    public static final String WASTE_DUMP_ID = "wastedumpblock";
 }

@@ -92,7 +92,7 @@ public abstract class AbstractBuilding implements IBuilding {
         return city.getEconomyManager().tryTakeGold(requiredGold, performTake);
     }
 
-    abstract List<Requirement> getRequirements();
+    abstract @NotNull List<Requirement> getRequirements();
 
     public abstract boolean checkLevelRequirements(byte desiredLevel);
 }

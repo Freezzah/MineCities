@@ -40,13 +40,15 @@ public class ModBlock {
     public static final @NotNull DeferredHolder<net.minecraft.world.level.block.Block, WellBlock> WELL_BLOCK =
             BLOCKS.register(ModBlockId.WELL_BLOCK_ID, () -> new WellBlock(BlockBehaviour.Properties.of().setId(
                     ResourceKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(MOD_ID, ModBlockId.WELL_BLOCK_ID)))));
-
+    public static final @NotNull DeferredHolder<net.minecraft.world.level.block.Block, WasteDumpBlock> WASTE_DUMP_BLOCK =
+            BLOCKS.register(ModBlockId.WASTE_DUMP_ID, () -> new WasteDumpBlock(BlockBehaviour.Properties.of().setId(
+                    ResourceKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(MOD_ID, ModBlockId.WASTE_DUMP_ID)))));
     @Contract(value = " -> new", pure = true)
     @NotNull
     public static AbstractBuildingBlock[] getBuildingSuppliers() {
         return new AbstractBuildingBlock[]{
                 TOWNHALL_BLOCK.get(), BANK_BLOCK.get(), HOUSE_BLOCK.get(),
-                FARM_BLOCK.get(), WATER_COLLECTOR_BLOCK.get(), WELL_BLOCK.get()
+                FARM_BLOCK.get(), WATER_COLLECTOR_BLOCK.get(), WELL_BLOCK.get(), WASTE_DUMP_BLOCK.get()
         };
     }
 

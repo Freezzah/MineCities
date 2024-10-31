@@ -37,6 +37,8 @@ public class ModItem {
             ITEMS.registerSimpleBlockItem(ModBlock.FARM_BLOCK);
     public static final Supplier<BlockItem> WELL_BLOCK_ITEM =
             ITEMS.registerSimpleBlockItem(ModBlock.WELL_BLOCK);
+    public static final Supplier<BlockItem> WASTE_DUMP_BLOCK_ITEM =
+            ITEMS.registerSimpleBlockItem(ModBlock.WASTE_DUMP_BLOCK);
     public static final Supplier<Item> COIN =
             ITEMS.register(ModItemId.COIN_ITEM_ID, () -> new Item(new Item.Properties().setId(
                     ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MOD_ID, ModItemId.COIN_ITEM_ID))).stacksTo(256)));

@@ -1,10 +1,12 @@
 package com.freezzah.minecities.event;
 
+import com.freezzah.minecities.blocks.block.AbstractBuildingBlock;
 import com.freezzah.minecities.blocks.building.registry.ModBuildingRegistry;
 import com.freezzah.minecities.blocks.block.registry.ModBlock;
 import com.freezzah.minecities.client.gui.menu.ModMenuType;
 import com.freezzah.minecities.client.gui.screen.BankScreen;
 import com.freezzah.minecities.client.gui.screen.CityOverviewScreen;
+import com.freezzah.minecities.client.gui.screen.WasteCollectorScreen;
 import com.freezzah.minecities.network.handler.ClientPayloadHandler;
 import com.freezzah.minecities.network.packet.UpdateEconomyPacket;
 import com.freezzah.minecities.network.packet.UpdateFoodPacket;
@@ -25,18 +27,16 @@ public class ModEventHandler {
     public static void clientSetup(final RegisterMenuScreensEvent event) {
         event.register(ModMenuType.BANK_MENU.get(), BankScreen::new);
         event.register(ModMenuType.CITY_OVERVIEW_MENU.get(), CityOverviewScreen::new);
+        event.register(ModMenuType.WASTE_MENU.get(), WasteCollectorScreen::new);
     }
 
     @SuppressWarnings("unused")
     @SubscribeEvent
     public void createTabBuildContent(@NotNull BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
-            event.accept(ModBlock.TOWNHALL_BLOCK.get());
-            event.accept(ModBlock.BANK_BLOCK.get());
-            event.accept(ModBlock.HOUSE_BLOCK.get());
-            event.accept(ModBlock.WATER_COLLECTOR_BLOCK.get());
-            event.accept(ModBlock.FARM_BLOCK.get());
-            event.accept(ModBlock.WELL_BLOCK.get());
+            for(AbstractBuildingBlock building : ModBlock.getBuildingSuppliers()) {
+                event.accept(building);
+            }
         }
     }
 
