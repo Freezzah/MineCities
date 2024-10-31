@@ -21,10 +21,10 @@ public class ModBuildingRegistry {
             ResourceKey.createRegistryKey(ResourceLocation.fromNamespaceAndPath(MOD_ID, "buildingentries"));
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
             DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, Constants.MOD_ID);
-    public static Registry<BuildingEntry> buildingRegistry = new RegistryBuilder<>(BUILDING_ENTRY_REGISTRY_KEY)
+    public static final Registry<BuildingEntry> buildingRegistry = new RegistryBuilder<>(BUILDING_ENTRY_REGISTRY_KEY)
             .defaultKey(ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "null"))
             .maxId(256).create();
-    public final static DeferredRegister<BuildingEntry> DEFERRED_REGISTER =
+    public static final DeferredRegister<BuildingEntry> DEFERRED_REGISTER =
             DeferredRegister.create(ModBuildingRegistry.buildingRegistry, MOD_ID);
     public static final Supplier<BuildingEntry> TOWNHALL = DEFERRED_REGISTER.register(ModBuildingId.TOWNHALL_ID, () -> new BuildingEntry.Builder()
             .setBuildingBlock(ModBlock.TOWNHALL_BLOCK.get())

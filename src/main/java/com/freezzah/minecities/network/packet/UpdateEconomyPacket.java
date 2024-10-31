@@ -24,13 +24,6 @@ public record UpdateEconomyPacket(long gold, UUID cityUUID) implements CustomPac
             UpdateEconomyPacket::new
     );
 
-    //MIGRATION REMOVE
-//    @Override
-//    public void write(FriendlyByteBuf pBuffer) {
-//        pBuffer.writeLong(gold());
-//        pBuffer.writeUUID(cityUUID());
-//    }
-
     @Override
     public @NotNull Type<? extends CustomPacketPayload> type() {
         return TYPE;

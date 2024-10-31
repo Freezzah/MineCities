@@ -9,6 +9,7 @@ import com.freezzah.minecities.tag.CityTags;
 import com.freezzah.minecities.utils.ITaggable;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtException;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
@@ -106,7 +107,7 @@ public class City implements ITaggable {
         this.happinessManager.tick(level);
     }
 
-    public @Nullable BuildingManager getBuildingManager() {
+    public @NotNull BuildingManager getBuildingManager() {
         return buildingManager;
     }
 
@@ -156,7 +157,7 @@ public class City implements ITaggable {
                 this.write();
             }
         } catch (final Exception e) {
-            Constants.LOGGER.warn("Something went wrong persisting colony: " + id, e);
+            Constants.LOGGER.warn("Something went wrong persisting colony: {}", id, e);
         }
         return this.cityTag;
     }
@@ -190,7 +191,11 @@ public class City implements ITaggable {
     public void read(@NotNull CompoundTag tag) {
         this.id = tag.getUUID(CityTags.TAG_CITY_ID);
         CompoundTag ownerTag = tag.getCompound(CityTags.TAG_OWNER);
-        setOwner(Inhabitant.load(ownerTag));
+        Inhabitant inhabitant = Inhabitant.load(ownerTag);
+        if (inhabitant == null) {
+            throw new NbtException("Expected data not present: Inhabitant");
+        }
+        setOwner(inhabitant);
         ListTag players = tag.getList(CityTags.TAG_PLAYERS, ListTag.TAG_COMPOUND);
         for (int i = 0; i < players.size(); i++) {
             CompoundTag playerTag = players.getCompound(i);
@@ -202,6 +207,7 @@ public class City implements ITaggable {
         this.wasteManager = WasteManager.load(tag.getCompound(CityTags.TAG_WASTE_MANAGER), this);
         this.waterManager = WaterManager.load(tag.getCompound(CityTags.TAG_WATER_MANAGER), this);
         this.foodManager = FoodManager.load(tag.getCompound(CityTags.TAG_FOOD_MANAGER), this);
+        this.happinessManager = HappinessManager.load(tag.getCompound(CityTags.TAG_HAPPINESS_MANAGER), this);
     }
 
     public String getCityName() {

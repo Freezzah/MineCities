@@ -1,5 +1,6 @@
 package com.freezzah.minecities.blocks.block;
 
+import com.freezzah.minecities.blocks.building.IBuilding;
 import com.freezzah.minecities.blocks.building.registry.BuildingEntry;
 import com.freezzah.minecities.blocks.building.registry.ModBuildingRegistry;
 import com.freezzah.minecities.city.City;
@@ -33,10 +34,18 @@ public class TownhallBlock extends AbstractBuildingBlock implements IBuildingBlo
                 City city = CityManager.getInstance().getCityByBuilding(pPos);
                 if (city != null) {
                     if (pPlayer.isCrouching()) {
-                        city.getBuildingManager().getBuildingByPos(pPos).increaseLevel(serverLevel, Inhabitant.fromPlayer(pPlayer));
+                        IBuilding building = city.getBuildingManager().getBuildingByPos(pPos);
+                        if (building == null) {
+                            return InteractionResult.FAIL;
+                        }
+                        building.increaseLevel(serverLevel, Inhabitant.fromPlayer(pPlayer));
                         return InteractionResult.SUCCESS;
                     }
-                    pPlayer.openMenu(pState.getMenuProvider(pLevel, pPos), new FriendlyByteBufHelper(city.getId())::writeUUID);
+                    MenuProvider menuProvider = pState.getMenuProvider(pLevel, pPos);
+                    if (menuProvider == null) {
+                        return InteractionResult.FAIL;
+                    }
+                    pPlayer.openMenu(menuProvider, new FriendlyByteBufHelper(city.getId())::writeUUID);
                 }
             }
         }
@@ -46,8 +55,12 @@ public class TownhallBlock extends AbstractBuildingBlock implements IBuildingBlo
     @Nullable
     @Override
     public MenuProvider getMenuProvider(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos) {
+        City city = CityManager.getInstance().getCityByBuilding(pPos);
+        if (city == null) {
+            return null;
+        }
         return new SimpleMenuProvider(
-                (pContainerId, pPlayerInventory, pPlayer) -> new CityOverviewMenu(pContainerId, pPlayerInventory, CityManager.getInstance().getCityByBuilding(pPos).getId()),
+                (pContainerId, pPlayerInventory, pPlayer) -> new CityOverviewMenu(pContainerId, pPlayerInventory, city.getId()),
                 Component.literal("mymenu"));
     }
 
@@ -72,6 +85,9 @@ public class TownhallBlock extends AbstractBuildingBlock implements IBuildingBlo
             return true;
         }
         city = CityManager.getInstance().createCity(Inhabitant.fromPlayer(player));
+        if (city == null) {
+            return true;
+        }
         city.getBuildingManager().addBuilding(pos, this);
         return false;
     }

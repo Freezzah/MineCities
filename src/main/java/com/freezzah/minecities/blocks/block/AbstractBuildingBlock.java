@@ -30,7 +30,7 @@ public abstract class AbstractBuildingBlock extends Block implements IBuildingBl
         if (player instanceof ServerPlayer serverPlayer) {
             City city = CityManager.getInstance().getCityByPlayer(Inhabitant.fromPlayer(serverPlayer));
             if (city != null) {
-                CityManager.getInstance().getCityByBuilding(pos).getBuildingManager().removeBuilding(pos);
+                city.getBuildingManager().removeBuilding(pos);
                 return false;
             } else if (CityManager.getInstance().getCityByBuilding(pos) == null) {
                 CityManager.getInstance().removeUnassociatedBuilding(pos);
@@ -54,6 +54,9 @@ public abstract class AbstractBuildingBlock extends Block implements IBuildingBl
     @Override
     public BlockEntity newBlockEntity(@NotNull final BlockPos blockPos, @NotNull final BlockState blockState) {
         final TileEntityBuilding teBuilding = ModBuildingRegistry.building.get().create(blockPos, blockState);
+        if (teBuilding == null) {
+            return null;
+        }
         teBuilding.setBuilding(this);
         teBuilding.registryName = this.getBuildingName();
         return teBuilding;

@@ -1,16 +1,29 @@
 package com.freezzah.minecities.city.managers;
 
+import com.freezzah.minecities.Constants;
 import com.freezzah.minecities.city.City;
 import com.freezzah.minecities.city.extensions.ILiveable;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 public class HappinessManager extends AbstractCityManager {
     public HappinessManager(City city) {
         super(city);
+    }
+
+    public static @Nullable HappinessManager load(@NotNull CompoundTag tag, @NotNull City city) {
+        try {
+            HappinessManager happinessManager = new HappinessManager(city);
+            happinessManager.read(tag);
+            return happinessManager;
+        } catch (Exception e) {
+            Constants.LOGGER.warn("Something went wrong loading the cities");
+        }
+        return null;
     }
 
     public void tick(@NotNull Level level) {
@@ -41,6 +54,8 @@ public class HappinessManager extends AbstractCityManager {
         }
         if (count == 0)
             return;
+        //TODO this code is defo wrong
+        //noinspection UnusedAssignment
         happiness = happiness / count;
     }
 

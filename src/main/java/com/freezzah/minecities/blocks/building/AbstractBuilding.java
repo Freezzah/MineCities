@@ -57,6 +57,9 @@ public abstract class AbstractBuilding implements IBuilding {
     public boolean increaseLevel(ServerLevel level, IInhabitant initiator) {
         try {
             City city = CityManager.getInstance().getCityByPlayer(initiator);
+            if (city == null) {
+                return false;
+            }
             if (canUpgrade((byte) (this.getBuildingLevel() + 1), city)) {
                 boolean moneyTaken = withdrawMaterials((byte) (this.getBuildingLevel() + 1), city, true);
                 if (moneyTaken) {

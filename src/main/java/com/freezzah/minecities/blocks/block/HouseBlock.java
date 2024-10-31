@@ -32,9 +32,16 @@ public class HouseBlock extends AbstractBuildingBlock {
         if (!pLevel.isClientSide) {
             super.useWithoutItem(pState, pLevel, pPos, pPlayer, pHit);
             City city = CityManager.getInstance().getCityByBuilding(pPos);
+            if (city == null) {
+                return InteractionResult.FAIL;
+            }
             if (pPlayer.isCrouching()) {
                 if (pLevel instanceof ServerLevel serverLevel) {
-                    city.getBuildingManager().getBuildingByPos(pPos).increaseLevel(serverLevel, Inhabitant.fromPlayer(pPlayer));
+                    IBuilding building = city.getBuildingManager().getBuildingByPos(pPos);
+                    if (building == null) {
+                        return InteractionResult.FAIL;
+                    }
+                    building.increaseLevel(serverLevel, Inhabitant.fromPlayer(pPlayer));
                     return InteractionResult.SUCCESS_SERVER;
                 }
             } else {

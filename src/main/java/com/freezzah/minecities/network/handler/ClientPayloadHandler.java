@@ -18,21 +18,33 @@ public class ClientPayloadHandler {
 
     public void handleData(final @NotNull UpdateEconomyPacket data, final @NotNull IPayloadContext context) {
         City city = CityManager.getInstance().getCityById(data.cityUUID());
+        if (city == null) {
+            throw new IllegalStateException(String.format("Cannot load city when handling data of type: " + data.getClass()));
+        }
         context.enqueueWork(() -> city.getEconomyManager().setGold(data.gold()));
     }
 
     public void handleData(final @NotNull UpdateWastePacket data, final @NotNull IPayloadContext context) {
         City city = CityManager.getInstance().getCityById(data.cityUUID());
+        if (city == null) {
+            throw new IllegalStateException(String.format("Cannot load city when handling data of type: " + data.getClass()));
+        }
         context.enqueueWork(() -> city.getWasteManager().setWaste(data.waste()));
     }
 
     public void handleData(final @NotNull UpdateWaterPacket data, final @NotNull IPayloadContext context) {
         City city = CityManager.getInstance().getCityById(data.cityUUID());
+        if (city == null) {
+            throw new IllegalStateException(String.format("Cannot load city when handling data of type: " + data.getClass()));
+        }
         context.enqueueWork(() -> city.getWaterManager().setWater(data.water()));
     }
 
     public void handleData(final @NotNull UpdateFoodPacket data, final @NotNull IPayloadContext context) {
         City city = CityManager.getInstance().getCityById(data.cityUUID());
+        if (city == null) {
+            throw new IllegalStateException(String.format("Cannot load city when handling data of type: " + data.getClass()));
+        }
         context.enqueueWork(() -> city.getFoodManager().setFood(data.food()));
     }
 }

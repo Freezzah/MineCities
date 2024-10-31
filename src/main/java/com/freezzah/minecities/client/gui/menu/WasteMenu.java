@@ -24,14 +24,16 @@ public class WasteMenu extends AbstractContainerMenu {
     }
 
     //Server
-    public WasteMenu(int containerId, @NotNull Inventory unused, @NotNull UUID cityUuid, @NotNull BlockPos pos) {
+    public WasteMenu(int containerId, @NotNull Inventory ignored, @NotNull UUID cityUuid, @NotNull BlockPos pos) {
         super(ModMenuType.WASTE_MENU.get(), containerId);
         this.city = CityManager.getInstance().getCityById(cityUuid);
         this.pos = pos;
     }
 
+    //TODO
     @Override
     public @NotNull ItemStack quickMoveStack(@NotNull Player pPlayer, int pIndex) {
+        //noinspection DataFlowIssue
         return null;
     }
 
@@ -47,6 +49,9 @@ public class WasteMenu extends AbstractContainerMenu {
     public long getWaste() {
         BuildingManager buildingManager = city.getBuildingManager();
         IWasteConsumer wasteConsumer = (IWasteConsumer) buildingManager.getBuildingByPos(this.pos);
+        if (wasteConsumer == null) {
+            throw new IllegalStateException("Waste consumer not found");
+        }
         return wasteConsumer.getCurrentWaste();
     }
 }

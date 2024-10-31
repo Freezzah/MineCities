@@ -4,6 +4,7 @@ import com.freezzah.minecities.blocks.block.IBuildingBlock;
 import com.freezzah.minecities.city.CityManager;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
@@ -16,11 +17,20 @@ public class EventHandler {
     @SubscribeEvent
     @SuppressWarnings("unused")
     public void onPlaceEvent(@NotNull BlockEvent.EntityPlaceEvent event) {
-        if (event.getEntity().level() instanceof ServerLevel serverLevel) {
-            if (event.getEntity() instanceof ServerPlayer serverPlayer) {
-                if (event.getPlacedBlock().getBlock() instanceof IBuildingBlock iBuildingBlock) {
-                    boolean cancel = iBuildingBlock.onPlace(serverPlayer, event.getPos());
-                    event.setCanceled(cancel);
+        Entity entity = event.getEntity();
+        if (entity == null) {
+            return;
+        }
+
+        //TODO Ignore?
+        //noinspection resource
+        if (entity.level() instanceof ServerLevel serverLevel) {
+            if (event.getEntity() != null) {
+                if (event.getEntity() instanceof ServerPlayer serverPlayer) {
+                    if (event.getPlacedBlock().getBlock() instanceof IBuildingBlock iBuildingBlock) {
+                        boolean cancel = iBuildingBlock.onPlace(serverPlayer, event.getPos());
+                        event.setCanceled(cancel);
+                    }
                 }
             }
         }

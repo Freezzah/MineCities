@@ -47,7 +47,7 @@ public abstract class AbstractCityManager implements IManager {
                 this.write();
             }
         } catch (final Exception e) {
-            Constants.LOGGER.warn("Something went wrong persisting building manager of city: " + city.getId(), e);
+            Constants.LOGGER.warn("Something went wrong persisting building manager of city: {}", city.getId(), e);
         }
         return this.managerTag;
     }

@@ -4,7 +4,6 @@ import com.freezzah.minecities.city.extensions.IFoodGenerator;
 import com.freezzah.minecities.utils.Requirement;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class FarmBuilding extends AbstractBuilding implements IFoodGenerator {
@@ -12,7 +11,7 @@ public class FarmBuilding extends AbstractBuilding implements IFoodGenerator {
     @Override
     @NotNull
     List<Requirement> getRequirements() {
-        return Arrays.asList(new Requirement(100, 100, 100));
+        return List.of(new Requirement(100, 100, 100));
     }
 
     @Override

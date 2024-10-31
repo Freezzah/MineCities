@@ -22,13 +22,15 @@ public class CityOverviewMenu extends AbstractContainerMenu {
     }
 
     //Server
-    public CityOverviewMenu(int containerId, Inventory _unused, UUID cityUuid) {
+    public CityOverviewMenu(int containerId, Inventory ignored, UUID cityUuid) {
         super(ModMenuType.CITY_OVERVIEW_MENU.get(), containerId);
         this.city = CityManager.getInstance().getCityById(cityUuid);
     }
 
+    //TODO
     @Override
     public @NotNull ItemStack quickMoveStack(@NotNull Player pPlayer, int pIndex) {
+        //noinspection DataFlowIssue
         return null;
     }
 

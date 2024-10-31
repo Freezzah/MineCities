@@ -45,7 +45,11 @@ public class BankBlock extends AbstractBuildingBlock {
                     int count = (int) city.getEconomyManager().withdrawStack();
                     pPlayer.addItem(new ItemStack(ModItem.COIN.get(), count));
                 } else {
-                    pPlayer.openMenu(pState.getMenuProvider(pLevel, pPos), new FriendlyByteBufHelper(city.getId())::writeUUID);
+                    MenuProvider menuProvider = pState.getMenuProvider(pLevel, pPos);
+                    if (menuProvider == null) {
+                        return InteractionResult.FAIL;
+                    }
+                    pPlayer.openMenu(menuProvider, new FriendlyByteBufHelper(city.getId())::writeUUID);
                 }
             }
         }
@@ -55,8 +59,12 @@ public class BankBlock extends AbstractBuildingBlock {
     @Nullable
     @Override
     public MenuProvider getMenuProvider(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos) {
+        City city = CityManager.getInstance().getCityByBuilding(pPos);
+        if (city == null) {
+            return null;
+        }
         return new SimpleMenuProvider(
-                (pContainerId, pPlayerInventory, pPlayer) -> new BankMenu(pContainerId, pPlayerInventory, CityManager.getInstance().getCityByBuilding(pPos).getId()),
+                (pContainerId, pPlayerInventory, pPlayer) -> new BankMenu(pContainerId, pPlayerInventory, city.getId()),
                 Component.literal("mymenu"));
     }
 }

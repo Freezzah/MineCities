@@ -36,17 +36,25 @@ public class WasteDumpBlock extends AbstractBuildingBlock {
         if (!level.isClientSide) {
             City city = CityManager.getInstance().getCityByBuilding(pos);
             if (city != null) {
-                player.openMenu(state.getMenuProvider(level, pos), new FriendlyByteBufHelper(city.getId(), pos)::writeUUIDAndBlockPos);
+                MenuProvider menuProvider = state.getMenuProvider(level, pos);
+                if (menuProvider == null) {
+                    return InteractionResult.FAIL;
+                }
+                player.openMenu(menuProvider, new FriendlyByteBufHelper(city.getId(), pos)::writeUUIDAndBlockPos);
             }
         }
         return InteractionResult.SUCCESS_SERVER; //MIGRATION MAYBE WRONG
     }
 
-    @Nullable
+
     @Override
-    public MenuProvider getMenuProvider(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos) {
+    public @Nullable MenuProvider getMenuProvider(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos) {
         FriendlyByteBuf friendlyByteBuf = new FriendlyByteBuf(Unpooled.buffer());
-        friendlyByteBuf.writeUUID(CityManager.getInstance().getCityByBuilding(pPos).getId()).writeBlockPos(pPos);
+        City city = CityManager.getInstance().getCityByBuilding(pPos);
+        if (city == null) {
+            return null;
+        }
+        friendlyByteBuf.writeUUID(city.getId()).writeBlockPos(pPos);
         return new SimpleMenuProvider(
                 (pContainerId, pPlayerInventory, pPlayer) -> new WasteMenu(pContainerId, pPlayerInventory, friendlyByteBuf),
                 Component.literal("mymenu"));

@@ -22,18 +22,20 @@ public class BankMenu extends AbstractContainerMenu {
     }
 
     //Server
-    public BankMenu(int containerId, Inventory _unused, UUID cityUuid) {
+    public BankMenu(int containerId, Inventory ignored, UUID cityUuid) {
         super(ModMenuType.BANK_MENU.get(), containerId);
         this.city = CityManager.getInstance().getCityById(cityUuid);
     }
 
+    //TODO
+    @SuppressWarnings("NullableProblems")
     @Override
-    public ItemStack quickMoveStack(Player pPlayer, int pIndex) {
+    public ItemStack quickMoveStack(@NotNull Player pPlayer, int pIndex) {
         return null;
     }
 
     @Override
-    public boolean stillValid(Player pPlayer) {
+    public boolean stillValid(@NotNull Player pPlayer) {
         return true;
     }
 

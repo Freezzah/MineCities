@@ -154,9 +154,15 @@ public class BuildingManager extends AbstractCityManager {
         List<IBuilding> buildings = new ArrayList<>();
         if (building instanceof IBuilding iBuilding) {
             BlockPos pos = getPosByBuilding(iBuilding);
+            if (pos == null) {
+                return buildings;
+            }
             for (IBuilding building1 : getBuildings()) {
                 if (type.isAssignableFrom(building1.getClass())) {
                     BlockPos pos1 = getPosByBuilding(building1);
+                    if (pos1 == null) {
+                        return buildings;
+                    }
                     double dist = BlockPosHelper.distance(pos, pos1);
                     if (dist < range) {
                         buildings.add(building1);
@@ -171,6 +177,7 @@ public class BuildingManager extends AbstractCityManager {
         List<T> buildings = new ArrayList<>();
         for (IBuilding building : getBuildings()) {
             if (type.isAssignableFrom(building.getClass())) {
+                //noinspection unchecked
                 buildings.add((T) building);
             }
         }

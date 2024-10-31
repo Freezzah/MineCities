@@ -13,11 +13,9 @@ import java.util.UUID;
 
 public class CityManager implements ICityManager {
     static CityManager instance;
-    private final ServerLevel level;
     private final CitySavedData savedData;
 
     public CityManager(@NotNull ServerLevel level) {
-        this.level = level;
         savedData = level.getDataStorage().computeIfAbsent(
                 new SavedData.Factory<>(CitySavedData::new, CitySavedData::load), "minecities_cities");
         //TODO, this seems to break if other worlds load later than the overworld
