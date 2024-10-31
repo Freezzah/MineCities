@@ -11,6 +11,7 @@ public class FriendlyByteBufHelper {
     //TODO this class feels weird, might need to revamp
     private final UUID uuid;
     private BlockPos pos = null;
+
     public FriendlyByteBufHelper(@NotNull UUID uuid) {
         this.uuid = uuid;
     }
@@ -23,6 +24,7 @@ public class FriendlyByteBufHelper {
     public void writeUUID(@NotNull FriendlyByteBuf byteBuf) {
         byteBuf.writeUUID(uuid);
     }
+
     public void writeBlockPos(@NotNull FriendlyByteBuf byteBuf) {
         if (pos != null)
             byteBuf.writeBlockPos(pos);

@@ -58,7 +58,6 @@ public class WaterManager extends AbstractCityManager {
 
     @Override
     public void tickSlow(@NotNull Level level) {
-        super.tickSlow(level);
         BuildingManager buildingManager = getCity().getBuildingManager();
         for (IBuilding building : getCity().getBuildingManager().getBuildings()) {
             //Collect water
@@ -66,9 +65,9 @@ public class WaterManager extends AbstractCityManager {
                 water += waterGenerator.generateWater();
 
             //If water consumer
-            if(building instanceof IWaterConsumer waterConsumer) {
+            if (building instanceof IWaterConsumer waterConsumer) {
                 //And can consume from well, consume from well
-                if(waterConsumer.canConsumeNearbyWater() &&
+                if (waterConsumer.canConsumeNearbyWater() &&
                         !buildingManager.getBuildingWithManagerWithinRange(building, 3, IWaterGeneratorNearby.class).isEmpty()) {
                     waterConsumer.consumeWater(Long.MAX_VALUE);
                 }

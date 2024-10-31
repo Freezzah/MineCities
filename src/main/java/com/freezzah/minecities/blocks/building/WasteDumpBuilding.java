@@ -16,6 +16,7 @@ public class WasteDumpBuilding extends AbstractBuilding implements IWasteConsume
     @NotNull List<Requirement> getRequirements() {
         return List.of(new Requirement(0, 0, 0));
     }
+
     @Override
     public boolean checkLevelRequirements(byte desiredLevel) {
         return true;

@@ -56,7 +56,6 @@ public class FoodManager extends AbstractCityManager {
 
     @Override
     public void tickSlow(@NotNull Level level) {
-        super.tickSlow(level);
         getCity().getBuildingManager().getBuildingWithManager(IFoodGenerator.class);
         for (IFoodGenerator foodGenerator : getCity().getBuildingManager().getBuildingWithManager(IFoodGenerator.class)) {
             food += foodGenerator.generateFood();
@@ -68,7 +67,7 @@ public class FoodManager extends AbstractCityManager {
         for (IInhabitant inhabitant : getCity().getPlayers()) {
             Player player = level.getPlayerByUUID(inhabitant.getUUID());
             if (player instanceof ServerPlayer serverPlayer) {
-                 PacketDistributor.sendToPlayer(serverPlayer, new UpdateFoodPacket(food, getCity().getId()));
+                PacketDistributor.sendToPlayer(serverPlayer, new UpdateFoodPacket(food, getCity().getId()));
             }
         }
     }

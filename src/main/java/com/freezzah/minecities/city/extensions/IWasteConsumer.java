@@ -12,6 +12,7 @@ public interface IWasteConsumer {
 
     /**
      * Returns the amount of waste that can be consumed per tick
+     *
      * @return consumable waste per tick
      */
     long getConsumableWastePerTick();
@@ -27,6 +28,7 @@ public interface IWasteConsumer {
      * Gets the current waste of the building.
      * This is used to calculate if more waste can be stored in the block
      * Waste should be removed (if applicable) in the ticking function of the building of the building.
+     *
      * @return current waste
      */
     long getCurrentWaste();

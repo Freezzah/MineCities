@@ -1,9 +1,9 @@
 package com.freezzah.minecities.blocks.block;
 
 import com.freezzah.minecities.blocks.blockentities.WaterCollectorBlockEntity;
+import com.freezzah.minecities.blocks.blockentities.registry.ModBlockEntity;
 import com.freezzah.minecities.blocks.building.registry.BuildingEntry;
 import com.freezzah.minecities.blocks.building.registry.ModBuildingRegistry;
-import com.freezzah.minecities.blocks.blockentities.registry.ModBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;

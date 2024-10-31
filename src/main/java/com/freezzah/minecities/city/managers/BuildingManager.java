@@ -17,6 +17,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -32,6 +33,11 @@ public class BuildingManager extends AbstractCityManager {
 
     public BuildingManager(@NotNull City city) {
         super(city);
+    }
+
+    @Override
+    public void tickSlow(@NotNull Level level) {
+
     }
 
     @Contract("_, _, _ -> new")
@@ -136,8 +142,8 @@ public class BuildingManager extends AbstractCityManager {
     }
 
     public @Nullable BlockPos getPosByBuilding(IBuilding building) {
-        for(Map.Entry<BlockPos, IBuilding> entry : this.buildings.entrySet()) {
-            if(entry.getValue().equals(building)){
+        for (Map.Entry<BlockPos, IBuilding> entry : this.buildings.entrySet()) {
+            if (entry.getValue().equals(building)) {
                 return entry.getKey();
             }
         }
@@ -146,13 +152,13 @@ public class BuildingManager extends AbstractCityManager {
 
     public <T, Y> @NotNull List<? extends IBuilding> getBuildingWithManagerWithinRange(@NotNull T building, int range, @NotNull Class<Y> type) {
         List<IBuilding> buildings = new ArrayList<>();
-        if(building instanceof IBuilding iBuilding) {
+        if (building instanceof IBuilding iBuilding) {
             BlockPos pos = getPosByBuilding(iBuilding);
-            for(IBuilding building1 : getBuildings()) {
-                if(type.isAssignableFrom(building1.getClass())) {
+            for (IBuilding building1 : getBuildings()) {
+                if (type.isAssignableFrom(building1.getClass())) {
                     BlockPos pos1 = getPosByBuilding(building1);
                     double dist = BlockPosHelper.distance(pos, pos1);
-                    if(dist < range){
+                    if (dist < range) {
                         buildings.add(building1);
                     }
                 }
@@ -163,9 +169,9 @@ public class BuildingManager extends AbstractCityManager {
 
     public <T> @NotNull List<T> getBuildingWithManager(@NotNull Class<T> type) {
         List<T> buildings = new ArrayList<>();
-        for(IBuilding building : getBuildings()) {
-            if(type.isAssignableFrom(building.getClass())) {
-                buildings.add((T)building);
+        for (IBuilding building : getBuildings()) {
+            if (type.isAssignableFrom(building.getClass())) {
+                buildings.add((T) building);
             }
         }
         return buildings;

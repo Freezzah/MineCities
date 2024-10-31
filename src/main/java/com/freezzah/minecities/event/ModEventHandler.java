@@ -1,8 +1,8 @@
 package com.freezzah.minecities.event;
 
 import com.freezzah.minecities.blocks.block.AbstractBuildingBlock;
-import com.freezzah.minecities.blocks.building.registry.ModBuildingRegistry;
 import com.freezzah.minecities.blocks.block.registry.ModBlock;
+import com.freezzah.minecities.blocks.building.registry.ModBuildingRegistry;
 import com.freezzah.minecities.client.gui.menu.ModMenuType;
 import com.freezzah.minecities.client.gui.screen.BankScreen;
 import com.freezzah.minecities.client.gui.screen.CityOverviewScreen;
@@ -16,10 +16,10 @@ import net.minecraft.world.item.CreativeModeTabs;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.neoforged.neoforge.registries.NewRegistryEvent;
 import org.jetbrains.annotations.NotNull;
-import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 
 import static com.freezzah.minecities.Constants.MOD_ID;
 
@@ -34,7 +34,7 @@ public class ModEventHandler {
     @SubscribeEvent
     public void createTabBuildContent(@NotNull BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
-            for(AbstractBuildingBlock building : ModBlock.getBuildingSuppliers()) {
+            for (AbstractBuildingBlock building : ModBlock.getBuildingSuppliers()) {
                 event.accept(building);
             }
         }

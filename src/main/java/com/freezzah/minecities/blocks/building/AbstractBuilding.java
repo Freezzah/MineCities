@@ -88,7 +88,7 @@ public abstract class AbstractBuilding implements IBuilding {
     }
 
     private boolean withdrawMaterials(byte desiredLevel, @NotNull City city, boolean performTake) {
-        long requiredGold = getRequirements().get(desiredLevel-1).gold();
+        long requiredGold = getRequirements().get(desiredLevel - 1).gold();
         return city.getEconomyManager().tryTakeGold(requiredGold, performTake);
     }
 

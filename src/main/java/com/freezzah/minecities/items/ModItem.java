@@ -4,8 +4,8 @@ import com.freezzah.minecities.blocks.block.registry.ModBlock;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.jetbrains.annotations.NotNull;
@@ -32,7 +32,7 @@ public class ModItem {
     public static final Supplier<BlockItem> HOUSE_BLOCK_ITEM =
             ITEMS.registerSimpleBlockItem(ModBlock.HOUSE_BLOCK);
     public static final Supplier<BlockItem> WATER_COLLECTOR_BLOCK_ITEM
-            =ITEMS.registerSimpleBlockItem(ModBlock.WATER_COLLECTOR_BLOCK);
+            = ITEMS.registerSimpleBlockItem(ModBlock.WATER_COLLECTOR_BLOCK);
     public static final Supplier<BlockItem> FARM_BLOCK_ITEM =
             ITEMS.registerSimpleBlockItem(ModBlock.FARM_BLOCK);
     public static final Supplier<BlockItem> WELL_BLOCK_ITEM =
@@ -42,6 +42,7 @@ public class ModItem {
     public static final Supplier<Item> COIN =
             ITEMS.register(ModItemId.COIN_ITEM_ID, () -> new Item(new Item.Properties().setId(
                     ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MOD_ID, ModItemId.COIN_ITEM_ID))).stacksTo(256)));
+
     /*
      * Function to call from mod init phase to register all items
      */

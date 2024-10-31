@@ -23,6 +23,7 @@ public record UpdateWaterPacket(long water, UUID cityUUID) implements CustomPack
             UpdateWaterPacket::cityUUID,
             UpdateWaterPacket::new
     );
+
     @Override
     public @NotNull Type<? extends CustomPacketPayload> type() {
         return TYPE;

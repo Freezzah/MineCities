@@ -13,6 +13,7 @@ public class NBTHelper {
      * Returns a collector that collects {@link CompoundTag}s and forms a {@link ListTag}
      * Example usage:
      * {@code myList.stream().map(myObject::getCompoundTag).collect(NBTHelper.toListNBT());}
+     *
      * @return Collector
      */
     @Contract(" -> new")

@@ -21,7 +21,7 @@ public class CityManager implements ICityManager {
         savedData = level.getDataStorage().computeIfAbsent(
                 new SavedData.Factory<>(CitySavedData::new, CitySavedData::load), "minecities_cities");
         //TODO, this seems to break if other worlds load later than the overworld
-        if(level.dimension() == Level.OVERWORLD)
+        if (level.dimension() == Level.OVERWORLD)
             instance = this;
     }
 

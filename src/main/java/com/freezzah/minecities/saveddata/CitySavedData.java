@@ -23,9 +23,11 @@ public class CitySavedData extends SavedData {
      */
     private final List<City> cities = new ArrayList<>();
     public UUID uuid = UUID.randomUUID();
+
     public CitySavedData() {
         this.setDirty();
     }
+
     /**
      * Loads SavedData from NBT
      *
@@ -42,6 +44,7 @@ public class CitySavedData extends SavedData {
         }
         return savedData;
     }
+
     /**
      * Writes SavedData to NBT.
      *
@@ -54,6 +57,7 @@ public class CitySavedData extends SavedData {
         compoundTag.put(CityTags.TAG_CITIES, tag);
         return compoundTag;
     }
+
     /**
      * Adds a city to the trackable object
      *
@@ -64,6 +68,7 @@ public class CitySavedData extends SavedData {
         cities.add(city);
         setDirty();
     }
+
     /**
      * Returns the {@link City} if any exist with UUID, otherwise null
      *
@@ -73,6 +78,7 @@ public class CitySavedData extends SavedData {
     public @Nullable City getById(@NotNull UUID uuid) {
         return cities.stream().filter(c -> c.getId().equals(uuid)).findFirst().orElse(null);
     }
+
     /**
      * Returns the {@link City} if any exist with UUID, otherwise null
      *
@@ -83,16 +89,20 @@ public class CitySavedData extends SavedData {
         return cities.stream().filter(city -> city.getPlayers().contains(inhabitant))
                 .findFirst().orElse(null);
     }
+
     public @NotNull List<City> getCities() {
         return cities;
     }
+
     public void destroyCity(City city) {
         cities.remove(city);
     }
+
     public void removeUnassociatedBuilding(BlockPos pos) {
         cities.stream().filter(city -> city.getBuildingManager().getBuildingByPos(pos) != null)
                 .forEach(city -> city.getBuildingManager().removeBuilding(pos));
     }
+
     public @Nullable City getCityByBuilding(BlockPos pos) {
         return cities.stream().filter(city -> city.getBuildingManager().getBuildingByPos(pos) != null)
                 .findFirst().orElse(null);

@@ -18,6 +18,7 @@ public class BlockPosHelper {
                 blockPosA.getY() == blockPosB.getY() &&
                 blockPosA.getZ() == blockPosB.getZ();
     }
+
     /**
      * Writes {@link BlockPos} to a new NBT Tag, and adds the tag to the given parameter
      *
@@ -33,6 +34,7 @@ public class BlockPosHelper {
         tag.put(TAG, compoundTag);
         return tag;
     }
+
     /**
      * Reads {@link BlockPos} from an NBT Tag.
      *
@@ -43,13 +45,15 @@ public class BlockPosHelper {
         CompoundTag compoundTag = tag.getCompound(TAG);
         return new BlockPos(compoundTag.getInt("x"), compoundTag.getInt("y"), compoundTag.getInt("z"));
     }
+
     /**
      * Calculates the distance between two {@link BlockPos} in 3D.
+     *
      * @param blockPos1 first block
      * @param blockPos2 second block
      * @return distance between blocks.
      */
-    public static double distance(BlockPos blockPos1, BlockPos blockPos2){
+    public static double distance(BlockPos blockPos1, BlockPos blockPos2) {
         double x = Math.pow(Math.abs(blockPos1.getX() - blockPos2.getX()), 2);
         double y = Math.pow(Math.abs(blockPos1.getY() - blockPos2.getY()), 2);
         double z = Math.pow(Math.abs(blockPos1.getZ() - blockPos2.getZ()), 2);

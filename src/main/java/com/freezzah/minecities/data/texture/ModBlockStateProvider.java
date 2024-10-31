@@ -1,15 +1,14 @@
 package com.freezzah.minecities.data.texture;
 
 
-import com.freezzah.minecities.blocks.block.AbstractBuildingBlock;
 import com.freezzah.minecities.blocks.block.registry.ModBlock;
-import com.freezzah.minecities.blocks.block.registry.ModBlockId;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import net.minecraft.world.level.block.Block;
+
 import static com.freezzah.minecities.Constants.MOD_ID;
 
 public class ModBlockStateProvider extends BlockStateProvider {

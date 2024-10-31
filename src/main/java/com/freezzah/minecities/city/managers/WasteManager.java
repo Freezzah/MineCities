@@ -57,13 +57,12 @@ public class WasteManager extends AbstractCityManager {
 
     @Override
     public void tickSlow(@NotNull Level level) {
-        super.tickSlow(level);
         for (IBuilding building : getCity().getBuildingManager().getBuildings()) {
             if (building instanceof IWasteGenerator wasteGenerator) {
                 waste += wasteGenerator.generateWaste();
             }
             if (building instanceof IWasteConsumer wasteConsumer) {
-                if(wasteConsumer.getCurrentWaste() < wasteConsumer.getMaxWaste()){
+                if (wasteConsumer.getCurrentWaste() < wasteConsumer.getMaxWaste()) {
                     waste -= wasteConsumer.consumeWaste(waste);
                 }
             }

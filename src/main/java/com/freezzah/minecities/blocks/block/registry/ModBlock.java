@@ -43,6 +43,7 @@ public class ModBlock {
     public static final @NotNull DeferredHolder<net.minecraft.world.level.block.Block, WasteDumpBlock> WASTE_DUMP_BLOCK =
             BLOCKS.register(ModBlockId.WASTE_DUMP_ID, () -> new WasteDumpBlock(BlockBehaviour.Properties.of().setId(
                     ResourceKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(MOD_ID, ModBlockId.WASTE_DUMP_ID)))));
+
     @Contract(value = " -> new", pure = true)
     @NotNull
     public static AbstractBuildingBlock[] getBuildingSuppliers() {

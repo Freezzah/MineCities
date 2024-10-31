@@ -5,15 +5,26 @@ public interface ILiveable {
     int getVillagers();
 
     void addVillager();
+
     int getMaxVillagers();
+
     void removeVillager();
+
     float calculateHappiness();
+
     int collectTax();
+
     float getHappiness();
+
     void tickUnhappy();
+
     int getTicksUnhappy();
+
     void removeUnhappyInhabitant();
+
     void tickHappy();
+
     int getTicksHappy();
+
     void addHappyVillager();
 }

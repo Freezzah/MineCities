@@ -13,6 +13,7 @@ public class WellBuilding extends AbstractBuilding implements IWaterGeneratorNea
     List<Requirement> getRequirements() {
         return List.of(new Requirement(0, 0, 0));
     }
+
     @Override
     public boolean checkLevelRequirements(byte desiredLevel) {
         return true;

@@ -121,10 +121,15 @@ public class City implements ITaggable {
     public @NotNull WaterManager getWaterManager() {
         return waterManager;
     }
+
     public @NotNull FoodManager getFoodManager() {
         return foodManager;
     }
-    public @NotNull HappinessManager getHappinessManager() { return happinessManager; }
+
+    public @NotNull HappinessManager getHappinessManager() {
+        return happinessManager;
+    }
+
     /*
      * NBT related methods
      */

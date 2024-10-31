@@ -1,8 +1,8 @@
 package com.freezzah.minecities.blocks.blockentities;
 
+import com.freezzah.minecities.blocks.blockentities.registry.ModBlockEntity;
 import com.freezzah.minecities.blocks.building.IBuilding;
 import com.freezzah.minecities.blocks.building.WaterCollectorBuilding;
-import com.freezzah.minecities.blocks.blockentities.registry.ModBlockEntity;
 import com.freezzah.minecities.city.City;
 import com.freezzah.minecities.city.CityManager;
 import net.minecraft.core.BlockPos;

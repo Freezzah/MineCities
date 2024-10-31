@@ -1,8 +1,8 @@
 package com.freezzah.minecities.blocks.building.registry;
 
 import com.freezzah.minecities.Constants;
-import com.freezzah.minecities.blocks.building.*;
 import com.freezzah.minecities.blocks.block.registry.ModBlock;
+import com.freezzah.minecities.blocks.building.*;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
@@ -65,7 +65,9 @@ public class ModBuildingRegistry {
     public static void register(IEventBus modEventBus) {
         DEFERRED_REGISTER.register(modEventBus);
         BLOCK_ENTITIES.register(modEventBus);
-    }    public static final Supplier<BlockEntityType<? extends TileEntityBuilding>> building = BLOCK_ENTITIES.register(
+    }
+
+    public static final Supplier<BlockEntityType<? extends TileEntityBuilding>> building = BLOCK_ENTITIES.register(
             "blockentitytypes", () ->
                     new BlockEntityType<>(TileEntityBuilding::new, ModBlock.getBuildingSuppliers()));
 

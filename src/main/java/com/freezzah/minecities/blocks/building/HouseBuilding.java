@@ -1,6 +1,9 @@
 package com.freezzah.minecities.blocks.building;
 
-import com.freezzah.minecities.city.extensions.*;
+import com.freezzah.minecities.city.extensions.IFoodConsumer;
+import com.freezzah.minecities.city.extensions.ILiveable;
+import com.freezzah.minecities.city.extensions.IWasteGenerator;
+import com.freezzah.minecities.city.extensions.IWaterConsumer;
 import com.freezzah.minecities.tag.CityTags;
 import com.freezzah.minecities.utils.Requirement;
 import net.minecraft.nbt.CompoundTag;
@@ -9,9 +12,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class HouseBuilding extends AbstractBuilding implements ILiveable,
-                                                               IWasteGenerator,
-                                                               IFoodConsumer,
-                                                               IWaterConsumer {
+        IWasteGenerator,
+        IFoodConsumer,
+        IWaterConsumer {
     //region Properties
     private static final int VILLAGER_TAX = 1;
     private int villagers = 0;
@@ -29,9 +32,10 @@ public class HouseBuilding extends AbstractBuilding implements ILiveable,
 
     //region ILiveable
     @Override
-    public int getVillagers(){
+    public int getVillagers() {
         return villagers;
     }
+
     @Override
     public void addVillager() {
         villagers = Math.min(getMaxVillagers(), villagers + 1);
@@ -51,6 +55,7 @@ public class HouseBuilding extends AbstractBuilding implements ILiveable,
     public float calculateHappiness() {
         return Math.max(0, Math.min(1, happiness + foodSatisfiedFactor + waterSatisfiedFactor));
     }
+
     @Override
     public int collectTax() {
         return villagers * VILLAGER_TAX;
@@ -63,33 +68,33 @@ public class HouseBuilding extends AbstractBuilding implements ILiveable,
 
     @Override
     public void tickUnhappy() {
-        if(getVillagers() != 0) {
+        if (getVillagers() != 0) {
             ticksUnhappy++;
         }
         ticksHappy = 0;
     }
 
     @Override
-    public int getTicksUnhappy(){
+    public int getTicksUnhappy() {
         return ticksUnhappy;
     }
 
     @Override
-    public void removeUnhappyInhabitant(){
+    public void removeUnhappyInhabitant() {
         this.ticksUnhappy = 0;
         removeVillager();
     }
 
     @Override
     public void tickHappy() {
-        if(getVillagers() < getMaxVillagers()) {
+        if (getVillagers() < getMaxVillagers()) {
             ticksHappy++;
         }
         ticksUnhappy = 0;
     }
 
     @Override
-    public int getTicksHappy(){
+    public int getTicksHappy() {
         return ticksHappy;
     }
 
@@ -117,9 +122,9 @@ public class HouseBuilding extends AbstractBuilding implements ILiveable,
     @Override
     public double consumeFood(double food) {
         //Empty house, skip
-        if(villagers == 0) {
+        if (villagers == 0) {
             //Do update happiness, otherwise nobody will join back
-            if(food > 0) {
+            if (food > 0) {
                 foodSatisfiedFactor = getFoodSatisfiedRatio();
             }
             return 0;
@@ -137,6 +142,7 @@ public class HouseBuilding extends AbstractBuilding implements ILiveable,
     public int getFoodConsumptionPerInhabitant() {
         return 1;
     }
+
     @Override
     public float getFoodSatisfiedRatio() {
         return 0.2f;
@@ -147,13 +153,13 @@ public class HouseBuilding extends AbstractBuilding implements ILiveable,
     @Override
     public long consumeWater(long water) {
         //Empty house, skip
-        if(villagers == 0) {
+        if (villagers == 0) {
             return 0;
         }
         int waterConsumptionRequired = villagers * getWaterConsumptionPerInhabitant();
         long consumed = Math.min(waterConsumptionRequired, water);
         //Prevent division by 0
-        if(consumed < waterConsumptionRequired)
+        if (consumed < waterConsumptionRequired)
             waterSatisfiedFactor = -getWaterSatisfiedRatio();
         else
             waterSatisfiedFactor = getWaterSatisfiedRatio();

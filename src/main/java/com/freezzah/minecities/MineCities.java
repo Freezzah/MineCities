@@ -1,8 +1,8 @@
 package com.freezzah.minecities;
 
-import com.freezzah.minecities.blocks.building.registry.ModBuildingRegistry;
 import com.freezzah.minecities.blocks.block.registry.ModBlock;
 import com.freezzah.minecities.blocks.blockentities.registry.ModBlockEntity;
+import com.freezzah.minecities.blocks.building.registry.ModBuildingRegistry;
 import com.freezzah.minecities.client.gui.menu.ModMenuType;
 import com.freezzah.minecities.data.DataGenerators;
 import com.freezzah.minecities.event.EventHandler;

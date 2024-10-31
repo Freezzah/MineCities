@@ -29,7 +29,7 @@ public abstract class AbstractCityManager implements IManager {
         }
     }
 
-    public void tickSlow(@NotNull Level level) {}
+    public abstract void tickSlow(@NotNull Level level);
 
     public void tick(@NotNull Level ignoredLevel) {
         checkDirty();

@@ -56,7 +56,7 @@ public class CityOverviewScreen extends AbstractContainerScreen<CityOverviewMenu
     @Override
     protected void renderBg(@NotNull GuiGraphics graphics, float partialTick, int mouseX, int mouesY) {
         RenderSystem.setShaderTexture(0, BACKGROUND_LOCATION);
-        graphics.blit(RenderType::guiTextured, BACKGROUND_LOCATION, this.leftPos, this.topPos, 0f, 0f, this.imageWidth, this.imageHeight,0,0);
+        graphics.blit(RenderType::guiTextured, BACKGROUND_LOCATION, this.leftPos, this.topPos, 0f, 0f, this.imageWidth, this.imageHeight, 0, 0);
     }
 
     @Override

@@ -26,6 +26,7 @@ public class ModMenuType {
     }    /*
      * All menus added by this mod.
      */
+
     public static final Supplier<MenuType<BankMenu>> BANK_MENU = MENUS.register(ModMenuId.BANK_MENU_ID, () ->
             IMenuTypeExtension.create(BankMenu::new));
     public static final Supplier<MenuType<WasteMenu>> WASTE_MENU = MENUS.register(ModMenuId.WASTE_MENU_ID, () ->

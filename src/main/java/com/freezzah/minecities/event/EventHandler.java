@@ -51,8 +51,8 @@ public class EventHandler {
 
     @SubscribeEvent
     public void tickEvent(@NotNull LevelTickEvent.Post levelTickEvent) {
-        if(levelTickEvent.getLevel() instanceof ServerLevel) {
-            if (levelTickEvent.getLevel().getGameTime() % 100 == 0  && levelTickEvent.getLevel().dimension() == Level.OVERWORLD) {
+        if (levelTickEvent.getLevel() instanceof ServerLevel) {
+            if (levelTickEvent.getLevel().getGameTime() % 100 == 0 && levelTickEvent.getLevel().dimension() == Level.OVERWORLD) {
                 CityManager.getInstance().tickSlow(levelTickEvent.getLevel());
 
             } else {
